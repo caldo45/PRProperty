@@ -59,7 +59,7 @@ export class TestComponent implements OnInit {
 
 
   onChange(files: File[], payments){
-    
+  
     if(files[0]){
       console.log(files[0]);
       this.papa.parse(files[0], {
