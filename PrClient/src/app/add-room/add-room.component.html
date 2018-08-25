@@ -1,0 +1,14 @@
+<div class="container list-object">
+    <form #addroomForm="ngForm">
+  
+      <div class="form-group" [class.has-error]="roomName.invalid && roomName.touched">
+        <label for="roomName" class="control-label field-name control-label" >Room Name</label>
+        <input #roomName="ngModel" required type="string" class="form-control" name="roomName" id="roomName" [(ngModel)]="room.roomName" placeholder="Enter Room Name">
+        <div *ngIf="roomName.invalid && roomName.touched">
+          Room Name is Required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-green" (click)="addRoom(room)">Submit</button>
+    </form>
+    </div>

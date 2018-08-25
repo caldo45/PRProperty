@@ -1,0 +1,32 @@
+<div class = 'container'>
+<div class='card'>
+  <div class='card-header'>
+      Properties
+  </div>
+  <div class='row'>
+      <div class='col-md-2'> Filter By</div>
+          <div class='col-md-4'>
+              <input type='text' 
+                  [(ngModel)]='listFilter'/>
+          </div>
+      </div>
+  </div>
+</div>      
+      <div class="container">
+        <div class="card" *ngFor="let property of filteredProperties">
+          <div class="row ">
+            <div class="col-md-2">
+                <img src="https://1203179244.rsc.cdn77.org/hd/p/517647/10924875.jpg"  style="max-width: 100%; height: auto; margin-bottom: 5px;">
+              </div>
+              <div class="col-md-8 px-3">
+                <div class="card-block px-3">
+                  <h4 class="card-title">{{property.firstLineAddress}}</h4>
+                  <p class="card-text">{{property.secondLineAddress}} {{property.landlordId}}</p>
+                  <a [routerLink]="['/properties', property.id]" class="btn btn-primary">More Info</a>
+                  <router-outlet></router-outlet>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="card flex-row flex-wrap" *ngIf="property">
+      <div class="card-header border-0">
+          <img src="https://1203179244.rsc.cdn77.org/hd/p/517647/10924875.jpg" alt="" class="img-profile">
+      </div>
+      <div class="card-block px-2">
+          <h4 class="card-title">{{property.firstLineAddress}}</h4>
+          <p class="card-text">{{property.secondLineAddress}} -  {{property.postcode}}</p>
+         <a [routerLink]="['/clients', property.landlord.id]">Landlord - {{property.landlord.firstName}} {{property.landlord.lastName}}</a><br>
+          <a [routerLink]="['/rooms', property.id]" class="btn btn-primary">View Rooms</a>
+
+      </div>
+      <div class="w-100"></div>
+      <div class="card-footer w-100 text-muted">
+      </div>
+
+  </div>
+
+  <agm-map *ngIf="property" [zoom]="16" [latitude]="property.latitude" [longitude]="property.longitude">
+    <agm-marker [latitude]="property.latitude" [longitude]="property.longitude"></agm-marker>
+    <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
+  </agm-map>
+  <a class="btn btn-primary" *ngIf="geolocationPosition" (click)="getDirection(geolocationPosition)">View Rooms</a>

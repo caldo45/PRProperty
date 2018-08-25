@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="card" *ngFor="let room of rooms">
+    <div class="row ">
+      <div class="col-md-2">
+          <img src="https://1203179244.rsc.cdn77.org/hd/p/517647/10924875.jpg"  style="max-width: 100%; height: auto; margin-bottom: 5px;">
+        </div>
+        <div class="col-md-8 px-3">
+          <div class="card-block px-3">
+            <h4 class="card-title"> {{room.roomName}}</h4>
+              <div *ngIf="(room.activeContract == 1)">
+                     <div class="card-text" ><p>Current Tenant: {{room.contract.client.firstName}} {{room.contract.client.lastName}} </p>
+                      <p>Contract Ends on {{room.contract.dateTo | date: 'dd/MM/yyyy'}} </p></div>
+                  </div>
+              <div *ngIf="(room.activeContract !== 1)">
+                    <div class="card-text" ><p>The Room is Currently Unoccupied </p></div>
+                  </div>
+            <a [routerLink]="['/room', room.id]" class="btn btn-primary">View Room</a>
+            </div>
+        </div>
+      </div>
+    </div>
+   
+    <div *ngIf="rooms">
+    <div *ngIf="rooms.length === 0">No Rooms Have Been Added for this Property</div>
+  </div>
+  <div> 
+  </div>
+  <a *ngIf="property" [routerLink]="['/addRoom', property.id]" class="btn btn-primary">Add Rooms</a></div>

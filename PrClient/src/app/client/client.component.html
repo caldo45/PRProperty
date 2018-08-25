@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="card" *ngIf="client">
+    <div class="row ">
+      <div class="col-md-2">
+          <img src="http://www.xdcam-user.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"  style="max-width: 100%; height: auto; margin-bottom: 5px;">
+        </div>
+        <div class="col-md-8 px-3">
+          <div class="card-block px-3">
+            <h4 class="card-title">{{client.firstName}} {{client.lastName}}</h4>
+            <p class="card-text"> {{client.phone}}</p>
+            <div *ngIf="client.clientTypeId === 2"> Properties Owned:
+              <a *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
+            </div>
+            <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-primary">Add / Update Client Image</a>
+            <div *ngIf="client.clientTypeId === 1">
+              <div *ngIf="activeContract">
+                {{activeContract.roomId}}
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+  </div>

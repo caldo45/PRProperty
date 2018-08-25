@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="card">
+      <h5 *ngIf="client">Upload File for Client - {{client.firstName}}</h5>
+      <input #file type="file" multiple (change)="upload(file.files, path, imgPath, id)" />
+      <br/>
+      <img *ngIf="imgPath" [src]='imgPath' style="width: 200px; height: 200px;">
+    </div>
+  </div>
+  
+  
