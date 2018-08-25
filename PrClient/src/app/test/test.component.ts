@@ -59,19 +59,21 @@ export class TestComponent implements OnInit {
 
   onChange(files: File[], payments) {
     if (files[0]) {
+      this.payments = [];
       console.log(files[0]);
       this.papa.parse(files[0], {
         header: true,
         skipEmptyLines: true,
         complete: (result, file) => {
           console.table(result.data);
+          this.payments = result.data as Payment[];
 
-          for (let i = 0; i < result.data.length; i++) {
-            const row = result.data[i] as Payment;
-            if (row) {
-              this.payments.push(row);
-            }
-          }
+          // for (let i = 0; i < result.data.length; i++) {
+          //   const payment = result.data[i] as Payment;
+          //   if (payment) {
+          //     this.payments.push(payment);
+          //   }
+          // }
         }
       });
     }
