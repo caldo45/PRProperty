@@ -13,11 +13,6 @@ namespace PrApiTest.Model
         [Column("payment_id")]
         public int Id { get; set; }
 
-        [Column("tenant_id")]
-        public String ClientId { get; set; }
-
-        public virtual Client Client { get; set; }
-
         [Column("date_recieved")]
         public String DateRecieved { get; set; }
 

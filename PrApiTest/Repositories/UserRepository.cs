@@ -269,8 +269,7 @@ namespace PrApiTest.Repositories
 
         public IEnumerable<Payment> GetPayments()
         {
-            var payments = _db.Payments
-                .Include(c => c.Client);
+            var payments = _db.Payments;
             return payments;
         }
 

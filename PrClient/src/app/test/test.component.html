@@ -9,12 +9,9 @@
   {{message}}
 </span>
 
-<input #fileParse type="file" (change)="parse(fileParse)" />
-<a class="btn btn-primary" (click)="parseFile()">Parse</a>
-<input #fileParse2 type="file" (change)="parseFile(fileParse)" />
 
 <input type="file" name="files" class="form-control" 
-                     #uploads  (change)="onChange(uploads.files)" multiple
-                     value="process"/>
+#uploads  (change)="onChange(uploads.files)" multiple
+ value="process"/>
 
 <div>
