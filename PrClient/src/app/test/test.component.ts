@@ -15,24 +15,22 @@ import { Payment } from '../models/payment';
 
 export class TestComponent implements OnInit {
 
-  ngOnInit(): void {
-
-    
-  }
   public progress: number;
   public message: string;
   csvFile: File;
-  payments: Payment[];
-  dataList : Payment[];
+  payments: Payment[] = [];
+  dataList: Payment[];
   path: String;
 
-  
-  
+  ngOnInit(): void {
+  }
+
   constructor(private http: HttpClient, private papa: Papa, private fileService: FileService, ) { }
 
   upload(files, path) {
-    if (files.length === 0)
+    if (files.length === 0) {
       return;
+    }
     console.log(files);
 
 
@@ -40,14 +38,15 @@ export class TestComponent implements OnInit {
 
     formData.append('propertyId', 'john');
 
-    for (let file of files)
+    for (const file of files) {
       formData.append(file.name, file);
+    }
 
     this.fileService.uploadFiles(formData)
       .subscribe(response => {
         path = response;
         console.log(path);
-      })
+      });
 
     // this.http.request(uploadReq).subscribe(event => {
     //   if (event.type === HttpEventType.UploadProgress)
@@ -58,22 +57,23 @@ export class TestComponent implements OnInit {
   }
 
 
-  onChange(files: File[], payments){
-    
-    if(files[0]){
+  onChange(files: File[], payments) {
+    if (files[0]) {
       console.log(files[0]);
       this.papa.parse(files[0], {
-        header: false,
+        header: true,
         skipEmptyLines: true,
-        complete: (result,file) => {
-          console.log(result.data);
-          this.dataList = result.data;
-          this.payments = this.dataList;
-          console.log(payments); 
+        complete: (result, file) => {
+          console.table(result.data);
+
+          for (let i = 0; i < result.data.length; i++) {
+            const row = result.data[i] as Payment;
+            if (row) {
+              this.payments.push(row);
+            }
+          }
         }
       });
     }
   }
-  
-
 }
