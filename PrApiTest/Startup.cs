@@ -39,7 +39,7 @@ namespace PrApiTest
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = "https://cmcgrathweb.eu.auth0.com";
+                options.Authority = "https://cmcgrathweb.eu.auth0.com/";
                 options.Audience = "PrPropertiesAPI";
                 
             });
