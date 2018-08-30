@@ -27,11 +27,6 @@ namespace PrApiTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserDbContext>(options => { options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")); });
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddCors();
-            services.AddMvc();
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,8 +36,13 @@ namespace PrApiTest
             {
                 options.Authority = "https://cmcgrathweb.eu.auth0.com/";
                 options.Audience = "PrPropertiesAPI";
-                
+
             });
+
+            services.AddDbContext<UserDbContext>(options => { options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")); });
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddCors();
+            services.AddMvc();
         }
     
 
@@ -60,10 +60,10 @@ namespace PrApiTest
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
             });
-           
+
+            app.UseAuthentication();
             app.UseMvc();
             app.UseStaticFiles();
-            app.UseAuthentication();
         }
     }
 }
