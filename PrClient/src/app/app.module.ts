@@ -32,6 +32,8 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from './services/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 
 
 
@@ -57,7 +59,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AddPropertyImageComponent,
     PaymentsComponent,
     AddPaymentComponent,
-    HomeComponent
+    HomeComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
   ],
-  providers: [PropertyService],
+  providers: [PropertyService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

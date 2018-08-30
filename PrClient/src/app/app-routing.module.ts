@@ -21,6 +21,7 @@ import { Payment } from './models/payment';
 import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
+import { CallbackComponent } from './callback/callback.component';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'addPayment', component: AddPaymentComponent},
   { path: 'home', component: HomeComponent},
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  { path: 'callback', component: CallbackComponent}
  // { path: '**', component: PageNotFoundComponent }
 ]
 

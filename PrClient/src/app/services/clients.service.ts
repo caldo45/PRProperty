@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Property } from '../models/property';
 import { Client } from '../models/client';
 import { ClientType } from '../models/clientType';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientsService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private authService: AuthService) { }
 
   getClients(): Observable<Client[]>{
     let url = 'http://localhost:54183/api/user';
@@ -28,8 +29,14 @@ export class ClientsService {
   }
 
   getClientTypes(): Observable<ClientType[]>{
+  //  console.log(localStorage.getItem('access_token'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url = 'http://localhost:54183/api/clientTypes';
-    return this.http.get<ClientType[]>(url);
+    return this.http.get<ClientType[]>(url, httpOptions);
   }
 
   postClient(client: Client, uploadSuccess: number){

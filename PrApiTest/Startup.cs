@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,20 @@ namespace PrApiTest
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddCors();
             services.AddMvc();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://cmcgrathweb.eu.auth0.com";
+                options.Audience = "PrPropertiesAPI";
+                
+            });
         }
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -49,7 +63,7 @@ namespace PrApiTest
            
             app.UseMvc();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
         }
     }
 }
