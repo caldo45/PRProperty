@@ -23,6 +23,9 @@ namespace PrApiTest.Database
         public DbSet<Payment> Payments { get; set; }
         public DbSet<LeaseNotification> LeaseNotifications { get; set; }
         public DbSet<ContractNotification> ContractNotifications { get; set; }
+        public DbSet<RoomImage> RoomImages { get; set; }
+        public DbSet<PropertyImage> PropertyImages { get; set; }
+        public DbSet<Lease> Lease { get; set; }
 
         public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
         {

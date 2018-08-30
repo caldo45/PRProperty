@@ -8,5 +8,6 @@ export class Room {
     property: Property;
     contract: Contract;
     activeContract: number;
+    imagePath: string;
 
 }

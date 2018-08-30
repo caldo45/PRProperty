@@ -1,26 +1,28 @@
-<div class="container">
-  <div class="card" *ngIf="client">
-    <div class="row ">
-      <div class="col-md-2">
-          <img src="http://www.xdcam-user.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"  style="max-width: 100%; height: auto; margin-bottom: 5px;">
-        </div>
-        <div class="col-md-8 px-3">
-          <div class="card-block px-3">
-            <h4 class="card-title">{{client.firstName}} {{client.lastName}}</h4>
-            <p class="card-text"> {{client.phone}}</p>
-            <div *ngIf="client.clientTypeId === 2"> Properties Owned:
-              <a *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
-            </div>
-            <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-primary">Add / Update Client Image</a>
-            <div *ngIf="client.clientTypeId === 1">
-              <div *ngIf="activeContract">
-                {{activeContract.roomId}}
-              </div>
+<div class="container">   
+  <div class="card flex-row flex-wrap" *ngIf="client">
+      <div class="card-header border-0">
+    <img class="client-image" src="{{client.imagePath}}" alt="Card image cap">
+    </div>
+        <div class="card-block px-2">
+              <p class="card-title field-name">Client Name</p>
+              <div class="card-title">{{client.firstName}} {{client.lastName}}</div>
+                <p class="card-title field-name">Phone</p>
+                <p class="card-text"> {{client.phone}}</p>
+                <p class="card-title field-name">Email</p>
+                <p class="card-text"> {{client.email}}</p>
+                <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-green">Add / Update Client Image</a>
+                <a *ngIf="client.clientTypeId === 1" [routerLink]="['/addContract/', client.id]" class="btn btn-green">Add Contract For {{client.firstName}}</a>
             </div>
           </div>
-          
-        </div>
+          <div *ngIf="client">
+              <div *ngIf="client.clientTypeId === 2">Properties Owned
+                <a class="rounded btn-custom-link" *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
+              </div>
+              <div *ngIf="activeContract">Contract Information           
+                  <p class="card-title field-name">Contract Start Date</p>
+                  <p class="card-text"> {{activeContract.dateFrom | date: 'dd/MM/yyyy'}}</p>
+                </div>
+              </div>
 
-      </div>
-    </div>
+
   </div>

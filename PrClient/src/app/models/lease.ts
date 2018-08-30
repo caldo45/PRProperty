@@ -8,7 +8,7 @@ export class Lease{
     dateFrom: Date;
     dateTo: Date;
     monthlyAmount: number;
-    tenantId: number;
+    landlordId: number;
     tenant: Client;
     
 }

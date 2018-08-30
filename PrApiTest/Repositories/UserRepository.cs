@@ -10,6 +10,8 @@ using System.Diagnostics;
 using PrApiTest.Extensions;
 using System.Net;
 using System.Net.Http;
+using Microsoft.EntityFrameworkCore.Migrations.Design;
+using Remotion.Linq.Clauses;
 
 namespace PrApiTest.Repositories
 {
@@ -43,10 +45,34 @@ namespace PrApiTest.Repositories
             return property;
         }
 
+        public IEnumerable<PropertyImage> GetPropertyImages(int propertyId)
+        {
+            var propertyImages = _db.PropertyImages.Include(p => p.Property).Where(p => p.PropertyId == propertyId);
+            return propertyImages;
+        }
+
+        public PropertyImage GetPropertyImage(int propertyId)
+        {
+            var propertyImage = _db.PropertyImages.FirstOrDefault(p => p.PropertyId == propertyId);
+            return propertyImage;
+        }
+
         public Client GetUser(int id)
         {
             var user = _db.Users.FirstOrDefault(b => b.Id == id);
             return user;
+        }
+
+        public string DeletePropertyImage(PropertyImage image)
+        {
+            string fileName = image.ImagePath;
+            if (System.IO.File.Exists(fileName))
+            {
+                System.IO.File.Delete(fileName);
+                _db.PropertyImages.Remove(image);
+                return "File Deleted";
+            }
+            return "File Could Not Be Found";
         }
 
         public Client AddUserImage(int id, string path)
@@ -125,8 +151,16 @@ namespace PrApiTest.Repositories
 
         public Room GetRoom(int id)
         {
-            var room = _db.Rooms.FirstOrDefault(b => b.Id == id);
+            var room = _db.Rooms.Include(r => r.Property)
+                    .FirstOrDefault(b => b.Id == id);
             return room;
+        }
+
+        public IEnumerable<RoomImage> GetRoomImages(int roomId)
+        {
+            var roomImages = _db.RoomImages.Include(r => r.Room)
+                                    .Where(r => r.RoomId == roomId);
+            return roomImages;
         }
 
         public IEnumerable<Room> GetRoomsByProperty(int propertyId)
@@ -142,6 +176,41 @@ namespace PrApiTest.Repositories
             return room;
         }
 
+        public RoomImage AddRoomImage(int roomId, string path)
+        {
+            RoomImage roomImage = new RoomImage();
+            roomImage.RoomId = roomId;
+            roomImage.ImagePath = path;
+            _db.RoomImages.Add(roomImage);
+            _db.SaveChanges();
+            return roomImage;
+        }
+
+        public PropertyImage AddPropertyImage(int propertyId, string path)
+        {
+            PropertyImage propertyImage = new PropertyImage();
+            propertyImage.PropertyId = propertyId;
+            propertyImage.ImagePath = path;
+            _db.PropertyImages.Add(propertyImage);
+            _db.SaveChanges();
+            return propertyImage;
+        }
+
+        public Contract GetContractByPaymentReference(string paymentReference)
+        {
+            var contract = _db.Contracts.Include(r => r.Client)
+                .FirstOrDefault(r => r.PaymentReference == paymentReference);
+            return contract;
+        }
+
+        public Payment[] AddPayments(Payment[] payments)
+        {
+            Payment[] paymentsArray = payments;
+
+            _db.Add(payments);
+            _db.SaveChanges();
+            return paymentsArray;
+        }
         
         public IEnumerable<Contract> GetContracts()
         {
@@ -156,7 +225,12 @@ namespace PrApiTest.Repositories
 
         public Contract GetContract(int id)
         {
-            var contract = _db.Contracts.FirstOrDefault(b => b.Id == id);
+            var contract = _db.Contracts
+                .Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(r => r.Room.Property).
+                FirstOrDefault(b => b.Id == id);
             return contract; 
         }
 
@@ -170,6 +244,32 @@ namespace PrApiTest.Repositories
                                                      && (r.DateTo.CompareTo(date) >= 0)) ;
             return contract;
         }
+
+        public Lease GetActiveLeaseByProperty(int propertyId)
+        {
+            DateTime date = DateTime.Now;
+            var lease = _db.Lease.Include(l => l.Property)
+                .FirstOrDefault(r => r.PropertyId == propertyId
+                                     && (r.DateFrom.CompareTo(date) <= 0)
+                                     && (r.DateTo.CompareTo(date) >= 0));
+            return lease;
+        }
+
+        public IEnumerable<Lease> GetLeasesByProperty(int propertyId)
+        {
+            var leases = _db.Lease.Include(l => l.Property)
+                .Where(r => r.PropertyId == propertyId);
+            return leases;
+        }
+
+        public IEnumerable<Lease> GetActiveLeases()
+        {
+            DateTime date = DateTime.Now;
+            var leases = _db.Lease.Include(l => l.Property).Where(l => l.DateFrom.CompareTo(date) <= 0 && l.DateTo.CompareTo(date) >= 0);
+            return leases;
+        }
+
+
 
         public Contract GetActiveContractByClient(int tenantId)
         {
@@ -194,27 +294,17 @@ namespace PrApiTest.Repositories
               return contract;
           }
 
-        /*  public IEnumerable<Contract> GetActiveContracts(Room[] rooms)
-          {
-              DateTime date = DateTime.Now;
-              List<Contract> activeContracts = new List<Contract>();
-              foreach (Room room in rooms)
-              {
-                  activeContracts.Add
-                    (_db.Contracts.Where(r => r.RoomId == room.Id
-                      && (r.DateFrom.CompareTo(date) <= 0)
-                      && (r.DateTo.CompareTo(date) >= 0)))
-                 ;
-                  return activeContracts;
-              }
-          }*/
 
         public Contract AddContract(Contract contract)
         {
             DateTime date = DateTime.Now;
-           var overlapExists = _db.Contracts.Any(c => c.RoomId == contract.RoomId
+           var overlapRoomExists = _db.Contracts.Any(c => c.RoomId == contract.RoomId
                                           && c.Overlaps(contract));
-            if (!overlapExists)
+            var overlapTenantExists = _db.Contracts.Any(c => c.ClientId == contract.ClientId
+                                                             && c.Overlaps(contract));
+          //  var lease = CheckContractValidWithLease(contract);
+
+            if (!overlapRoomExists && !overlapTenantExists)
             {
                 _db.Contracts.Add(contract);
                 _db.SaveChanges();
@@ -222,10 +312,15 @@ namespace PrApiTest.Repositories
             }
             else
             {
-               // throw new HttpResponseException("Contract Cannot Overlap With Another for Same Room", HttpStatusCode.BadRequest);
+               throw new HttpRequestException("Contract Overlaps With Another for this Room Or Client, Please Amend Dates");
             }
-            return null;
 
+        }
+
+        public Lease CheckContractValidWithLease(Contract contract)
+        {
+            var lease = _db.Lease.FirstOrDefault(l => l.PropertyId == contract.Room.PropertyId && l.DateFrom <= contract.DateFrom && l.DateTo >= contract.DateTo);
+            return lease;
         }
 
         public IEnumerable<Lease> GetLeases()
@@ -267,16 +362,35 @@ namespace PrApiTest.Repositories
             return paymentType;
         }
 
-        public IEnumerable<Payment> GetPayments()
+        public IEnumerable<Payment> GetPaymentsByUser(int userId)
         {
-            var payments = _db.Payments;
+            var payments = _db.Payments.Include(p => p.Contract)
+                                         .Include(p => p.Contract.Room)
+                                        .Include(p => p.Contract.Client)
+                                        
+                                        .Include(p => p.Contract.Room.Property)
+                .Where(b => b.Contract.ClientId == userId);
             return payments;
         }
 
         public Payment GetPayment(int id)
         {
-            var payment = _db.Payments.FirstOrDefault(b => b.Id == id);
+            var payment = _db.Payments.Include(p => p.Contract)
+                .Include(p => p.Contract.Client)
+                .Include(p => p.Contract.Room)
+                .Include(p => p.Contract.Room.Property)
+                .FirstOrDefault(b => b.Contract.ClientId == id);
             return payment;
+        }
+
+        public IEnumerable<Payment> GetPayments()
+        {
+            var payments = _db.Payments.Include(p => p.Contract)
+                .Include(p => p.Contract.Client)
+                .Include(p => p.Contract.Room)
+                .Include(p => p.Contract.Room.Property);
+            return payments;
+
         }
 
         public Payment AddPayment(Payment payment)
@@ -284,6 +398,64 @@ namespace PrApiTest.Repositories
             _db.Payments.Add(payment);
             _db.SaveChanges();
             return payment;
+        }
+
+        public List<String> CheckValidPayments(Payment[] payments)
+        {
+            List<String> badReferences = new List<String>();
+            foreach (Payment payment in payments)
+            {
+                var contract = _db.Contracts.FirstOrDefault(c => c.PaymentReference == payment.Reference);
+                if (contract == null)
+                {
+                    badReferences.Add(payment.Reference);
+                }
+            }
+
+            return badReferences;
+            
+        }
+
+
+        public IEnumerable<Contract> AddContractNotifications(int days)
+        {
+            DateTime date = DateTime.Now.AddDays(+days);
+            int exists = 0;
+            var contracts = _db.Contracts.Where(c => c.DateTo <= date);
+            var existingNotifications = _db.ContractNotifications;
+            foreach (Contract contract in contracts)
+            {
+                ContractNotification notification = new ContractNotification();
+                notification.ContractId = contract.Id;
+                switch (days)
+                {
+                    case 30:
+                        notification.ContractNotificationTypeId = 1;
+                        break;
+                    case 60:
+                        notification.ContractNotificationTypeId = 2;
+                        break;
+                    case 90:
+                        notification.ContractNotificationTypeId = 3;
+                        break;
+                }
+
+                foreach (ContractNotification existingNotification in existingNotifications)
+                {
+                    if (notification.ContractId == existingNotification.ContractId &&
+                        notification.ContractNotificationTypeId == existingNotification.ContractNotificationTypeId)
+                    {
+                        exists = 1;
+                    }
+                }
+
+                if (exists == 0)
+                {
+                    _db.ContractNotifications.Add(notification);
+                }
+            }
+            _db.SaveChanges();
+            return contracts;
         }
 
         public IEnumerable<LeaseNotification> GetLeaseNotifications()

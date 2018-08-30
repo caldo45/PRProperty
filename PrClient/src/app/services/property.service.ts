@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property';
+import { PropertyImage } from '../models/propertyImage';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,16 @@ export class PropertyService {
     return this.http.get<Property[]>(url);
   }
 
+  getPropertyImages(propertyId: number): Observable<PropertyImage[]>{
+    let url = 'http://localhost:54183/api/properties/images/'+propertyId;
+    return this.http.get<PropertyImage[]>(url);
+  }
+
+  getPropertyImage(propertyId: number): Observable<PropertyImage>{
+    let url = 'http://localhost:54183/api/properties/image/'+propertyId;
+    return this.http.get<PropertyImage>(url);
+  }
+
   postProperty(property: Property){
     return this.http.post('http://localhost:54183/api/properties',property)
       .subscribe( res => 
@@ -34,5 +45,10 @@ export class PropertyService {
         console.log("Error Occured");
        }
        );
+    }
+
+    deletePropertyImage(image: PropertyImage){
+      return this.http.post('http://localhost:54183/api/properties/deleteImage',image)
+        .subscribe(response => console.log(response));
     }
 }

@@ -49,5 +49,26 @@ namespace PrApiTest.Controllers
             return StatusCode(201, added);
         }
 
+        [HttpGet("images/{propertyId}")]
+        public IActionResult GetImagesByProperty(int propertyId)
+        {
+            var propertyImages = _repository.GetPropertyImages(propertyId);
+            return Ok(propertyImages);
+        }
+
+        [HttpGet("image/{propertyId}")]
+        public IActionResult GetImageByProperty(int propertyId)
+        {
+            var propertyImages = _repository.GetPropertyImages(propertyId);
+            return Ok(propertyImages);
+        }
+
+        [HttpPost("deleteImage")]
+        public IActionResult Post([FromBody]PropertyImage image)
+        {
+            var deleted = _repository.DeletePropertyImage(image);
+            return StatusCode(201, deleted);
+        }
+
     }
 }

@@ -20,13 +20,15 @@ export class AddClientPhotoComponent implements OnInit {
   id: number;
   client: Client;
   imgPath: string;
-  uploadImage: uploadClientImage;
   path;
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.clientService.getClient(this.id)
-    .subscribe(response => this.client = response);
+    .subscribe(response => {
+      this.client = response;
+      this.imgPath = this.client.imagePath;
+      console.log(this.imgPath)});
   }
 
   upload(files, path, imgPath, id) {
@@ -35,10 +37,9 @@ export class AddClientPhotoComponent implements OnInit {
     console.log(files);
     console.log(this.id);
 
-
     const formData = new FormData();
 
-    formData.append('clientId', id);
+    formData.append('assetId', id);
     formData.append('imageType', 'client');
     console.log(this.id);
 
@@ -50,7 +51,6 @@ export class AddClientPhotoComponent implements OnInit {
         path = response;
         console.log(path);
         this.imgPath = path;
-        console.log(this.imgPath)
       })
     }
   

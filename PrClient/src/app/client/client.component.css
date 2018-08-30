@@ -1,0 +1,16 @@
+.client-image{
+    max-width: 500px;
+    max-height:300px;
+    height: auto;
+  object-fit: cover;
+    align-content: center; 
+}
+
+@media all and (max-width: 500px) {
+    .client-image{
+        width: 300px;
+        height:200px;
+        align-content: center;
+        object-fit: scale-down;
+    }
+}

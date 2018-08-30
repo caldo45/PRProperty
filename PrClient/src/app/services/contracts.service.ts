@@ -3,6 +3,7 @@ import { Contract } from '../models/contract';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PaymentType } from '../models/paymentType';
+import { Payment } from '../models/payment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +28,25 @@ export class ContractsService {
   }
 
   getActiveContractByClient(clientId: number): Observable<Contract>{
-    let url = 'http://localhost:54183/api/contract/activeByProperty'+clientId;
+    let url = 'http://localhost:54183/api/contract/activeByUser'+clientId;
     return this.http.get<Contract>(url);
   }
 
   getPaymentTypes(): Observable<PaymentType[]>{
     let url = 'http://localhost:54183/api/paymentTypes';
     return this.http.get<PaymentType[]>(url);
+  }
+
+  postPayments(payments: Payment[]){
+    return this.http.post('http://localhost:54183/api/contract/payments', payments)
+      .subscribe( res =>
+        {console.log(res);})
+      
+  }
+
+  getPayments(){
+    let url = 'http://localhost:54183/api/payments'
+    return this.http.get<Payment[]>(url); 
   }
 
   postContract(contract: Contract){

@@ -27,6 +27,12 @@ import { AgmDirectionModule } from 'agm-direction';
 import { PapaParseModule } from 'ngx-papaparse';
 import { AddClientPhotoComponent } from './add-client-photo/add-client-photo.component';
 import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component';
+import { AddPropertyImageComponent } from './add-property-image/add-property-image.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { AddPaymentComponent } from './add-payment/add-payment.component';
+import { HomeComponent } from './home/home.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
@@ -47,7 +53,11 @@ import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component
     AddContractComponent,
     MapTestComponent,
     AddClientPhotoComponent,
-    AddRoomPhotoComponent
+    AddRoomPhotoComponent,
+    AddPropertyImageComponent,
+    PaymentsComponent,
+    AddPaymentComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +68,8 @@ import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component
       apiKey: 'AIzaSyBIJj57SZFm_FgT55Uqwq-tVZjMyM5KGw4'
     }),
     AgmDirectionModule,
-    PapaParseModule
+    PapaParseModule,
+    NgbModule
 
 
   ],

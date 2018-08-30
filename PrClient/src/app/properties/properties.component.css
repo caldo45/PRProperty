@@ -10,3 +10,35 @@
  .card{
      margin-bottom: 10px;
  }
+
+ .btn-green{
+    background-color: #aad8cd;
+    font-size: 10pt;
+    display: inline-block;
+    border:0px;
+
+}
+
+.list-photo{
+    max-width: 100%; 
+    height: auto; 
+}
+
+
+ @media all and (max-width: 500px) {
+    .card-title-custom{
+        font-size: 10pt;
+    }
+
+    .card-text-custom{
+        font-size: 9pt;
+    }
+
+    .list-photo{
+        width: auto; 
+        height: 100px; 
+        object-fit: cover;
+    }
+
+
+}

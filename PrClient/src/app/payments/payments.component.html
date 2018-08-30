@@ -1,0 +1,23 @@
+<div class="container" *ngIf="payments">
+    <table *ngIf="payments.length > 0" class="table table-striped table-bordered mt-5">
+        <thead>
+          <tr>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+            <th scope="col">Reference</th>
+            <th scope="col">Tenant Name</th>
+            <th scope="col">Property Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of payments">
+            <th scope="row">{{payment.amount}}</th>
+            <td>{{payment.date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{payment.reference}}</td>
+            <td>{{payment.contract.client.firstName}} {{payment.contract.client.lastName}}</td>
+            <td>{{payment.contract.room.property.firstLineAddress}}</td>
+          </tr>
+        </tbody>
+        <button class='primary' (click)="postPayments(payments)">Add Payments to Database</button>
+      </table>
+</div>

@@ -16,7 +16,7 @@ using System.Web;
 namespace PrApiTest.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController: Controller
+    public class UserController : Controller
     {
         private readonly IUserRepository _repository;
         private IHostingEnvironment _hostingEnvironment;
@@ -50,53 +50,11 @@ namespace PrApiTest.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Client user)
+        public IActionResult Post([FromBody] Client user)
         {
             var added = _repository.AddUser(user);
             return StatusCode(201, added);
         }
 
-        [HttpPost("UploadFile"), DisableRequestSizeLimit]
-        public ActionResult UploadFile()
-        {
-            try
-            {
-                var file = Request.Form.Files[0];
-                var clientId = HttpContext.Request.Form["clientId"];
-                var imageTypeFolder = HttpContext.Request.Form["imageType"];
-                string rootFolderName = "Uploads";
-                string imageFolder = clientId;
-                string fullPath = null;
-                string apiPath = null;
-                string webRootPath = _hostingEnvironment.WebRootPath;
-                string newPath = Path.Combine(webRootPath, rootFolderName, imageTypeFolder, imageFolder);
-                if (!Directory.Exists(newPath))
-                {
-                    Directory.CreateDirectory(newPath);
-                }
-                if (file.Length > 0)
-                {
-                    string uploadFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    string ext = Path.GetExtension(uploadFileName);
-
-                    string fileName = clientId+ext;
-                    string localHost = "http:\\\\localhost:54183";
-                    fullPath = Path.Combine(newPath, fileName);
-                    apiPath = Path.Combine(localHost, rootFolderName, imageTypeFolder, imageFolder, fileName);
-                    int clientIdInt = Int32.Parse(clientId);
-                    _repository.AddUserImage(clientIdInt, apiPath);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-                }
-                return Json(apiPath);
-            }
-            catch (System.Exception ex)
-            {
-                return Json("Upload Failed: " + ex.Message);
-            }
-        }
     }
-
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/c
 import { FileService } from '../services/file.service';
 import { Papa } from 'ngx-papaparse';
 import { Payment } from '../models/payment';
+import { ContractsService } from '../services/contracts.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class TestComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(private http: HttpClient, private papa: Papa, private fileService: FileService, ) { }
+  constructor(private http: HttpClient, private papa: Papa, private fileService: FileService, private contractService: ContractsService ) { }
 
   upload(files, path) {
     if (files.length === 0) {
@@ -67,15 +68,13 @@ export class TestComponent implements OnInit {
         complete: (result, file) => {
           console.table(result.data);
           this.payments = result.data as Payment[];
-
-          // for (let i = 0; i < result.data.length; i++) {
-          //   const payment = result.data[i] as Payment;
-          //   if (payment) {
-          //     this.payments.push(payment);
-          //   }
-          // }
         }
       });
     }
+  }
+
+  postPayments(payments){
+    this.contractService.postPayments(payments);
+    console.log(payments);
   }
 }
