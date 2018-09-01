@@ -6,6 +6,7 @@ import { Client } from '../models/client';
 import { ClientsService } from '../services/clients.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room';
+import { RoomImage } from '../models/roomImage';
 
 @Component({
   selector: 'app-add-room-photo',
@@ -20,22 +21,32 @@ export class AddRoomPhotoComponent implements OnInit {
   public message: string;
   id: number;
   room: Room;
-  imgPath: string;
-  imgPaths: string[];
+  roomImages: RoomImage[];
+  imgPaths: string[] = [];
   path;
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
+    this.roomService.getRoomPhotos(this.id)
+      .subscribe(response => { this.roomImages = response;
+      console.log(this.roomImages)
+      });
+
     this.roomService.getRoom(this.id)
-    .subscribe(response => this.room = response);
+    .subscribe(response => {
+      this.room = response;
+      console.log(this.room);
+    });
   }
 
-  upload(files, path, imgPath, id, imgPaths) {
+  upload(files, path, imgPaths, id) {
     if (files.length === 0)
       return;
+
     const formData = new FormData();
 
-    formData.append('roomId', id);
+    formData.append('assetId', id);
+    formData.append('imageType', 'room');
     console.log(this.id);
 
     for (let file of files)
@@ -44,10 +55,9 @@ export class AddRoomPhotoComponent implements OnInit {
     this.fileService.uploadFiles(formData)
       .subscribe(response => {
         path = response;
-        console.log(path);
-        this.imgPath = path;
-        imgPaths.add(this.imgPath);
-        console.log(this.imgPaths);
+        this.roomService.getRoomPhotos(this.id)
+        .subscribe(response => this.roomImages = response);
+
       })
     }
   

@@ -35,6 +35,13 @@ namespace PrApiTest.Controllers
             return contract;
         }
 
+        [HttpGet("byPaymentReference{paymentRefernce}")]
+        public Contract GetByPaymentReference(string paymentReference)
+        {
+            var contract = _repository.GetContractByPaymentReference(paymentReference);
+            return contract;
+        }
+
         [HttpGet("activeByUser{clientId}")]
         public Contract GetActiveContractByClient(int clientId)
         {
@@ -63,5 +70,24 @@ namespace PrApiTest.Controllers
             var added = _repository.AddContract(contract);
             return StatusCode(201, added);
         }
-    }
-}
+
+        [HttpPost("payments")]
+        public IActionResult Post([FromBody]Payment[] payments)
+        {
+            List<String> badReferences = new List<string>(_repository.CheckValidPayments(payments));
+            if (badReferences.Count >= 1)
+            {
+                return Json(badReferences);
+            }
+            foreach (Payment payment in payments)
+                {
+                    var contract = _repository.GetContractByPaymentReference(payment.Reference);
+                        payment.ContractId = contract.Id;
+                        var added = _repository.AddPayment(payment);  
+                    }
+                return Json(201);
+            }
+        } 
+   }
+    
+

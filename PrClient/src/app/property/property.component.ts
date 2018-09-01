@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClientsService } from '../services/clients.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room';
+import { PropertyImage } from '../models/propertyImage';
 
 @Component({
   selector: 'app-property',
@@ -20,6 +21,7 @@ export class PropertyComponent implements OnInit {
   markerLatitude: number;
   markerLongitude: number;
   geolocationPosition: {};
+  images: PropertyImage[];
 
 
     dir = undefined;
@@ -31,7 +33,12 @@ export class PropertyComponent implements OnInit {
   ngOnInit() {
     let id = +this.route.snapshot.paramMap.get('id');
     this.propertyService.getProperty(id)
-    .subscribe(response => this.property = response);
+    .subscribe(response => {
+        this.property = response;
+        this.propertyService.getPropertyImages(id)
+            .subscribe(response => this.images = response)
+    });
+
     this.roomService.getRoomsByProperty(id)
     .subscribe(response => this.rooms = response);
     if (window.navigator && window.navigator.geolocation) {

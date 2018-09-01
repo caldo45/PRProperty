@@ -1,0 +1,60 @@
+<div class="container list-object">
+  <form #addPropertyForm="ngForm" *ngIf="property">
+
+    <div class="form-group" [class.has-error]="firstLineAddress.invalid && firstLineAddress.touched">
+      <label for="firstLineAddress" class="control-label field-name control-label" >First Line Address</label>
+      <input #firstLineAddress="ngModel" required type="string" class="form-control" name="firstLineAddress" id="firstLineAddress" [(ngModel)]="property.firstLineAddress">
+      <div *ngIf="firstLineAddress.invalid && firstLineAddress.touched">
+          First Line Address is Required
+        </div>
+    </div>
+
+    <div class="form-group" [class.has-error]="secondLineAddress.invalid && secondLineAddress.touched">
+        <label for="secondLineAddress" class="control-label field-name control-label" >Second Line Address</label>
+        <input #secondLineAddress="ngModel" required type="string" class="form-control" name="secondLineAddress" id="secondLineAddress" [(ngModel)]="property.secondLineAddress">
+        <div *ngIf="secondLineAddress.invalid && secondLineAddress.touched">
+          Second Line Address is Required
+        </div>
+      </div>
+
+      <div class="form-group" [class.has-error]="country.invalid && country.touched">
+        <label for="country" class="control-label field-name control-label" >Country</label>
+        <input #country="ngModel" required type="string" class="form-control" name="country" id="country" [(ngModel)]="property.country">
+        <div *ngIf="country.invalid && country.touched">
+            Country is Required
+          </div>
+      </div>
+
+      <div class="form-group" [class.has-error]="city.invalid && city.touched">
+        <label for="city" class="control-label field-name control-label" >City</label>
+        <input #city="ngModel" required type="string" class="form-control" name="city" id="city" [(ngModel)]="property.city">
+        <div *ngIf="city.invalid && city.touched">
+            City is Required
+          </div>
+      </div>
+
+      <div class="form-group" [class.has-error]="postcode.invalid && postcode.touched">
+          <label for="postcode" class="control-label field-name control-label" >Postcode</label>
+          <input #postcode="ngModel" required type="string" style="text-transform:uppercase" maxlength="7" class="form-control" name="postcode" id="postcode" [(ngModel)]="property.postcode" placeholder="">
+          <div *ngIf="postcode.invalid && postcode.touched">
+             Postcode is Required
+            </div>
+        </div>
+
+
+          <div class="form-group">
+              <label for="landlordId" class="field-name" >Landlord</label>
+              <select class="form-control" input type="number" required  id="landlordId" name="landlordId" [(ngModel)]="property.landlordId">
+              <option *ngFor="let landlord of landlords" [value]=landlord.id> {{landlord.firstName}} {{landlord.lastName}}</option>
+            </select>
+            </div>
+          
+            <div class="form-group">
+              <agm-map [zoom]="13" [latitude]="property.latitude" [longitude]="property.longitude" (mapClick)="onChoseLocation($event)">
+                <agm-marker [latitude]="markerLatitude" [longitude]="markerLongitude"></agm-marker>
+              </agm-map>
+            </div>
+
+    <button type="submit" class="btn btn-green" (click)="addProperty(property)" [disabled]="addPropertyForm.invalid">Submit</button>
+  </form>
+  </div>

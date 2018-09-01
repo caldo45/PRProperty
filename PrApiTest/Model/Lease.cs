@@ -18,10 +18,10 @@ namespace PrApiTest.Model
         public virtual Property Property { get; set; }
 
         [Column("date_from")]
-        public String DateFrom { get; set; }
+        public DateTime DateFrom { get; set; }
 
         [Column("date_to")]
-        public String DateTo { get; set; }
+        public DateTime DateTo { get; set; }
 
         [Column("amount")]
         public int AmountMonthly { get; set; }

@@ -13,10 +13,18 @@ namespace PrApiTest.Model
         [Column("payment_id")]
         public int Id { get; set; }
 
+        [Column("amount")]
+        public Double Amount { get; set; }
+
         [Column("date_recieved")]
-        public String DateRecieved { get; set; }
+        public DateTime Date { get; set; }
 
         [Column("payment_reference")]
-        public String PaymentReference { get; set; }
+        public String Reference { get; set; }
+
+        [Column("contract_id")]
+        public int ContractId { get; set; }
+
+        public virtual Contract Contract { get; set; }
     }
 }

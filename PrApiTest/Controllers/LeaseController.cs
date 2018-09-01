@@ -35,8 +35,30 @@ namespace PrApiTest.Controllers
             return Ok(lease);
         }
 
+        [HttpGet("byProperty/{propertyId}")]
+        public IActionResult GetByProperty(int propertyId)
+        {
+            var leases = _repository.GetLeasesByProperty(propertyId);
+            return Ok(leases);
+        }
+
+        [HttpGet("activeByProperty{propertyId}")]
+        public IActionResult GetActiveByProperty(int propertyId)
+        {
+            var lease = _repository.GetActiveLeaseByProperty(propertyId);
+            return Ok(lease);
+        }
+
+        [HttpGet("active")]
+        public IActionResult GetActiveLeases()
+        {
+            var lease = _repository.GetActiveLeases();
+            return Ok(lease);
+        }
+
+
         [HttpPost]
-        public IActionResult Post(Lease lease)
+        public IActionResult Post([FromBody]Lease lease)
         {
             var added = _repository.AddLease(lease);
             return StatusCode(201, added);

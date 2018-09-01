@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Property } from '../models/property';
 import { Client } from '../models/client';
 import { ClientType } from '../models/clientType';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +14,27 @@ export class ClientsService {
   constructor(private http:HttpClient) { }
 
   getClients(): Observable<Client[]>{
-    let url = 'http://localhost:54183/api/user';
+    let url =  environment.baseUrl + '/api/user';
     return this.http.get<Client[]>(url);
   }
 
   getClientsByType(clientTypeId: number): Observable<Client[]> {
-    let url = 'http://localhost:54183/api/user/getbytype'+clientTypeId;
+    let url =  environment.baseUrl + '/api/user/getbytype'+clientTypeId;
     return this.http.get<Client[]>(url);
   }
 
   getClient(id: number): Observable<Client>{
-    let url = 'http://localhost:54183/api/user/'+id;
+    let url =  environment.baseUrl + '/api/user/'+id;
     return this.http.get<Client>(url);
   }
 
   getClientTypes(): Observable<ClientType[]>{
-    let url = 'http://localhost:54183/api/clientTypes';
+    let url =  environment.baseUrl + '/api/clientTypes';
     return this.http.get<ClientType[]>(url);
   }
 
   postClient(client: Client, uploadSuccess: number){
-    return this.http.post('http://localhost:54183/api/user',client)
+    return this.http.post( environment.baseUrl + '/api/user',client)
       .subscribe( res => 
         {console.log(res);
           uploadSuccess = 1;

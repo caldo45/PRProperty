@@ -35,6 +35,7 @@ namespace PrApiTest.Controllers
             return Ok(rooms);
         }
 
+
         [HttpGet("byProperty{propertyId}")]
         public IActionResult GetRoomsByProperty(int propertyId)
         {
@@ -48,5 +49,13 @@ namespace PrApiTest.Controllers
             var added = _repository.AddRoom(room);
             return StatusCode(201, added);
         }
+
+        [HttpGet("images/{roomId}")]
+        public IActionResult GetImagesByRoom(int roomId)
+        {
+            var roomImages = _repository.GetRoomImages(roomId);
+            return Ok(roomImages);
+        }
+
     }
 }

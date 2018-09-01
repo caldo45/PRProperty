@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Property } from '../models/property';
 import { PropertyService } from '../services/property.service';
+import { LeaseService } from '../services/lease.service';
+import { Lease } from '../models/lease';
 
 @Component({
   selector: 'app-properties',
@@ -13,6 +15,13 @@ export class PropertiesComponent implements OnInit {
   _listFilter: string;
   filteredProperties: Property[] = [];
   pageTitle: 'Properties';
+  activeLeases: Lease[];
+
+  constructor(private propertyService:PropertyService, private leaseService: LeaseService) { 
+    this.filteredProperties = this.properties;
+    this._listFilter = null;
+
+  }
 
   performFilter(filterBy: string): Property[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -29,19 +38,25 @@ export class PropertiesComponent implements OnInit {
     this.filteredProperties= this.listFilter ? this.performFilter(this.listFilter) : this.properties;
   }
 
-  constructor(private propertyService:PropertyService) { 
-    this.filteredProperties = this.properties;
-    this._listFilter = null;
 
-  }
 
   ngOnInit() {
     this.propertyService.getProperties()
       .subscribe(response => {
         this.properties = response;
         this.filteredProperties = this.properties;
+        this.leaseService.getActiveLeases()
+            .subscribe(response => { this.activeLeases = response;
+        for(let lease of this.activeLeases){
+          for(let property of this.properties){
+            if(lease.propertyId == property.id){
+              (property.lease = lease) && (property.activeLease = 1)
+            }
+          }
+        
+        }
       });
-      
+    });
   }
 
 }

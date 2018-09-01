@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="card">
+    <h5 *ngIf="room">Upload Images for Room - {{room.roomName}} - {{room.property.firstLineAddress}}</h5>
+    <input #file type="file" multiple (change)="upload(file.files, path, imgPath, id)" />
+    <br/>
+    <div class="holder" *ngFor="let img of propertyImages">
+      <img  [src]="img.imagePath" style="max-width: 300px; max-height: 200px;">
+      <button class="btn btn-green" (click)="deleteImage(img)">Delete Image</button>    
+   </div>
+ 
+</div>

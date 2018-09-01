@@ -24,11 +24,14 @@ export class ClientComponent implements OnInit {
   ngOnInit() {
     let id = +this.route.snapshot.paramMap.get('id');
     this.clientService.getClient(id)
-    .subscribe(response => this.client = response);
-     this.propertyService.getPropertiesByLandlord(id)
-    .subscribe(response => this.properties = response);
-    this.contractService.getActiveContractByClient(id)
-      .subscribe(response => this.activeContract = response)
+    .subscribe(response => { this.client = response;
+                            this.propertyService.getPropertiesByLandlord(id)
+                             .subscribe(response => { this.properties = response;
+                             this.contractService.getActiveContractByClient(id)
+                             .subscribe(response => this.activeContract = response)
+                              console.log(this.activeContract);
+                             });
+    });
   }
 
 }

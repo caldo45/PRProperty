@@ -10,3 +10,46 @@
  .card{
      margin-bottom: 10px;
  }
+
+ .btn-green{
+    background-color: #aad8cd;
+    font-size: 10pt;
+    display: inline-block;
+    border:0px;
+
+}
+
+.list-photo{
+    max-width: 100%; 
+    height: auto; 
+}
+
+.example-card {
+    max-width: 400px;
+    display: inline-block;
+    margin: 5px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+
+ @media all and (max-width: 500px) {
+    .card-title-custom{
+        font-size: 10pt;
+    }
+
+    .card-text-custom{
+        font-size: 9pt;
+    }
+
+    .list-photo{
+        width: auto; 
+        height: 100px; 
+        object-fit: cover;
+    }
+
+
+}

@@ -22,6 +22,7 @@ export class AddContractComponent implements OnInit {
   properties: Property[];
   propertyId: 0;
   rooms: Room[];
+  room: Room;
   tenant: Client;
   clientId: number;
   client: Client;
@@ -47,10 +48,12 @@ export class AddContractComponent implements OnInit {
     console.log(paymentTypes);
   }
 
-  addContract(contract: Contract) {
-    console.log(contract);
-   this.contractService.postContract(contract);
-  }
+  addContract(contract: Contract, room) {
+   this.roomService.getRoom(contract.roomId)
+    .subscribe(response => { this.contract.room = response;
+                     this.contractService.postContract(this.contract);
+  });
+}
 
   getRooms(propertyId, rooms){
     this.roomService.getRoomsByProperty(this.propertyId)

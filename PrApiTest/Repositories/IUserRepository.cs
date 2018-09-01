@@ -20,6 +20,10 @@ namespace PrApiTest.Repositories
         IEnumerable<NextOfKin> GetNextOfKins();
         NextOfKin GetNextOfKin(int id);
         NextOfKin AddNextOfKin(NextOfKin nextOfKin);
+        Client DeleteClient(Client client);
+
+        Client UpdateUser(Client user);
+        Property UpdateProperty(Property property);
 
         IEnumerable<Client> GetUserByType(int id);
 
@@ -41,10 +45,13 @@ namespace PrApiTest.Repositories
         Contract GetActiveContract(int roomId);
         IEnumerable<Contract> GetActiveContracts(int propertyId);
         Contract GetActiveContractByClient(int tenantId);
-
+        RoomImage AddRoomImage(int assetIdInt, string apiPath);
+        IEnumerable<RoomImage> GetRoomImages(int roomId);
         IEnumerable<Lease> GetLeases();
         Lease GetLease(int id);
         Lease AddLease(Lease lease);
+        IEnumerable<PropertyImage> GetPropertyImages(int propertyId);
+        PropertyImage AddPropertyImage(int assetIdInt, string apiPath);
 
         IEnumerable<PaymentType> GetPaymentTypes();
         PaymentType GetPaymentType(int id);
@@ -54,6 +61,12 @@ namespace PrApiTest.Repositories
         Payment GetPayment(int id);
         Payment AddPayment(Payment payment);
 
+        List<String> CheckValidPayments(Payment[] payments);
+        IEnumerable<Payment> GetPaymentsByUser(int userId);
+
+        IEnumerable<Contract> AddContractNotifications(int days);
+
+
         IEnumerable<LeaseNotification> GetLeaseNotifications();
         LeaseNotification GetLeaseNotification(int id);
         LeaseNotification AddLeaseNotification(LeaseNotification leaseNotification);
@@ -62,7 +75,14 @@ namespace PrApiTest.Repositories
         ContractNotification GetContractNotification(int id);
         ContractNotification AddContractNotification(ContractNotification contractNotification);
 
-  
+        Contract GetContractByPaymentReference(string paymentReference);
+        IEnumerable<Lease> GetLeasesByProperty(int propertyId);
+        Lease GetActiveLeaseByProperty(int propertyId);
+        IEnumerable<Lease> GetActiveLeases();
+        string DeletePropertyImage(PropertyImage image);
+
+
+
 
 
     }

@@ -36,7 +36,7 @@ namespace PrApiTest.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(NextOfKin nextOfKin)
+        public IActionResult Post([FromBody] NextOfKin nextOfKin)
         {
             var added = _repository.AddNextOfKin(nextOfKin);
             return StatusCode(201, added);

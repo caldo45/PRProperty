@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PrApiTest.Model
 {
-    [Table("contract_notifcations")]
+    [Table("contract_notifications")]
     public class ContractNotification
     {
-        [Column("contract_notificaiton_id")]
+        [Column("contract_notification_id")]
         public int Id { get; set; }
 
         [Column("contract_id")]
@@ -20,10 +20,11 @@ namespace PrApiTest.Model
         [Column("marked_read")]
         public int MarkedRead { get; set; }
 
-        [Column("contract_notificaiton_type_id")]
-        public int ContractNotificaitonTypeId { get; set; }
+        [Column("contract_notification_type_id")]
+        public int ContractNotificationTypeId { get; set; }
 
-        // public virtual ContractNotificationType {get; set;}
+        public virtual ContractNotificationType ContractNotificationType { get; set; }
+
 
     }
 }

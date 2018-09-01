@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.object-img{
+    max-width: 150px;
+    display: inline-block;
+ }
+
+ .property-row{
+     margin-bottom: 10px;
+ }
+
+ .card{
+     margin-bottom: 10px;
+ }
+
+ .card-text-custom{
+    font-size: 14pt;
+ }
+
+ .container{
+     border: 0px;
+ }
+
+ .btn-green{
+    background-color: #aad8cd;
+    color: white;
+    font-size: 10pt;
+    display: inline-block;
+    border:0px;
+    margin: 5px;
+    margin-bottom: 5px;
+}
+
+.card-footer{
+    background-color: white;
+}
+
+.btn-custom-link
+{
+    color: grey;
+    padding: 3px;
+    font-size: 10pt;
+    display: inline-block;
+    width: 300px;
+    border: solid #aad8cd;
+    border-width: 1px 1px 1px 1px;
+    margin: 3px;
+    font-size: 10pt;
+}
+
+.field-name{
+    font-size: 12pt;
+    color: #aad8cd;
+    margin-bottom: 1pt;
+}
+
+.list-photo{
+    max-width: 100%; 
+    height: auto; 
+}
+
+
+ @media all and (max-width: 500px) {
+    .card-title-custom{
+        font-size: 10pt;
+    }
+
+    .card-text-custom{
+        font-size: 9pt;
+    }
+
+    .list-photo{
+        width: auto; 
+        height: 100px; 
+        object-fit: cover;
+    }
+
+    .field-name{
+        font-size: 8pt;
+    }
+
+    .btn-green{
+        font-size: 10pt;
+    }
+
+    .btn-text{
+        font-size: 8pt;
+        margin-bottom: 0px;
+    }
+
+
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }

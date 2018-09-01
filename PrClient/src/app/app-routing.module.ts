@@ -15,6 +15,15 @@ import { MapTestComponent } from './map-test/map-test.component';
 import { AddContractComponent } from './add-contract/add-contract.component';
 import { AddClientComponent } from './add-client/add-client.component';
 import { AddClientPhotoComponent } from './add-client-photo/add-client-photo.component';
+import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component';
+import { AddPropertyImageComponent } from './add-property-image/add-property-image.component';
+import { Payment } from './models/payment';
+import { PaymentsComponent } from './payments/payments.component';
+import { AddPaymentComponent } from './add-payment/add-payment.component';
+import { HomeComponent } from './home/home.component';
+import { UpdateClientComponent } from './update-client/update-client.component';
+import { UpdatePropertyComponent } from './update-property/update-property.component';
+import { AddLeaseComponent } from './add-lease/add-lease.component';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent},
@@ -29,7 +38,17 @@ const routes: Routes = [
   { path: 'room/:id', component: RoomComponent},
   { path: 'mapTest', component: MapTestComponent},
   { path: 'addContract/:id', component: AddContractComponent },
-  { path: 'addClientPhoto/:id', component: AddClientPhotoComponent}
+  { path: 'addClientPhoto/:id', component: AddClientPhotoComponent},
+  { path: 'addRoomPhoto/:id', component: AddRoomPhotoComponent},
+  { path: 'addPropertyImage/:id', component: AddPropertyImageComponent},
+  { path: 'payments', component: PaymentsComponent},
+  { path: 'addPayment', component: AddPaymentComponent},
+  { path: 'home', component: HomeComponent},
+  { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  { path: 'updateClient/:id', component: UpdateClientComponent},
+  { path: 'updateProperty/:id', component: UpdatePropertyComponent},
+  { path: 'addLease/:id', component: AddLeaseComponent}
+ // { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({

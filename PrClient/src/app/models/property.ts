@@ -1,4 +1,5 @@
 import { Client } from '../models/client';
+import { Lease } from './lease';
 
 export class Property {
     id: number;
@@ -12,4 +13,9 @@ export class Property {
     longitude: number;
     imagePath: string;
     landlord: Client;
+    activeLease: number;
+    lease: Lease;
+    country: string;
+    city: string;
+    
 }

@@ -27,6 +27,19 @@ import { AgmDirectionModule } from 'agm-direction';
 import { PapaParseModule } from 'ngx-papaparse';
 import { AddClientPhotoComponent } from './add-client-photo/add-client-photo.component';
 import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component';
+import { AddPropertyImageComponent } from './add-property-image/add-property-image.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { AddPaymentComponent } from './add-payment/add-payment.component';
+import { HomeComponent } from './home/home.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material';
+import { AddUpdateLeaseComponent } from './add-update-lease/add-update-lease.component';
+import { UpdateClientComponent } from './update-client/update-client.component';
+import { UpdatePropertyComponent } from './update-property/update-property.component';
+import { AddLeaseComponent } from './add-lease/add-lease.component';
+
 
 
 @NgModule({
@@ -47,7 +60,15 @@ import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component
     AddContractComponent,
     MapTestComponent,
     AddClientPhotoComponent,
-    AddRoomPhotoComponent
+    AddRoomPhotoComponent,
+    AddPropertyImageComponent,
+    PaymentsComponent,
+    AddPaymentComponent,
+    HomeComponent,
+    AddUpdateLeaseComponent,
+    UpdateClientComponent,
+    UpdatePropertyComponent,
+    AddLeaseComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +79,12 @@ import { AddRoomPhotoComponent } from './add-room-photo/add-room-photo.component
       apiKey: 'AIzaSyBIJj57SZFm_FgT55Uqwq-tVZjMyM5KGw4'
     }),
     AgmDirectionModule,
-    PapaParseModule
+    PapaParseModule,
+    NgbModule,
+    MatButtonModule, 
+    MatCheckboxModule, 
+    BrowserAnimationsModule,
+    MatCardModule, 
 
 
   ],
