@@ -50,7 +50,7 @@ const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'updateClient/:id', component: UpdateClientComponent},
   { path: 'updateProperty/:id', component: UpdatePropertyComponent},
-  { path: 'addLease/:id', component: AddLeaseComponent}
+  { path: 'addLease/:id', component: AddLeaseComponent},
   { path: 'callback', component: CallbackComponent}
  // { path: '**', component: PageNotFoundComponent }
 ]
