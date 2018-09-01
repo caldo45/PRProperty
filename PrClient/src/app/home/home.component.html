@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="authService.isAuthenticated()">
   <button routerLink="/clients" class="btn-primary rounded fontawesome-button "><i class="far fa-user fa-7x"></i><br><p class="button-font">Clients</p></button>
   <button routerLink="/properties" class="btn-primary rounded fontawesome-button"><i class="fas fa-home fa-7x"></i><br><p class="button-font">Properties</p></button>
   <button routerLink="/payments" class="btn-primary rounded fontawesome-button"><i class="fas fa-pound-sign fa-7x"></i><br><p class="button-font">Payments</p></button>

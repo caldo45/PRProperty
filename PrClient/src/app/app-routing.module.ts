@@ -22,11 +22,13 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
 import { CallbackComponent } from './callback/callback.component';
+import { AuthService } from './services/auth.service';
+import { RouteGuardService } from './services/route-guard.service';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent},
   { path: 'properties/:id', component: PropertyComponent},
-  { path: 'clients', component: ClientsComponent},
+  { path: 'clients', component: ClientsComponent, canActivate: [RouteGuardService]},
   { path: 'clients/:id', component: ClientComponent},
   { path: 'rooms/:id', component: RoomsInPropertyComponent},
   { path: 'addUser', component: AddUserComponent },
