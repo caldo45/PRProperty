@@ -45,8 +45,17 @@ namespace PrApiTest.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Property property)
         {
-            var added = _repository.AddProperty(property);
-            return StatusCode(201, added);
+            if (property.Id == 0)
+            {
+                var added = _repository.AddProperty(property);
+                return StatusCode(201, added);
+            }
+
+            {
+                var updated = _repository.UpdateProperty(property);
+                return StatusCode(201, updated);
+            }
+
         }
 
         [HttpGet("images/{propertyId}")]

@@ -31,7 +31,7 @@ namespace PrApiTest.Model
         public int MonthlyAmount { get; set; }
 
         [Column("payment_date")]
-        public String PaymentDate { get; set; }
+        public int PaymentDate { get; set; }
 
         [Column("payment_type_id")]
         public int PaymentTypeId { get; set; }

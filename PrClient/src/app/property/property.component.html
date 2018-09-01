@@ -15,7 +15,7 @@
           <p class="card-text card-text-custom">{{property.secondLineAddress}} -  {{property.postcode}}</p>
           <p class="card-title field-name">Landlord</p>
          <a [routerLink]="['/clients', property.landlord.id]"><p class="card-text-custom">Landlord - {{property.landlord.firstName}} {{property.landlord.lastName}}</p></a><br>
-         
+         <a [routerLink]="['/updateProperty', property.id]" class="btn btn-green"><p class="btn-text">Update Property Details</p></a>
          <a [routerLink]="['/rooms', property.id]" class="btn btn-green"><p class="btn-text">View Rooms</p></a>
           <a [routerLink]="['/rooms', property.id]" class="btn btn-green"><p class="btn-text">Edit / Update Details</p></a>
           <a [routerLink]="['/addPropertyImage', property.id]" class="btn btn-green"><p class="btn-text">Edit Images</p></a>

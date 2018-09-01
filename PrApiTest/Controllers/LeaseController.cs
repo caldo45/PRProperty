@@ -58,7 +58,7 @@ namespace PrApiTest.Controllers
 
 
         [HttpPost]
-        public IActionResult Post(Lease lease)
+        public IActionResult Post([FromBody]Lease lease)
         {
             var added = _repository.AddLease(lease);
             return StatusCode(201, added);

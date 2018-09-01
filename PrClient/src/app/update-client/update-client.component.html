@@ -1,0 +1,54 @@
+<div class="container list-object">
+  <form #addUserForm="ngForm" *ngIf="client">
+
+    <div class="form-group" [class.has-error]="firstName.invalid && firstName.touched">
+      <label for="inputFirstName" class="field-name" >First Name </label>
+      <input #firstName="ngModel" required type="string" class="form-control" name="inputfirstName" id="inputfirstName" [(ngModel)]="client.firstName" placeholder="Enter First Name">
+      <div *ngIf="firstName.invalid && firstName.touched">
+          First Name is Required
+        </div>
+    </div>
+    
+
+    <div class="form-group" [class.has-error]="lastName.invalid && lastName.touched">
+      <label for="inputLastName" class="field-name" >Last Name </label>
+      <input #lastName="ngModel" required type="string" class="form-control"  id="inputLastName"  name="inputLastName" [(ngModel)]="client.lastName" placeholder="Enter Last Name">
+      <div *ngIf="lastName.invalid && lastName.touched">
+          Last Name is Required
+        </div>
+    </div>
+
+    <div class="form-group" [class.has-error]="email.invalid && email.touched">
+      <label for="inputEmail" class="field-name" >Email address</label>
+      <input #email="ngModel" type="email" class="form-control" required id="inputEmail" name="inputEmail" [(ngModel)]="client.email" aria-describedby="emailHelp" placeholder="Enter email">
+      <div *ngIf="email.invalid && email.touched">
+          Email is Required, Please Ensure Email is in Correct Format, abc@email.com
+        </div>
+    </div>
+
+    <div class="form-group" [class.has-error]="phone.invalid && phone.touched">
+      <label for="inputPhone" class="field-name" >Phone Number</label>
+      <input #phone type="text" pattern="^[0-9-+s()]*$" class="form-control" required id="inputPhone" name="inputPhone" [(ngModel)]="client.phone" placeholder="Enter Phone Number">
+      <div *ngIf="phone.invalid && phone.touched">
+          Only Numeric Values or + Accepted
+        </div>
+    </div>
+
+
+    <div class="form-group" [class.has-error]="dob.invalid && dob.touched">
+      <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
+      <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [(ngModel)]="client.dob" placeholder="Enter DOB">
+      <div *ngIf="dob.invalid && dob.touched">
+          Date of Birth is Required
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputClientTypeId" class="field-name" >Client Type</label>
+      <select class="form-control" input type="number" required  id="inputClientTypeId" name="inputClientTypeId" [(ngModel)]="client.clientTypeId" placeholder="Select Client Type">
+      <option *ngFor="let clientType of clientTypes" [value]=clientType.id> {{clientType.type}}</option>
+    </select>
+    </div>
+    <button type="submit" class="btn btn-green" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
+  </form>
+  </div>

@@ -11,6 +11,7 @@
                 <p class="card-title field-name">Email</p>
                 <p class="card-text"> {{client.email}}</p>
                 <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-green">Add / Update Client Image</a>
+                <a [routerLink]="['/updateClient', client.id]" class="btn btn-green">Update Client Details</a>
                 <a *ngIf="client.clientTypeId === 1" [routerLink]="['/addContract/', client.id]" class="btn btn-green">Add Contract For {{client.firstName}}</a>
             </div>
           </div>

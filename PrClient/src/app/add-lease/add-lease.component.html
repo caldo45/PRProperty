@@ -1,0 +1,28 @@
+<div class="container list-object" *ngIf="property">
+  <form #addLeaseForm="ngForm" *ngIf="newLease">
+    <h4>Add New Lease for {{property.firstLineAddress}}</h4>
+    <p *ngIf="activeLease != null">Current Lease Runs From {{ activeLease.dateFrom | date: 'dd/MM/yyyy' }} to {{activeLease.dateTo  | date: 'dd/MM/yyyy'}} </p>
+  <div class="form-group" [class.has-error]="dateFrom.invalid && dateFrom.touched">
+    <label for="dateFrom" class="field-name datepicker" >Date From</label>
+    <input #dateFrom="ngModel" type="date" class="form-control" required id="dateFrom" name="dateFrom" [(ngModel)]="newLease.dateFrom" placeholder="Enter Date From">
+    <div *ngIf="dateFrom.invalid && dateFrom.touched">
+        Date From is Required
+      </div>
+  </div>
+  <div class="form-group" [class.has-error]="dateTo.invalid && dateTo.touched">
+    <label for="dateTo" class="field-name datepicker" >Date To</label>
+    <input #dateTo="ngModel" type="date" class="form-control" required id="dateTo" name="dateTo" [(ngModel)]=" newLease.dateTo" placeholder="Enter Date To">
+    <div *ngIf="dateTo.invalid && dateTo.touched">
+        Date To is Required
+        </div>
+    </div>
+    <div class="form-group" [class.has-error]="monthlyAmount.invalid && monthlyAmount.touched">
+      <label for="monthlyAmount" class="field-name" >Monthly Amount</label>
+      <input #monthlyAmount="ngModel" type="number" class="form-control" required id="monthlyAmount" name="monthlyAmount" [(ngModel)]="newLease.monthlyAmount" placeholder="Enter Monthly Amount">
+      <div *ngIf="monthlyAmount.invalid && monthlyAmount.touched">
+          Monthly Amount is Required
+          </div>
+      </div>
+      <button type="submit" class="btn btn-green" (click)="addLease(newLease)" [disabled]="addLeaseForm.invalid"> Submit</button>
+    </form>
+</div>

@@ -8,7 +8,7 @@
           <div class="card-block px-3">
             <h4 class="card-title"> {{room.roomName}}</h4>
               <div *ngIf="(room.activeContract == 1)">
-                     <div class="card-text" ><p>Current Tenant: {{room.contract.client.firstName}} {{room.contract.client.lastName}} </p>
+                     <div class="card-text" ><p>Current Tenant: {{room.contract.client.firstName}} {{room.contract.client.lastName}} - {{room.contract.monthlyAmount | currency:'£'}}pcm </p>
                       <p>Contract Ends on {{room.contract.dateTo | date: 'dd/MM/yyyy'}} </p></div>
                   </div>
               <div *ngIf="(room.activeContract !== 1)">

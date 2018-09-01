@@ -52,9 +52,24 @@ namespace PrApiTest.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Client user)
         {
-            var added = _repository.AddUser(user);
-            return StatusCode(201, added);
+            if (user.Id == 0)
+            {
+                var added = _repository.AddUser(user);
+                return StatusCode(201, added);
+            }
+
+            {
+                var updated = _repository.UpdateUser(user);
+                return StatusCode(201, updated);
+            }
         }
 
+
+        [HttpPost("delete")]
+        public Client PostDelete([FromBody] Client client)
+        {
+            var deleted = _repository.DeleteClient(client);
+            return deleted;
+        }    
     }
 }

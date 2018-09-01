@@ -15,5 +15,7 @@ export class Property {
     landlord: Client;
     activeLease: number;
     lease: Lease;
+    country: string;
+    city: string;
     
 }

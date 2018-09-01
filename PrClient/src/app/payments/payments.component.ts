@@ -10,9 +10,17 @@ import { ContractsService } from '../services/contracts.service';
 export class PaymentsComponent implements OnInit {
 
   payments: Payment[];
+  _listFilterStart: Date;
+  _listFilterEnd: Date;
+  filteredPayments: Payment[] = [];
+  filters: {clientType:string}
 
 
-  constructor(private contractService: ContractsService) { }
+  constructor(private contractService: ContractsService) { 
+    this.filteredPayments = this.payments;
+    this._listFilterStart = null;
+    this._listFilterEnd = null;
+  }
 
   ngOnInit() {
     this.contractService.getPayments()

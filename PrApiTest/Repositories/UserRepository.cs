@@ -108,9 +108,25 @@ namespace PrApiTest.Repositories
             return user;
         }
 
+        public Client UpdateUser(Client user)
+        {
+
+            _db.Entry(user).State = EntityState.Modified;
+            _db.SaveChanges();
+            return user;
+        }
+
+
         public Property AddProperty(Property property)
         {
             _db.Properties.Add(property);
+            _db.SaveChanges();
+            return property;
+        }
+
+        public Property UpdateProperty(Property property)
+        {
+            _db.Entry(property).State = EntityState.Modified;
             _db.SaveChanges();
             return property;
         }
@@ -129,9 +145,9 @@ namespace PrApiTest.Repositories
             return nextOfKins;
         }
 
-        public NextOfKin GetNextOfKin(int id)
+        public NextOfKin GetNextOfKin(int clientId)
         {
-            var nextOfKin = _db.NextOfKins.FirstOrDefault(b => b.Id == id);
+            var nextOfKin = _db.NextOfKins.FirstOrDefault(b => b.ClientId == clientId);
             return nextOfKin;
         }
 
@@ -297,7 +313,6 @@ namespace PrApiTest.Repositories
 
         public Contract AddContract(Contract contract)
         {
-            DateTime date = DateTime.Now;
            var overlapRoomExists = _db.Contracts.Any(c => c.RoomId == contract.RoomId
                                           && c.Overlaps(contract));
             var overlapTenantExists = _db.Contracts.Any(c => c.ClientId == contract.ClientId
@@ -338,10 +353,78 @@ namespace PrApiTest.Repositories
 
         public Lease AddLease(Lease lease)
         {
-            _db.Leases.Add(lease);
-            _db.SaveChanges();
-            return lease;
+            var overlapPropertyExists = _db.Lease.Any(l => l.PropertyId == lease.PropertyId
+                                                           && l.Overlaps(lease));
+            if (!overlapPropertyExists)
+            {
+                _db.Leases.Add(lease);
+                _db.SaveChanges();
+                return lease;
+            }
+            else
+            {
+                throw new HttpRequestException("Lease Overlaps With Another for this Property, Please Amend Dates");
+            }
+
         }
+
+        public Lease UpdateLease(Lease lease)
+        {
+            var existingLease = _db.Lease.FirstOrDefault(l => l.Id == lease.Id);
+            var overlapPropertyExists = _db.Lease.Any(l => l.PropertyId == lease.PropertyId
+                                                           && l.Overlaps(lease));
+            if (!overlapPropertyExists)
+            {
+                existingLease = lease;
+                _db.Lease.Update(existingLease);
+                _db.SaveChanges();
+                return lease;
+            }
+            else
+            {
+                throw new HttpRequestException("New Lease Overlaps With Another for this Property, Please Amend Dates");
+            }
+        }
+
+        public Contract UpdateContract(Contract contract)
+        {
+            var existingContract = _db.Contracts.FirstOrDefault(c => c.Id == contract.Id);
+            var overlapRoomExists = _db.Contracts.Any(c => c.RoomId == contract.RoomId
+                                                           && c.Overlaps(contract) && c.Id != contract.Id);
+            var overlapTenantExists = _db.Contracts.Any(c => c.ClientId == contract.ClientId
+                                                             && c.Overlaps(contract) && c.Id != contract.Id);
+            //  var lease = CheckContractValidWithLease(contract);
+
+            if (!overlapRoomExists && !overlapTenantExists)
+            {
+                existingContract = contract;
+                _db.Contracts.Update(existingContract);
+                _db.SaveChanges();
+                return contract;
+            }
+            else
+            {
+                throw new HttpRequestException("Contract Overlaps With Another for this Room Or Client, Please Amend Dates");
+            }
+
+        }
+
+        public Client DeleteClient(Client client)
+        {
+            var contract = _db.Contracts.FirstOrDefault(c => c.Id == client.Id);
+            if (contract == null)
+            {
+                _db.Users.Remove(client);
+                _db.SaveChanges();
+                return client;
+            }
+
+            {
+                throw new Exception("Client Cannot Be Deleted Once ");
+            }
+        }
+
+
 
         public IEnumerable<PaymentType> GetPaymentTypes()
         {

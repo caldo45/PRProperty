@@ -21,6 +21,9 @@ import { Payment } from './models/payment';
 import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
+import { UpdateClientComponent } from './update-client/update-client.component';
+import { UpdatePropertyComponent } from './update-property/update-property.component';
+import { AddLeaseComponent } from './add-lease/add-lease.component';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent},
@@ -42,6 +45,9 @@ const routes: Routes = [
   { path: 'addPayment', component: AddPaymentComponent},
   { path: 'home', component: HomeComponent},
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  { path: 'updateClient/:id', component: UpdateClientComponent},
+  { path: 'updateProperty/:id', component: UpdatePropertyComponent},
+  { path: 'addLease/:id', component: AddLeaseComponent}
  // { path: '**', component: PageNotFoundComponent }
 ]
 

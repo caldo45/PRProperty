@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environment';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ export class NotificationService {
   constructor(private http:HttpClient) { }
 
  activateNotifications(activate: number){
-    return this.http.post('http://localhost:54183/api/notifications',activate)
+    return this.http.post( environment.baseUrl + '/api/notifications',activate)
       .subscribe( res => 
         {console.log(res);
        },

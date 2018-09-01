@@ -32,6 +32,13 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material';
+import { AddUpdateLeaseComponent } from './add-update-lease/add-update-lease.component';
+import { UpdateClientComponent } from './update-client/update-client.component';
+import { UpdatePropertyComponent } from './update-property/update-property.component';
+import { AddLeaseComponent } from './add-lease/add-lease.component';
 
 
 
@@ -57,7 +64,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AddPropertyImageComponent,
     PaymentsComponent,
     AddPaymentComponent,
-    HomeComponent
+    HomeComponent,
+    AddUpdateLeaseComponent,
+    UpdateClientComponent,
+    UpdatePropertyComponent,
+    AddLeaseComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +80,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     }),
     AgmDirectionModule,
     PapaParseModule,
-    NgbModule
+    NgbModule,
+    MatButtonModule, 
+    MatCheckboxModule, 
+    BrowserAnimationsModule,
+    MatCardModule, 
 
 
   ],

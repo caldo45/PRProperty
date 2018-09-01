@@ -18,7 +18,7 @@ export class FileService {
     reportProgress: true,
   });
 
-  let url = 'http://localhost:54183/api/images/UploadFile';
+  let url = environment.baseUrl + '/api/images/UploadFile';
 
   return this.http.post<HttpResponse<string>>(url, formData)
     

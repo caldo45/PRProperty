@@ -20,6 +20,10 @@ namespace PrApiTest.Repositories
         IEnumerable<NextOfKin> GetNextOfKins();
         NextOfKin GetNextOfKin(int id);
         NextOfKin AddNextOfKin(NextOfKin nextOfKin);
+        Client DeleteClient(Client client);
+
+        Client UpdateUser(Client user);
+        Property UpdateProperty(Property property);
 
         IEnumerable<Client> GetUserByType(int id);
 

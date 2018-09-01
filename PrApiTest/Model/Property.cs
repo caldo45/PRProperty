@@ -34,5 +34,11 @@ namespace PrApiTest.Model
 
         public virtual Client Landlord { get; set; }
 
+        [Column("country")]
+        public String Country { get; set; }
+
+        [Column("city")]
+        public String City { get; set; }
+
     }
 }

@@ -24,6 +24,17 @@
     height: auto; 
 }
 
+.example-card {
+    max-width: 400px;
+    display: inline-block;
+    margin: 5px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
 
  @media all and (max-width: 500px) {
     .card-title-custom{

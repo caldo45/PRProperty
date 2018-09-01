@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property';
 import { PropertyImage } from '../models/propertyImage';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,32 +13,32 @@ export class PropertyService {
   constructor(private http:HttpClient) { }
 
   getProperties(): Observable<Property[]> {
-    let url = 'http://localhost:54183/api/properties';
+    let url =  environment.baseUrl + '/api/properties';
     return this.http.get<Property[]>(url);
   }
 
   getProperty(id: number): Observable<Property>{
-    let url = 'http://localhost:54183/api/properties/'+id;
+    let url =  environment.baseUrl + '/api/properties/'+id;
     return this.http.get<Property>(url);
   }
 
   getPropertiesByLandlord(landlordId: number): Observable<Property[]>{
-    let url = 'http://localhost:54183/api/properties/byLandlord'+landlordId;
+    let url =  environment.baseUrl + '/api/properties/byLandlord'+landlordId;
     return this.http.get<Property[]>(url);
   }
 
   getPropertyImages(propertyId: number): Observable<PropertyImage[]>{
-    let url = 'http://localhost:54183/api/properties/images/'+propertyId;
+    let url =  environment.baseUrl + '/api/properties/images/'+propertyId;
     return this.http.get<PropertyImage[]>(url);
   }
 
   getPropertyImage(propertyId: number): Observable<PropertyImage>{
-    let url = 'http://localhost:54183/api/properties/image/'+propertyId;
+    let url =  environment.baseUrl + '/api/properties/image/'+propertyId;
     return this.http.get<PropertyImage>(url);
   }
 
   postProperty(property: Property){
-    return this.http.post('http://localhost:54183/api/properties',property)
+    return this.http.post( environment.baseUrl + '/api/properties',property)
       .subscribe( res => 
         {console.log(res);
        },
@@ -48,7 +49,7 @@ export class PropertyService {
     }
 
     deletePropertyImage(image: PropertyImage){
-      return this.http.post('http://localhost:54183/api/properties/deleteImage',image)
+      return this.http.post( environment.baseUrl + '/api/properties/deleteImage',image)
         .subscribe(response => console.log(response));
     }
 }
