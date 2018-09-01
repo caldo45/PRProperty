@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import * as auth0 from 'auth0-js';
+import * as auth0 from '../../../node_modules/auth0-js/build/auth0.js';
 
 (window as any).global = window;
 
@@ -16,7 +16,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'PrPropertiesAPI',
     redirectUri: 'http://localhost:4200/callback',
-    scope: 'openid'
+    scope: 'openid profile'
   });
 
   constructor(public router: Router) {}
@@ -27,7 +27,7 @@ export class AuthService {
 
   public handleAuthentication(): void {
     
-    this.auth0.parseHash((err, authResult) => {
+    this.auth0.parseHash((err, authResult, test) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
@@ -46,6 +46,7 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    console.log(authResult);
   }
 
   public logout(): void {
