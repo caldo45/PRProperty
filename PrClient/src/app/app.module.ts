@@ -32,6 +32,8 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from './services/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
@@ -65,6 +67,7 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
     PaymentsComponent,
     AddPaymentComponent,
     HomeComponent,
+    CallbackComponent,
     AddUpdateLeaseComponent,
     UpdateClientComponent,
     UpdatePropertyComponent,
@@ -88,7 +91,7 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
 
 
   ],
-  providers: [PropertyService],
+  providers: [PropertyService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

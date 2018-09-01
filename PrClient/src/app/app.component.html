@@ -14,6 +14,19 @@
                         <a class="nav-item nav-link" routerLink="/addProperty">Add Property</a>
                         <a class="nav-item nav-link" routerLink="/addUser">Add Client</a>
                         <a class="nav-item nav-link" routerLink="/payments">Payments</a>
+                        <button
+                        class="btn btn-primary btn-margin"
+                        *ngIf="!authService.isAuthenticated()"
+                        (click)="authService.login()">
+                          Log In
+                      </button>
+                
+                      <button
+                        class="btn btn-primary btn-margin"
+                        *ngIf="authService.isAuthenticated()"
+                        (click)="authService.logout()">
+                          Log Out
+                      </button>
                       </div>
                     </div>
                 </div>
