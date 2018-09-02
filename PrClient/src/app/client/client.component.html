@@ -17,7 +17,7 @@
           </div>
           <div *ngIf="client">
               <div *ngIf="client.clientTypeId === 2">Properties Owned
-                <a class="rounded btn-custom-link" *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
+                <a class="rounded btn-secondary" *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
               </div>
               <div *ngIf="activeContract">Contract Information           
                   <p class="card-title field-name">Contract Start Date</p>

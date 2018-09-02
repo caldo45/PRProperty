@@ -67,5 +67,22 @@ h4{
     padding: 10px 25px;
 }
 
+.btn-green{
+    color: rgba(255,255,255,.85);
+    padding: 5px;
+    margin: 5px;
+    background-color: #53a6fa;
+}
+
+.field-name{
+    color: #53a6fa;
+    font-size: 10pt;
+}
+
+.btn-secondary{
+    padding: 5px;
+    margin: 5px;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }

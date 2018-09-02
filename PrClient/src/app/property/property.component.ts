@@ -65,10 +65,10 @@ export class PropertyComponent implements OnInit {
   }
 
 
-  getDirection(geolocationPosition) {
+  getDirection(geolocationPosition, property) {
     this.dir = {
       origin:  { lat: geolocationPosition.coords.latitude , lng: geolocationPosition.coords.longitude },
-      destination: { lat: 54.57370300, lng: -5.91710600 }
+      destination: { lat: this.property.latitude, lng: this.property.longitude}
   }
   
 }

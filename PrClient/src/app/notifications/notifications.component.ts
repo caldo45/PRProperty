@@ -26,6 +26,12 @@ export class NotificationsComponent implements OnInit {
     this.notificationService.markContractNotificationAsRead(contractNotification);
   }
 
+  markAsDeleted(contractNotification: ContractNotification)
+  {
+    contractNotification.deleted = 1;
+    this.notificationService.markContractNotificationAsRead(contractNotification);
+  }
+
   getAndSortNotifications(contractNotifications: ContractNotification[], unreadNotifications: ContractNotification[], readNotifications: ContractNotification[] ){
     this.notificationService.getContractNotifications()
     .subscribe(response => {
@@ -34,7 +40,7 @@ export class NotificationsComponent implements OnInit {
         if(notification.markedRead == 0)
         {
           this.unreadNotifications.push(notification);
-        } else
+        } else if(notification.deleted == 0)
         {
           this.readNotifications.push(notification);
         } 
