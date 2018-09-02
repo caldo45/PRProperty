@@ -8,23 +8,49 @@ import { ContractsService } from '../services/contracts.service';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
-
+  $: any;
   payments: Payment[];
-  _listFilterStart: Date;
-  _listFilterEnd: Date;
+  startDate: Date;
+  endDate: Date;
   filteredPayments: Payment[] = [];
-  filters: {clientType:string}
+  filters: {clientType: string };
+  loaded = false;
 
-
-  constructor(private contractService: ContractsService) { 
-    this.filteredPayments = this.payments;
-    this._listFilterStart = null;
-    this._listFilterEnd = null;
+  constructor(private contractService: ContractsService) {
+    this.startDate = null;
+    this.endDate = null;
   }
 
   ngOnInit() {
     this.contractService.getPayments()
-      .subscribe(response => this.payments = response);
+      .subscribe(response => {
+        this.payments = response;
+        this.filteredPayments = this.payments;
+        this.loaded = true;
+      });
+  }
+
+  updatePayments() {
+    console.log('test');
+    console.log(this.startDate);
+    console.log(this.endDate);
+    if (this.startDate) {
+      this.filteredPayments = this.payments.filter(payment =>
+        payment.date >= this.startDate);
+    } else {
+      this.filteredPayments = this.payments;
+    }
+
+    if (this.endDate) {
+      this.filteredPayments = this.filteredPayments.filter(payment => 
+        payment.date <= this.endDate);
+    }
+  }
+
+  resetFilters() {
+    this.startDate = null;
+    this.endDate = null;
+    this.filteredPayments = this.payments;
   }
 
 }

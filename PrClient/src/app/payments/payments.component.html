@@ -1,23 +1,47 @@
 <div class="container" *ngIf="payments">
-    <table *ngIf="payments.length > 0" class="table table-striped table-bordered mt-5">
-        <thead>
-          <tr>
-            <th scope="col">Amount</th>
-            <th scope="col">Date</th>
-            <th scope="col">Reference</th>
-            <th scope="col">Tenant Name</th>
-            <th scope="col">Property Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let payment of payments">
-            <th scope="row">{{payment.amount}}</th>
-            <td>{{payment.date | date: 'dd/MM/yyyy'}}</td>
-            <td>{{payment.reference}}</td>
-            <td>{{payment.contract.client.firstName}} {{payment.contract.client.lastName}}</td>
-            <td>{{payment.contract.room.property.firstLineAddress}}</td>
-          </tr>
-        </tbody>
-        
-      </table>
+    <div *ngIf="loaded">
+      <!-- <h4>Filter by date:</h4> -->
+      <form>
+          <div class="row">          
+            <div class="col-4">
+              <label for="startDate">Start Date</label>
+              <input type="date" (change)="updatePayments()" name="startDate" [(ngModel)]="startDate" class="form-control" placeholder="Date From">
+            </div>
+            <div class="col-4">
+                <label for="endDate">End Date</label>
+              <input type="date" (change)="updatePayments()" class="form-control" name="endDate" [(ngModel)]="endDate" placeholder="Date Until">
+            </div>
+            <div class="col-4 pt-4">
+                <button class="btn primary" id="resetBtn" (click)="resetFilters()">Reset</button>
+            </div>
+          </div>
+        </form>
+
+      <table *ngIf="filteredPayments.length > 0" class="table table-striped table-bordered mt-5">
+          <thead>
+            <tr>
+              <th scope="col">Amount</th>
+              <th scope="col">Date</th>
+              <th scope="col">Reference</th>
+              <th scope="col">Tenant Name</th>
+              <th scope="col">Property Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of filteredPayments">
+              <th scope="row">{{payment.amount}}</th>
+              <td>{{payment.date | date: 'dd/MM/yyyy'}}</td>
+              <td>{{payment.reference}}</td>
+              <td>{{payment.contract.client.firstName}} {{payment.contract.client.lastName}}</td>
+              <td>{{payment.contract.room.property.firstLineAddress}}</td>
+            </tr>
+          </tbody>
+          
+        </table>
+        <div *ngIf="filteredPayments.length == 0" class="row mt-5 mb-5">
+          <div class="col">
+              <p>No payments found</p>
+          </div>          
+        </div>
+    </div>
 </div>

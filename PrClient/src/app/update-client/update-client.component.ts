@@ -16,7 +16,7 @@ export class UpdateClientComponent implements OnInit {
   testDate: Date;
 
   client: Client;
-  saveSuccess: bool;
+  saveSuccess: boolean;
   userMessage: string = null;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService, private datePipe: DatePipe) { }
@@ -37,14 +37,14 @@ export class UpdateClientComponent implements OnInit {
     this.userMessage = null;
     this.client.clientTypeId = +this.client.clientTypeId;
     this.clientService.postClient(client)
-    .subscribe( res => {
-        this.saveSuccess = true;
-        this.userMessage = 'Client Details Saved';
-     },
-    err => {
-        this.saveSuccess = false;
-        this.userMessage = 'Error Saving Client Details';
-     }
+      .subscribe( res => {
+          this.saveSuccess = true;
+          this.userMessage = 'Client Details Saved';
+      },
+      err => {
+          this.saveSuccess = false;
+          this.userMessage = 'Error Saving Client Details';
+      }
      );
   }
 
