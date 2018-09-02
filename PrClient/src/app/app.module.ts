@@ -41,6 +41,7 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ContractNotificationsComponent } from './contract-notifications/contract-notifications.component';
 import { DatePipe } from '@angular/common';
+import { ContractComponent } from './contract/contract.component';
 
 
 
@@ -73,7 +74,8 @@ import { DatePipe } from '@angular/common';
     UpdatePropertyComponent,
     AddLeaseComponent,
     NotificationsComponent,
-    ContractNotificationsComponent
+    ContractNotificationsComponent,
+    ContractComponent
   ],
   imports: [
     BrowserModule,

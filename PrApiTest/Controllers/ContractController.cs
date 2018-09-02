@@ -56,6 +56,21 @@ namespace PrApiTest.Controllers
             return Ok(contracts);
         }
 
+        [HttpGet("allActive")]
+        public IActionResult GetAllActiveContracts()
+        {
+            var contracts = _repository.GetAllActiveContracts();
+            return Ok(contracts);
+        }
+
+        [HttpGet("allInactive")]
+        public IActionResult GetAllInactiveContracts()
+        {
+            var contracts = _repository.GetAllInactiveContracts();
+            return Ok(contracts);
+        }
+
+
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)

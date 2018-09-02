@@ -45,12 +45,23 @@ export class ContractsService {
       
   }
 
+  getAllInactiveContracts(): Observable<Contract[]> {
+    let url = environment.baseUrl + '/api/contract/allInactive';
+    return this.http.get<Contract[]>(url);
+  }
+
+  getAllActiveContracts(){
+    let url = environment.baseUrl + '/api/contract/allActive';
+    return this.http.get<Contract[]>(url);
+  }
+
   getPayments(){
     let url =  environment.baseUrl + '/api/payments'
     return this.http.get<Payment[]>(url); 
   }
 
   postContract(contract: Contract){
+    console.log(contract);
     return this.http.post(environment.baseUrl + '/api/contract',contract);     
     }
 }

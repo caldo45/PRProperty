@@ -50,7 +50,7 @@ export class AddContractComponent implements OnInit {
     console.log(paymentTypes);
   }
 
-  addContract(contract: Contract, room) {
+  addContract(contract: Contract) {
     this.userMessage = null;
       this.contractService.postContract(this.contract)
         .subscribe( res => 
@@ -58,7 +58,7 @@ export class AddContractComponent implements OnInit {
             this.userMessage = "Contract Added"
         },
         err => {
-            this.userMessage = "Add Contract Failed - Contract overlaps another for same room"
+            this.userMessage = "Add Contract Failed - Check if Contract overlaps another for same room"
         }
         );;
 }

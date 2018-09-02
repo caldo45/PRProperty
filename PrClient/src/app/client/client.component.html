@@ -10,13 +10,18 @@
                 <p class="card-text"> {{client.phone}}</p>
                 <p class="card-title field-name">Email</p>
                 <p class="card-text"> {{client.email}}</p>
+                <div *ngIf="activeContract">Contract Information           
+                    <p class="card-title field-name">Active Contract End Date</p>
+                    <p class="card-text"> {{activeContract.dateTo | date: 'dd/MM/yyyy'}}</p>
+                </div>
                 <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-green">Add / Update Client Image</a>
                 <a [routerLink]="['/updateClient', client.id]" class="btn btn-green">Update Client Details</a>
                 <a *ngIf="client.clientTypeId === 1" [routerLink]="['/addContract/', client.id]" class="btn btn-green">Add Contract For {{client.firstName}}</a>
             </div>
           </div>
-          <div *ngIf="client">
-              <div *ngIf="client.clientTypeId === 2">Properties Owned
+          <div class="col-lg-4 col-md-4 sm-6 mb-3" >
+          <div class="card">
+              <p class="card-title" *ngIf="client.clientTypeId === 2">Properties Owned
                 <a class="rounded btn-secondary" *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
               </div>
               <div *ngIf="activeContract">Contract Information           
@@ -24,6 +29,4 @@
                   <p class="card-text"> {{activeContract.dateFrom | date: 'dd/MM/yyyy'}}</p>
                 </div>
               </div>
-
-
-  </div>
+              </div>

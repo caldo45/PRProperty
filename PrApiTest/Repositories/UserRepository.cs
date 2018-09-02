@@ -308,6 +308,29 @@ namespace PrApiTest.Repositories
               return contract;
           }
 
+        public IEnumerable<Contract> GetAllActiveContracts()
+        {
+            DateTime date = DateTime.Now;
+            var contract = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.DateFrom.CompareTo(date) <= 0
+                                                          && r.DateTo.CompareTo(date) >= 0);
+            return contract;
+
+        }
+
+        public IEnumerable<Contract> GetAllInactiveContracts()
+        {
+            DateTime date = DateTime.Now;
+            var contract = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.DateFrom.CompareTo(date) >= 0
+                                                          || r.DateTo.CompareTo(date) <= 0);
+            return contract;
+        }
+
 
         public Contract AddContract(Contract contract)
         {
@@ -577,7 +600,7 @@ namespace PrApiTest.Repositories
             return contractNotification;
         }
 
-        public ContractNotification markAsRead(ContractNotification contractNotification)
+        public ContractNotification MarkAsRead(ContractNotification contractNotification)
         {
 
             _db.Entry(contractNotification).State = EntityState.Modified;

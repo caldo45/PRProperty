@@ -16,7 +16,7 @@ export class UpdateClientComponent implements OnInit {
   testDate: Date;
 
   client: Client;
-  saveSuccess: bool;
+  saveSuccess: boolean;
   userMessage: string = null;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService, private datePipe: DatePipe) { }

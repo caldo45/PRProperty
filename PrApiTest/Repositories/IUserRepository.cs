@@ -39,7 +39,9 @@ namespace PrApiTest.Repositories
         Room AddRoom(Room room);
         IEnumerable<Room> GetRoomsByProperty(int propertyId);
         IEnumerable<PropertyImage> GetAllPropertiesImages();
-        ContractNotification markAsRead(ContractNotification contractNotification);
+        ContractNotification MarkAsRead(ContractNotification contractNotification);
+        IEnumerable<Contract> GetAllActiveContracts();
+        IEnumerable<Contract> GetAllInactiveContracts();
 
         IEnumerable<Contract> GetContracts();
         Contract GetContract(int id);

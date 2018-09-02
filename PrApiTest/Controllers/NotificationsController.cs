@@ -44,7 +44,7 @@ namespace PrApiTest.Controllers
         public IActionResult PostRead([FromBody]ContractNotification contractNotification
         )
         {
-            var updated = _repository.markAsRead(contractNotification);
+            var updated = _repository.MarkAsRead(contractNotification);
             return StatusCode(201);
 
         }
