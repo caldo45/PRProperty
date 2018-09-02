@@ -31,9 +31,6 @@ export class PaymentsComponent implements OnInit {
   }
 
   updatePayments() {
-    console.log('test');
-    console.log(this.startDate);
-    console.log(this.endDate);
     if (this.startDate) {
       this.filteredPayments = this.payments.filter(payment =>
         payment.date >= this.startDate);
