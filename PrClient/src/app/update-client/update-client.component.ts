@@ -37,14 +37,14 @@ export class UpdateClientComponent implements OnInit {
     this.userMessage = null;
     this.client.clientTypeId = +this.client.clientTypeId;
     this.clientService.postClient(client)
-    .subscribe( res => {
-        this.saveSuccess = true;
-        this.userMessage = 'Client Details Saved';
-     },
-    err => {
-        this.saveSuccess = false;
-        this.userMessage = 'Error Saving Client Details';
-     }
+      .subscribe( res => {
+          this.saveSuccess = true;
+          this.userMessage = 'Client Details Saved';
+      },
+      err => {
+          this.saveSuccess = false;
+          this.userMessage = 'Error Saving Client Details';
+      }
      );
   }
 

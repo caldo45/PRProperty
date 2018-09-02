@@ -26,7 +26,7 @@ export class AddUserComponent implements OnInit {
   addUser(client: Client, uploadSuccess) {
     this.client.clientTypeId = +this.client.clientTypeId;
     console.log(client);
-    this.clientService.postClient(client, uploadSuccess)
+    this.clientService.postClient(client)
     ;
   }
 
