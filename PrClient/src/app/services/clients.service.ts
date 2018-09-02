@@ -36,20 +36,11 @@ export class ClientsService {
         'Authorization': 'bearer ' + localStorage.getItem('access_token')
       })
     };
-    let url = 'http://localhost:54183/api/clientTypes';
+    const url = 'http://localhost:54183/api/clientTypes';
     return this.http.get<ClientType[]>(url, httpOptions);
   }
 
-  postClient(client: Client, uploadSuccess: number){
-    return this.http.post('http://localhost:54183/api/user',client)
-      .subscribe( res => 
-        {console.log(res);
-          uploadSuccess = 1;
-       },
-      err => {
-        console.log("Error Occured");
-        uploadSuccess = 0;
-       }
-       );
+  postClient(client: Client) {
+    return this.http.post('http://localhost:54183/api/user', client);
     }
   }

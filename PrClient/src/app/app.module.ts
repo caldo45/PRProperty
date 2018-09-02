@@ -40,6 +40,7 @@ import { UpdatePropertyComponent } from './update-property/update-property.compo
 import { AddLeaseComponent } from './add-lease/add-lease.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ContractNotificationsComponent } from './contract-notifications/contract-notifications.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -88,7 +89,11 @@ import { ContractNotificationsComponent } from './contract-notifications/contrac
 
 
   ],
-  providers: [PropertyService, AuthService],
+  providers: [
+    PropertyService,
+    AuthService,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

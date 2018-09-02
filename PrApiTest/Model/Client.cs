@@ -21,7 +21,7 @@ namespace PrApiTest.Model
         public String LastName { get; set; }
 
         [Column("dob")]
-        public String Dob { get; set; }
+        public DateTime Dob { get; set; }
 
         [Column("phone")]
         public String Phone { get; set; }

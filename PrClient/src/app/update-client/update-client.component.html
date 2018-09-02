@@ -1,4 +1,8 @@
 <div class="container list-object">
+  <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+    {{userMessage}}
+  </div>
+
   <form #addUserForm="ngForm" *ngIf="client">
 
     <div class="form-group" [class.has-error]="firstName.invalid && firstName.touched">
@@ -26,6 +30,7 @@
         </div>
     </div>
 
+
     <div class="form-group" [class.has-error]="phone.invalid && phone.touched">
       <label for="inputPhone" class="field-name" >Phone Number</label>
       <input #phone type="text" pattern="^[0-9-+s()]*$" class="form-control" required id="inputPhone" name="inputPhone" [(ngModel)]="client.phone" placeholder="Enter Phone Number">
@@ -34,16 +39,16 @@
         </div>
     </div>
 
-
-    <!-- <div class="form-group">
+<!-- 
+  <div class="form-group">
       <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
       <input  type="date" class="form-control" required id="inputDob" [ngModel]="client.dob | date:'yyyy-MM-dd'" name="inputDob">
       
-    </div> -->
+    </div>  -->
 
     <div class="form-group" [class.has-error]="dob.invalid && dob.touched">
       <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
-      <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [ngModel]="client.dob | date:'yyyy-MM-dd'" value="02-04-2016">
+      <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [(ngModel)]="client.dob">
       <div *ngIf="dob.invalid && dob.touched">
           Date of Birth is Required
         </div>
@@ -55,6 +60,6 @@
       <option *ngFor="let clientType of clientTypes" [value]=clientType.id> {{clientType.type}}</option>
     </select>
     </div>
-    <button type="submit" class="btn btn-green" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
+    <button type="submit" class="btn primary" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
   </form>
   </div>
