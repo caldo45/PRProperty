@@ -34,7 +34,7 @@ export class AddPropertyImageComponent implements OnInit {
     });
   }
 
-  upload(files, path, imgPaths, id) {
+  upload(files, path, id) {
     if (files.length === 0)
       return;
 

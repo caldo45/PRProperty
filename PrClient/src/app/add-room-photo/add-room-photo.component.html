@@ -1,7 +1,7 @@
 <div class="container">
   <div class="card">
     <h5 *ngIf="room">Upload Images for Room - {{room.roomName}} - {{room.property.firstLineAddress}}</h5>
-    <input #file type="file" multiple (change)="upload(file.files, path, imgPath, id)" />
+    <input #file type="file" multiple (change)="upload(file.files, path, imgPaths, id)" />
     <br/>
     <div class="holder">
       <img *ngFor="let img of roomImages" [src]="img.imagePath" style="max-width: 500px; max-height: 500px;">     

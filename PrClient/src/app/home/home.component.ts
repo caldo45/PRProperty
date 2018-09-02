@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   readNotifications: ContractNotification[] = [];
 
 
-  constructor(private notificationService: NotificationService, private authService: AuthService) { }
+  constructor(private notificationService: NotificationService, public authService: AuthService) { }
 
   ngOnInit() {
     this.notificationService.activateNotifications(1);
