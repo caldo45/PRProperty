@@ -11,7 +11,7 @@ using PrApiTest.Repositories;
 
 namespace PrApiTest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class ClientTypesController : Controller
     {

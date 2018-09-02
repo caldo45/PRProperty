@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import * as auth0 from 'auth0-js';
+import * as auth0 from '../../../node_modules/auth0-js/build/auth0.min.js';
 
 (window as any).global = window;
 
@@ -16,8 +16,10 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'PrPropertiesAPI',
     redirectUri: 'http://localhost:4200/callback',
-    scope: 'openid'
+    scope: 'openid profile email role:admin'
   });
+
+  userProfile: any;
 
   constructor(public router: Router) {}
 
@@ -25,12 +27,26 @@ export class AuthService {
     this.auth0.authorize();
   }
 
+  public setProfile(): void {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access Token must exist to fetch profile');
+    }
+    const self = this;
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+    });
+  }
+
   public handleAuthentication(): void {
-    
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
+        console.table(authResult.idTokenPayload);
+        // this.setProfile();
         this.router.navigate(['/home']);
       } else if (err) {
         this.router.navigate(['/home']);

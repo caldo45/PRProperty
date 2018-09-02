@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using PrApiTest.Database;
 using PrApiTest.Repositories;
 
@@ -36,7 +37,11 @@ namespace PrApiTest
             {
                 options.Authority = "https://cmcgrathweb.eu.auth0.com/";
                 options.Audience = "PrPropertiesAPI";
-
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/roles"
+                };
             });
 
             services.AddDbContext<UserDbContext>(options => { options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")); });
