@@ -45,6 +45,11 @@ namespace PrApiTest.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Property property)
         {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400, ModelState);
+            }
+
             if (property.Id == 0)
             {
                 var added = _repository.AddProperty(property);
@@ -65,10 +70,10 @@ namespace PrApiTest.Controllers
             return Ok(propertyImages);
         }
 
-        [HttpGet("image/{propertyId}")]
-        public IActionResult GetImageByProperty(int propertyId)
+        [HttpGet("allProperties")]
+        public IActionResult GetAllPropertiesImages()
         {
-            var propertyImages = _repository.GetPropertyImages(propertyId);
+            var propertyImages = _repository.GetAllPropertiesImages();
             return Ok(propertyImages);
         }
 

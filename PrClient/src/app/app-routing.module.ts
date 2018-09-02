@@ -27,6 +27,7 @@ import { RouteGuardService } from './services/route-guard.service';
 import { UpdateClientComponent } from './update-client/update-client.component';
 import { UpdatePropertyComponent } from './update-property/update-property.component';
 import { AddLeaseComponent } from './add-lease/add-lease.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent},
@@ -51,7 +52,8 @@ const routes: Routes = [
   { path: 'updateClient/:id', component: UpdateClientComponent},
   { path: 'updateProperty/:id', component: UpdatePropertyComponent},
   { path: 'addLease/:id', component: AddLeaseComponent},
-  { path: 'callback', component: CallbackComponent}
+  { path: 'callback', component: CallbackComponent},
+  { path: 'notifications', component: NotificationsComponent}
  // { path: '**', component: PageNotFoundComponent }
 ]
 

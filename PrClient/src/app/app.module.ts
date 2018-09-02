@@ -38,6 +38,8 @@ import { AddUpdateLeaseComponent } from './add-update-lease/add-update-lease.com
 import { UpdateClientComponent } from './update-client/update-client.component';
 import { UpdatePropertyComponent } from './update-property/update-property.component';
 import { AddLeaseComponent } from './add-lease/add-lease.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ContractNotificationsComponent } from './contract-notifications/contract-notifications.component';
 
 
 
@@ -68,7 +70,9 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
     AddUpdateLeaseComponent,
     UpdateClientComponent,
     UpdatePropertyComponent,
-    AddLeaseComponent
+    AddLeaseComponent,
+    NotificationsComponent,
+    ContractNotificationsComponent
   ],
   imports: [
     BrowserModule,

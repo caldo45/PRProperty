@@ -1,26 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { AuthService } from '../services/auth.service';
-import { NotificationsComponent } from '../notifications/notifications.component';
 import { ContractNotification } from '../models/ContractNotification';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-notifications',
+  templateUrl: './notifications.component.html',
+  styleUrls: ['./notifications.component.css']
 })
-export class HomeComponent implements OnInit {
+export class NotificationsComponent implements OnInit {
+
+
+  constructor(private notificationService: NotificationService) { }
 
   contractNotifications: ContractNotification[];
   unreadNotifications: ContractNotification[] = [];
   readNotifications: ContractNotification[] = [];
 
-
-  constructor(private notificationService: NotificationService, private authService: AuthService) { }
-
   ngOnInit() {
-    this.notificationService.activateNotifications(1);
-    this.getAndSortNotifications(this.contractNotifications, this.unreadNotifications,this.readNotifications );     
+    this.getAndSortNotifications(this.contractNotifications, this.unreadNotifications,this.readNotifications );
+  }
+
+  markAsRead(contractNotification: ContractNotification){
+    contractNotification.markedRead = 1;
+    this.notificationService.markContractNotificationAsRead(contractNotification);
   }
 
   getAndSortNotifications(contractNotifications: ContractNotification[], unreadNotifications: ContractNotification[], readNotifications: ContractNotification[] ){

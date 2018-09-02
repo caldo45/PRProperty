@@ -32,8 +32,8 @@ export class PropertyService {
     return this.http.get<PropertyImage[]>(url);
   }
 
-  getPropertyImage(propertyId: number): Observable<PropertyImage>{
-    let url =  environment.baseUrl + '/api/properties/image/'+propertyId;
+  getAllPropertiesImages(): Observable<PropertyImage>{
+    let url =  environment.baseUrl + '/api/properties/allImages';
     return this.http.get<PropertyImage>(url);
   }
 
@@ -44,6 +44,7 @@ export class PropertyService {
        },
       err => {
         console.log("Error Occured");
+        console.log(err);
        }
        );
     }

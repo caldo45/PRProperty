@@ -1,0 +1,16 @@
+<div class="container" *ngIf="unreadNotifications"><h3 class="primary">Unread Notifications</h3>
+    <div *ngFor="let notification of unreadNotifications">
+        <div class="alert alert-info" role="alert">
+         {{notification.contract.client.firstName}} {{notification.contract.client.lastName}} contract will end in {{notification.contractNotificationType.notificationType}}. Added on {{notification.dateAdded | date: 'dd/MM/yyyy'}}
+         <button class="primary float-right" (click)="markAsRead(notification, contractNotifications, unreadNotifications, readNotifications)">Mark As Read</button>
+          </div>
+     </div> 
+     <h4 *ngIf="unreadNotifications.length ==0" class="mt-5 mb-5"> There are no New Notifications</h4>  
+</div>
+<div class="container" *ngIf="readNotifications">Read Notifications
+        <div *ngFor="let notification of readNotifications">
+            <div class="alert alert-light" role="alert">
+             {{notification.contract.client.firstName}} {{notification.contract.client.lastName}} contract will end in {{notification.contractNotificationType.notificationType}}. Added on {{notification.dateAdded | date: 'dd/MM/yyyy'}}
+              </div>
+         </div>
+    </div>

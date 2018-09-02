@@ -3,6 +3,7 @@ import { Property } from '../models/property';
 import { PropertyService } from '../services/property.service';
 import { LeaseService } from '../services/lease.service';
 import { Lease } from '../models/lease';
+import { PropertyImage } from '../models/propertyImage';
 
 @Component({
   selector: 'app-properties',
@@ -16,6 +17,7 @@ export class PropertiesComponent implements OnInit {
   filteredProperties: Property[] = [];
   pageTitle: 'Properties';
   activeLeases: Lease[];
+  propertiesImages: PropertyImage[];
 
   constructor(private propertyService:PropertyService, private leaseService: LeaseService) { 
     this.filteredProperties = this.properties;
@@ -50,7 +52,8 @@ export class PropertiesComponent implements OnInit {
         for(let lease of this.activeLeases){
           for(let property of this.properties){
             if(lease.propertyId == property.id){
-              (property.lease = lease) && (property.activeLease = 1)
+              (property.lease = lease) && (property.activeLease = 1);
+              this.propertyService.getAllPropertiesImages();
             }
           }
         

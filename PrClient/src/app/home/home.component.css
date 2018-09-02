@@ -14,3 +14,24 @@
 .fontawesome-button:hover {
     background-color: #6c8d85;
 }
+
+.icon{
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    align-content: center; 
+    position: relative;
+
+}
+
+.notify-badge{
+    position: absolute;
+    right:-20px;
+    top:10px;
+    background:red;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding:5px 10px;
+    font-size:20px;
+}

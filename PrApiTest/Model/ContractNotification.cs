@@ -23,6 +23,9 @@ namespace PrApiTest.Model
         [Column("contract_notification_type_id")]
         public int ContractNotificationTypeId { get; set; }
 
+        [Column("date_added")]
+        public DateTime DateAdded { get; set; }
+
         public virtual ContractNotificationType ContractNotificationType { get; set; }
 
 

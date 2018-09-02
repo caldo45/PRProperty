@@ -14,6 +14,6 @@ export class Contract {
     paymentDate: number;
     paymentTypeId: number;
     paymentType: PaymentType;
-    depositPaid: Boolean;
+    depositPaid: number;
     paymentReference: String;
 }

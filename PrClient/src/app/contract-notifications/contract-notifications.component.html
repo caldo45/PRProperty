@@ -1,0 +1,5 @@
+<div class="container">
+    <div class="alert alert-info" *ngFor="let notification of contractNotifications" role="alert">
+        {{contractNotification.contact.client.firstName}} {{contractNotification.contact.client.lastName}} contract will end in {{contractNotification.contractNotificationType.notificationType}}
+      </div>
+</div>

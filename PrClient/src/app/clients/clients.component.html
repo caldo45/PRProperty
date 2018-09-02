@@ -1,33 +1,33 @@
-<div class = 'container'>
-  <div class='card'>
-    <div class='card-header'>
-        {{pageTitle}}
-    </div>
-    <div class='row small-padding'>
-        <div class='col-md-2'> Filter By</div>
-            <div class='col-md-4'>
-                <input type='text' class="form-control" 
-                    [(ngModel)]='listFilter'/>
+<div class="container first-container">
+    <header class="jumbotron search-bar small-padding">
+             
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]='listFilter' placeholder="Search..." aria-label="search">
+          </div>
+          <span class="input-group-text" id="basic-addon1">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-primary" *ngFor="let clientType of clientTypes" [class.active]="filters.clientType===clientType.id.toString()">
+                  <input type="radio" name="clientType" id="tenant" value="{{clientType.id}}" (click)="changeClientType(clientType)"> {{clientType.type}}
+                </label>
+              
             </div>
-            <div class="col-md-4">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-primary" *ngFor="let clientType of clientTypes" [class.active]="filters.clientType===clientType.id.toString()">
-                        <input type="radio" name="clientType" id="tenant" value="{{clientType.id}}" (click)="changeClientType(clientType)"> {{clientType.type}}
-                      </label>
-                  </div>      
-            </div>
-        </div>
-    </div>
-  </div>      
-        <div class="container">
-          <div class="card" *ngFor="let client of filteredClients">
-            <div class="row ">
-              <div class="col-md-2">
-                  <img src="{{client.imagePath}}"  style="max-width: 100%; height: auto; margin-bottom: 5px;">
-                </div>
-                <div class="col-md-8 px-3">
+          </span>      
+
+     
+    </header> 
+    <div class="row mb-5">
+        <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let client of filteredClients">
+            <div class="card">
+                <img class="card-img-top" src="{{client.imagePath}}">
+                <div class="card-body">
+                    <h4 class="card-title text-center primary-text">
+                        {{client.firstName}} {{client.lastName}} - {{client.clientType.type}}</h4>
                   <div class="card-block px-3">
-                    <h4 class="card-title">{{client.firstName}} {{client.lastName}} - {{client.clientType.type}}</h4>
                     <p class="card-text">{{client.email}} {{client.phone}} </p>
                     <a [routerLink]="['/clients', client.id]" class="btn btn-primary">Profile</a>
                   </div>

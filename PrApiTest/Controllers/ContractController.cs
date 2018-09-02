@@ -68,6 +68,12 @@ namespace PrApiTest.Controllers
         public IActionResult Post([FromBody]Contract contract)
         {
             var added = _repository.AddContract(contract);
+
+            if (added.Id == 0)
+            {
+                return StatusCode(400, "Contract exists or overlaps");
+            }
+
             return StatusCode(201, added);
         }
 

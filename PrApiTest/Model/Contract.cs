@@ -39,7 +39,7 @@ namespace PrApiTest.Model
         public virtual PaymentType PaymentType { get; set; }
 
         [Column("deposit_paid")]
-        public String DepositPaid { get; set; }
+        public int DepositPaid { get; set; }
 
         [Column("contract_path")]
         public String ContractPath { get; set; }
