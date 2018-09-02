@@ -28,6 +28,9 @@ namespace PrApiTest.Model
 
         public virtual ContractNotificationType ContractNotificationType { get; set; }
 
+        [Column("deleted")]
+        public int Deleted { get; set; }
+
 
     }
 }

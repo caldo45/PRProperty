@@ -9,4 +9,5 @@ export class ContractNotification{
     contractNotificationType: ContractNotificationType
     contract: Contract;    
     dateAdded: Date;
+    deleted: number;
 }
