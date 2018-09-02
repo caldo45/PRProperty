@@ -33,14 +33,14 @@ export class PaymentsComponent implements OnInit {
   updatePayments() {
     if (this.startDate) {
       this.filteredPayments = this.payments.filter(payment =>
-        payment.date >= this.startDate);
+        new Date(payment.date).getTime() >= new Date(this.endDate).getTime());
     } else {
       this.filteredPayments = this.payments;
     }
 
     if (this.endDate) {
-      this.filteredPayments = this.filteredPayments.filter(payment => 
-        payment.date <= this.endDate);
+      this.filteredPayments = this.filteredPayments.filter(payment =>
+        new Date(payment.date).getTime() <= new Date(this.endDate).getTime());
     }
   }
 
