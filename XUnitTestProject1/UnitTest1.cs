@@ -1,5 +1,5 @@
-using PrApiTest.Extensions;
-using PrApiTest.Model;
+using PrApi.Extensions;
+using PrApi.Model;
 using System;
 using Xunit;
 

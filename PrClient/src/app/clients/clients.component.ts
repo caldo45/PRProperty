@@ -15,6 +15,7 @@ export class ClientsComponent implements OnInit {
   filteredClients: Client[] = [];
   filters: {clientType:string} = {clientType:""};
   clientTypes: ClientType[];
+  loading: boolean = false;
 
   constructor(private clientsService:ClientsService) { 
   this.filteredClients = this.clients;
@@ -22,6 +23,7 @@ export class ClientsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.clientsService.getClients()
       .subscribe(response => {
       this.clients = response;
@@ -32,7 +34,9 @@ export class ClientsComponent implements OnInit {
             if(response && response[0]){
               this.filters.clientType = response[0].id.toString();
               this.filteredClients = this.performFilter("");
-            }
+              
+            } 
+            this.loading = false;
         });
       });
     

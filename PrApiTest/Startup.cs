@@ -10,10 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PrApiTest.Database;
-using PrApiTest.Repositories;
+using PrApi.Database;
+using PrApi.Repositories;
 
-namespace PrApiTest
+namespace PrApi
 {
     public class Startup
     {

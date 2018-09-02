@@ -29,7 +29,7 @@ export class NotificationService {
     }
 
     markContractNotificationAsRead(contractNotification: ContractNotification){
-      return this.http.post('http://localhost:54183/api/notifications/asRead',contractNotification)
+      return this.http.post(environment.baseUrl +'/api/notifications/asRead',contractNotification)
       .subscribe( res => 
         {console.log(res);
        },

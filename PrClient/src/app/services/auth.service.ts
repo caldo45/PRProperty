@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from '../../../node_modules/auth0-js/build/auth0.js';
+import { environment } from '../environment';
 
 (window as any).global = window;
 
@@ -15,7 +16,7 @@ export class AuthService {
     domain: 'cmcgrathweb.eu.auth0.com',
     responseType: 'token id_token',
     audience: 'PrPropertiesAPI',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: environment.redirectUri,
     scope: 'openid profile'
   });
 

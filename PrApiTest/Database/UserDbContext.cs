@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PrApiTest.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySqlX.XDevAPI.Relational;
+using PrApi.Model;
 
-namespace PrApiTest.Database
+namespace PrApi.Database
 {
     public class UserDbContext : DbContext
     {

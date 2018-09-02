@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 
-namespace PrApiTest
+namespace PrApi
 {
     public class Program
     {

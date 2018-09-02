@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PrApiTest.Model
+namespace PrApi.Model
 {
     [Table("contract_notification_type")]
     public class ContractNotificationType

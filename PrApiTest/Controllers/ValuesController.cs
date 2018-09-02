@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PrApiTest.Database;
-using PrApiTest.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using PrApi.Database;
+using PrApi.Repositories;
 
-namespace PrApiTest.Controllers
+namespace PrApi.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller

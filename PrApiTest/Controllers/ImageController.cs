@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using PrApiTest.Repositories;
+using PrApi.Repositories;
 
-namespace PrApiTest.Controllers
+namespace PrApi.Controllers
 {
     [Route("api/[controller]")]
     public class ImagesController : Controller

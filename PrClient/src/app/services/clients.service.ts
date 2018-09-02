@@ -36,11 +36,11 @@ export class ClientsService {
         'Authorization': 'bearer ' + localStorage.getItem('access_token')
       })
     };
-    const url = 'http://localhost:54183/api/clientTypes';
+    const url =environment.baseUrl + '/api/clientTypes';
     return this.http.get<ClientType[]>(url, httpOptions);
   }
 
   postClient(client: Client) {
-    return this.http.post('http://localhost:54183/api/user', client);
+    return this.http.post(environment.baseUrl + '/api/user', client);
     }
   }

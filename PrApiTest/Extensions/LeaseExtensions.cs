@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PrApiTest.Model;
+using PrApi.Model;
 
-namespace PrApiTest.Extensions
+namespace PrApi.Extensions
 {
     public static class LeaseExtensions
     {

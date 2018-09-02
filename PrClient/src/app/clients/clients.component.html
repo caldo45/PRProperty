@@ -1,5 +1,8 @@
 <div class="container first-container">
-    <header class="jumbotron search-bar small-padding">
+    <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+      </div>
+    <header class="jumbotron search-bar small-padding" *ngIf="!loading && filteredClients.length > 0 ">
              
         <div class="input-group">
           <div class="input-group-prepend">
@@ -19,7 +22,8 @@
           </span>      
 
      
-    </header> 
+    </header>
+
     <div class="row mb-5">
         <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let client of filteredClients">
             <div class="card">
@@ -34,5 +38,5 @@
                 </div>      
               </div>
             </div>
-            <div *ngIf="filteredClients.length === 0">No results found</div>
+            <div *ngIf="filteredClients.length === 0 && !loading">No results found</div>
           </div>

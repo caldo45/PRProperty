@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PrApiTest.Database;
-using PrApiTest.Model;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using PrApiTest.Extensions;
+using PrApi.Extensions;
 using System.Net;
 using System.Net.Http;
 using Microsoft.EntityFrameworkCore.Migrations.Design;
+using PrApi.Database;
+using PrApi.Model;
 using Remotion.Linq.Clauses;
 
-namespace PrApiTest.Repositories
+namespace PrApi.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -54,6 +54,16 @@ namespace PrApiTest.Repositories
             var propertyImage = _db.PropertyImages;
             return propertyImage;
         }
+
+//        public IEnumerable<PropertyImage> GetOneImageForEachProperty()
+//        {
+//            var propertyImages = _db.PropertyImages;
+//            foreach(PropertyImage image in propertyImages)
+//            {
+//                if()
+//            }
+//            return propertyImage;
+//        }
 
         public Client GetUser(int id)
         {
@@ -356,6 +366,7 @@ namespace PrApiTest.Repositories
             var lease = _db.Lease.FirstOrDefault(l => l.PropertyId == contract.Room.PropertyId && l.DateFrom <= contract.DateFrom && l.DateTo >= contract.DateTo);
             return lease;
         }
+
 
         public IEnumerable<Lease> GetLeases()
         {

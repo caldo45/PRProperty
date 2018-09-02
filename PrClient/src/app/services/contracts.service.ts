@@ -18,6 +18,12 @@ export class ContractsService {
     return this.http.get<Contract[]>(url);
   }
 
+  getContract(contractId: number): Observable<Contract>{
+    let url = environment.baseUrl + '/api/contract/'+contractId;
+    return this.http.get<Contract>(url);
+  }
+
+
   getActiveContract(roomId: number): Observable<Contract>{
     let url = environment.baseUrl + '/api/contract/activeByRoom'+roomId;
     return this.http.get<Contract>(url);

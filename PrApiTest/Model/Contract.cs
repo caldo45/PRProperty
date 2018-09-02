@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PrApiTest.Model
+namespace PrApi.Model
 {
     public class Contract
     {
@@ -39,7 +39,7 @@ namespace PrApiTest.Model
         public virtual PaymentType PaymentType { get; set; }
 
         [Column("deposit_paid")]
-        public int DepositPaid { get; set; }
+        public Boolean DepositPaid { get; set; }
 
         [Column("contract_path")]
         public String ContractPath { get; set; }

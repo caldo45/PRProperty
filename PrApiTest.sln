@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrApiTest", "PrApiTest\PrApiTest.csproj", "{108F82D4-9B1B-4B94-8C55-736D2FE33BE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrApi", "PrApiTest\PrApi.csproj", "{108F82D4-9B1B-4B94-8C55-736D2FE33BE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{692D88B5-61C5-4E01-A719-B2C6B9E6D3AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{692D88B5-61C5-4E01-A719-B2C6B9E6D3AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

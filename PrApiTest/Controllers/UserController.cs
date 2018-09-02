@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PrApiTest.Model;
-using PrApiTest.Database;
+using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using PrApiTest.Repositories;
 using System.IO;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Web;
+using PrApi.Model;
+using PrApi.Repositories;
 
-namespace PrApiTest.Controllers
+namespace PrApi.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller

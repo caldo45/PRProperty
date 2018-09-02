@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PrApiTest.Model;
-using PrApiTest.Database;
+using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using PrApiTest.Repositories;
+using PrApi.Model;
+using PrApi.Repositories;
 
-namespace PrApiTest.Controllers
+namespace PrApi.Controllers
 {
     [Route("api/[controller]")]
     public class NextOfKinController : Controller

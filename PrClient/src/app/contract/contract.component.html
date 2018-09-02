@@ -1,3 +1,18 @@
-<p>
-  contract works!
-</p>
+<div class="container">
+<div class="card" *ngIf="contract">
+    <div class="card-body">
+      <h5 class="card-title">Contract</h5>
+      <div class="col-lg-2 col-md-2 sm-4 mb-4">
+        <p class="card-title"><strong>Property: </strong><a [routerLink]="['/properties', contract.room.propertyId]" class="btn btn-primary">{{contract.room.property.firstLineAddress}}</a></p>
+        <p class="card-title"><strong>Tenant: </strong><a [routerLink]="['/clients', contract.clientId]" class="btn btn-primary">{{contract.client.firstName}} {{contract.client.lastName}}</a></p>
+        <p class="card-title"><strong>Room: </strong><a [routerLink]="['/room', contract.roomId]" class="btn btn-primary">{{contract.room.roomName}}</a></p>      
+     </div>
+     <div class="col-lg-4 col-md-4 sm-6 mb-3">
+      <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
+      <p class="card-title"><strong>Start Date: </strong>{{contract.dateFrom | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>End Date: </strong> {{contract.dateTo | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>Deposit Paid: </strong> <i class="fas fa-check" *ngIf="contract.depositPaid == 1"></i><i class="fas fa-times" *ngIf="contract.depositPaid == 0"></i>
+    </div>
+    </div>
+  </div>
+</div>

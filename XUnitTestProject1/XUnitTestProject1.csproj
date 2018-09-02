@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PrApiTest\PrApiTest.csproj" />
+    <ProjectReference Include="..\PrApiTest\PrApi.csproj" />
   </ItemGroup>
 
 </Project>

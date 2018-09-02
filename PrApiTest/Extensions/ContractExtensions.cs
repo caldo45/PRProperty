@@ -1,10 +1,10 @@
-﻿using PrApiTest.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PrApi.Model;
 
-namespace PrApiTest.Extensions
+namespace PrApi.Extensions
 {
     public static class ContractExtensions
     {

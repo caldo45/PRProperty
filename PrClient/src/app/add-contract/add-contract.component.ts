@@ -28,6 +28,7 @@ export class AddContractComponent implements OnInit {
   client: Client;
   contract: Contract;
   paymentTypes: PaymentType[];
+  depositPaid: number;
 
   userMessage: string = null;
 
@@ -52,6 +53,7 @@ export class AddContractComponent implements OnInit {
 
   addContract(contract: Contract) {
     this.userMessage = null;
+    console.log(contract);
       this.contractService.postContract(this.contract)
         .subscribe( res => 
         {

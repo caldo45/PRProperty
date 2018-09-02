@@ -1,12 +1,12 @@
-﻿using PrApiTest.Model;
-using PrApiTest.Database;
+﻿using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PrApi.Model;
 
-namespace PrApiTest.Repositories
+namespace PrApi.Repositories
 {
     public interface IUserRepository
     {

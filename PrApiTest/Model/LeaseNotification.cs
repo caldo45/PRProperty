@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PrApiTest.Model
+namespace PrApi.Model
 {
     [Table("lease_notifcations")]
     public class LeaseNotification
