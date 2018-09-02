@@ -1,8 +1,39 @@
-<div class="container">
-  <button routerLink="/clients" class="btn-primary rounded fontawesome-button "><i class="far fa-user fa-7x"></i><br><p class="button-font">Clients</p></button>
-  <button routerLink="/properties" class="btn-primary rounded fontawesome-button"><i class="fas fa-home fa-7x"></i><br><p class="button-font">Properties</p></button>
-  <button routerLink="/payments" class="btn-primary rounded fontawesome-button"><i class="fas fa-pound-sign fa-7x"></i><br><p class="button-font">Payments</p></button>
-  <button routerLink="/addUser" class="btn-primary rounded fontawesome-button"><i class="fas fa-user-plus fa-7x"></i><br><p class="button-font">Add Client</p></button>
-  <button routerLink="/addProperty" class="btn-primary rounded fontawesome-button"><i class="fas fa-plus fa-7x"></i><br><p class="button-font">Add Property</p></button>
-  <button class="btn-primary rounded fontawesome-button"><i class="far fa-flag fa-7x"></i><br><p class="button-font">Notifications</p></button>
+<div class="container" *ngIf="authService.isAuthenticated()">
+    <div class="container first-container">
+        <div class="row mb-5">
+          <div class="col-sm-3">
+              <div class="card" routerLink="/clients" style="width: 18rem;">
+                  <img class="card-img-top icon" src="../../assets/icons/user.png" alt="Card image cap">
+                  <div class="card-body">
+                    <h3 class="card-text text-center">Clients</h3>
+                  </div>
+                </div>
+          </div>
+          <div class="col-sm-3">
+              <div class="card" routerLink="/properties" style="width: 18rem;">
+                  <img class="card-img-top icon" src="../../assets/icons/house.png" alt="Card image cap">
+                  <div class="card-body">
+                    <h3 class="card-text text-center">Properties</h3>
+                  </div>
+                </div>
+
+        </div>
+        <div class="col-sm-3">
+            <div class="card" routerLink="/payments" style="width: 18rem;">
+                <img class="card-img-top icon" src="../../assets/icons/payment.png" alt="Card image cap">
+                <div class="card-body">
+                  <h3 class="card-text text-center">Payments</h3>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card" routerLink="/notifications" style="width: 18rem;">
+              <span class="notify-badge" *ngIf="unreadNotifications">{{unreadNotifications.length}}</span>
+                <img class="card-img-top icon" src="../../assets/icons/notification.png" alt="Card image cap">
+                <div class="card-body">
+                  <h3 class="card-text text-center">Notifications</h3>
+                </div>
+              </div>
+        </div>
+        </div>
 </div>

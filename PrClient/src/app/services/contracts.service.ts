@@ -51,13 +51,6 @@ export class ContractsService {
   }
 
   postContract(contract: Contract){
-    return this.http.post(environment.baseUrl + '/api/contract',contract)
-      .subscribe( res => 
-        {console.log(res);
-       },
-      err => {
-        console.log("Error Occured");
-       }
-       );
+    return this.http.post(environment.baseUrl + '/api/contract',contract);     
     }
 }

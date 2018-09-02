@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using PrApiTest.Model;
 using PrApiTest.Database;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using PrApiTest.Repositories;
 
 namespace PrApiTest.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class ClientTypesController : Controller
     {

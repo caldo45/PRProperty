@@ -32,13 +32,14 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { HomeComponent } from './home/home.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material';
+import { AuthService } from './services/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 import { AddUpdateLeaseComponent } from './add-update-lease/add-update-lease.component';
 import { UpdateClientComponent } from './update-client/update-client.component';
 import { UpdatePropertyComponent } from './update-property/update-property.component';
 import { AddLeaseComponent } from './add-lease/add-lease.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ContractNotificationsComponent } from './contract-notifications/contract-notifications.component';
 
 
 
@@ -65,10 +66,13 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
     PaymentsComponent,
     AddPaymentComponent,
     HomeComponent,
+    CallbackComponent,
     AddUpdateLeaseComponent,
     UpdateClientComponent,
     UpdatePropertyComponent,
-    AddLeaseComponent
+    AddLeaseComponent,
+    NotificationsComponent,
+    ContractNotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -80,15 +84,11 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
     }),
     AgmDirectionModule,
     PapaParseModule,
-    NgbModule,
-    MatButtonModule, 
-    MatCheckboxModule, 
-    BrowserAnimationsModule,
-    MatCardModule, 
+    NgbModule
 
 
   ],
-  providers: [PropertyService],
+  providers: [PropertyService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

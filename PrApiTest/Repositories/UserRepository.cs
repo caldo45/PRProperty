@@ -37,8 +37,6 @@ namespace PrApiTest.Repositories
             return properties;
         }
 
-
-
         public Property GetProperty(int id)
         {
             var property = _db.Properties.Include(c => c.Landlord).FirstOrDefault(b => b.Id == id);
@@ -51,9 +49,9 @@ namespace PrApiTest.Repositories
             return propertyImages;
         }
 
-        public PropertyImage GetPropertyImage(int propertyId)
+        public IEnumerable<PropertyImage> GetAllPropertiesImages()
         {
-            var propertyImage = _db.PropertyImages.FirstOrDefault(p => p.PropertyId == propertyId);
+            var propertyImage = _db.PropertyImages;
             return propertyImage;
         }
 
@@ -325,10 +323,8 @@ namespace PrApiTest.Repositories
                 _db.SaveChanges();
                 return contract;
             }
-            else
-            {
-               throw new HttpRequestException("Contract Overlaps With Another for this Room Or Client, Please Amend Dates");
-            }
+
+            return contract;
 
         }
 
@@ -534,6 +530,7 @@ namespace PrApiTest.Repositories
 
                 if (exists == 0)
                 {
+                    notification.DateAdded = DateTime.Now;
                     _db.ContractNotifications.Add(notification);
                 }
             }
@@ -562,7 +559,8 @@ namespace PrApiTest.Repositories
 
         public IEnumerable<ContractNotification> GetContractNotifications()
         {
-            var contractNotifications = _db.ContractNotifications;
+            var contractNotifications = _db.ContractNotifications
+                .Include(n => n.Contract).Include(n => n.Contract.Client).Include(n => n.ContractNotificationType);
             return contractNotifications;
         }
 
@@ -575,6 +573,14 @@ namespace PrApiTest.Repositories
         public ContractNotification AddContractNotification(ContractNotification contractNotification)
         {
             _db.ContractNotifications.Add(contractNotification);
+            _db.SaveChanges();
+            return contractNotification;
+        }
+
+        public ContractNotification markAsRead(ContractNotification contractNotification)
+        {
+
+            _db.Entry(contractNotification).State = EntityState.Modified;
             _db.SaveChanges();
             return contractNotification;
         }

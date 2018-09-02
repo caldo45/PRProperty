@@ -10,7 +10,7 @@ agm-map {
     max-width: 500px;
     max-height:300px;
     height: auto;
-  object-fit: cover;
+    object-fit: cover;
     align-content: center; 
 }
 

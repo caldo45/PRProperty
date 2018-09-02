@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PrApiTest.Model;
 using PrApiTest.Repositories;
 
 namespace PrApiTest.Controllers
@@ -37,6 +38,15 @@ namespace PrApiTest.Controllers
                 
             }
             return StatusCode(201);
+        }
+
+        [HttpPost("asRead")]
+        public IActionResult PostRead([FromBody]ContractNotification contractNotification
+        )
+        {
+            var updated = _repository.markAsRead(contractNotification);
+            return StatusCode(201);
+
         }
     }
 }

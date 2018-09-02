@@ -5,6 +5,7 @@ export class Client {
     firstName: string;
     lastName: string;
     dob: string;
+    dobDate: Date;
     phone: string;
     email: string;
     imagePath: string;

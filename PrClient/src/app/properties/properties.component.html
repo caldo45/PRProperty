@@ -1,52 +1,41 @@
-<div class = 'container'>
-<div class='card'>
-  <div class='card-header'>
-      Properties
-  </div>
-  <div class='row'>
-      <div class='col-md-2'> Filter By</div>
-          <div class='col-md-4'>
-              <input type='text' 
-                  [(ngModel)]='listFilter'/>
-          </div>
-      </div>
-  </div>
-</div>      
-      <div class="container">
-        <div class="card" *ngFor="let property of filteredProperties">
-          <div class="row ">
-            <div class="col-md-2 col-sm-2 col-4">
-                <img src="https://1203179244.rsc.cdn77.org/hd/p/517647/10924875.jpg"  class="list-photo">
-              </div>
-              <div class="col-md-8 col-sm-8 col-8">
-                <div class="card-block">
-                  <h4 class="card-title card-title-custom">{{property.firstLineAddress}} </h4>
-                  <p class="card-text card-text-custom" *ngIf="property.activeLease == 1">{{property.secondLineAddress}} {{property.landlordId}} - Lease Expires: {{property.lease.dateTo | date: 'dd/MM/yyyy'}}</p> 
-                  <p class="card-text card-text-custom" *ngIf="property.activeLease != 1">{{property.secondLineAddress}} {{property.landlordId}} - Not Currently Leased</p>
-                  <a [routerLink]="['/properties', property.id]" class="btn btn-primary btn-green">More Info</a>
-                  <router-outlet></router-outlet>
+        
+        <div class="container first-container">
+
+            <!-- Jumbotron Header -->
+            <header class="jumbotron search-bar small-padding">
+             
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" [(ngModel)]='listFilter' placeholder="Search..." aria-label="search">
+                </div>
+                <button routerLink="/addProperty" class="btn-primary rounded fontawesome-button mt-4">Add New Property</button>
+             
+            </header>
+        
+            <!-- Page Features -->
+            <div class="row mb-5">
+                
+        
+              <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let property of filteredProperties">
+                <div class="card">
+                  <img class="card-img-top" src="https://1203179244.rsc.cdn77.org/hd/p/517647/10924875.jpg" alt="">
+                  <div class="card-body">
+                    <h4 class="card-title text-center primary-text">
+                        {{property.firstLineAddress}}</h4>
+                    <h6 class="text-center mb-3">{{property.secondLineAddress}} </h6>
+                    <p class="card-text" *ngIf="property.activeLease == 1">
+                      <strong>Lease Expires:</strong> {{property.lease.dateTo | date: 'dd/MM/yyyy'}}</p>
+                      <p class="card-text" *ngIf="property.activeLease != 1">
+                          <strong>Lease Expires:</strong> Not Currently Leased</p>
+                    <p class="card-text">
+                      <strong>Landlord: </strong> {{property.landlord.firstName}}</p>
+                      <a [routerLink]="['/properties', property.id]" class="btn btn-primary btn-green">More Info</a>
+                  </div>
                 </div>
               </div>
-    
-            </div>
-          </div>
-        </div>
-<div class="container">
-  <mat-card class="example-card" *ngFor="let property of filteredProperties">
-    <mat-card-header>
-      <mat-card-title>{{property.firstLineAddress}} </mat-card-title>
-      <mat-card-subtitle>{{property.landlord.firstName}}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-      <p *ngIf="property.activeLease == 1">
-        {{property.secondLineAddress}} {{property.landlordId}} - Lease Expires: {{property.lease.dateTo | date: 'dd/MM/yyyy'}}
-      </p>
-      <p *ngIf="property.activeLease != 1">{{property.secondLineAddress}} {{property.landlordId}} - Not Currently Leased</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+              </div>
+              </div>

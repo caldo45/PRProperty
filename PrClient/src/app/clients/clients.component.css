@@ -2,3 +2,22 @@
     padding: 5px;
 }
 
+.card-img-top{
+    height: 250px;;
+    width: auto; 
+    object-fit: cover;
+    align-content: center; 
+}
+
+h4{
+    font-size: 20pt;
+}
+
+h6{
+    font-size:16pt;
+}
+
+p{
+    font-size: 12pt;
+}
+

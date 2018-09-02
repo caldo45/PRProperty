@@ -29,6 +29,8 @@ export class AddContractComponent implements OnInit {
   contract: Contract;
   paymentTypes: PaymentType[];
 
+  userMessage: string = null;
+
 
   ngOnInit() {
     let clientId = +this.route.snapshot.paramMap.get('id');
@@ -49,10 +51,16 @@ export class AddContractComponent implements OnInit {
   }
 
   addContract(contract: Contract, room) {
-   this.roomService.getRoom(contract.roomId)
-    .subscribe(response => { this.contract.room = response;
-                     this.contractService.postContract(this.contract);
-  });
+    this.userMessage = null;
+      this.contractService.postContract(this.contract)
+        .subscribe( res => 
+        {
+            this.userMessage = "Contract Added"
+        },
+        err => {
+            this.userMessage = "Add Contract Failed - Contract overlaps another for same room"
+        }
+        );;
 }
 
   getRooms(propertyId, rooms){

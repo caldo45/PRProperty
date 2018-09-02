@@ -1,5 +1,8 @@
 <div class="container list-object">
     <h3 *ngIf="client">Add Contract for Tenant - {{client.firstName}} {{client.lastName}}</h3>
+    <div class="alert alert-info" *ngIf="userMessage">
+        {{ userMessage }}
+    </div>
     <form #selectPropertyForm="ngForm">
         <div class="form-group">
             <label for="landlordId" class="field-name" >Property</label>

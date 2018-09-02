@@ -11,6 +11,18 @@
      margin-bottom: 10px;
  }
 
+ h4{
+    font-size: 20pt;
+}
+
+h6{
+    font-size:16pt;
+}
+
+p{
+    font-size: 12pt;
+}
+
  .btn-green{
     background-color: #aad8cd;
     font-size: 10pt;
@@ -24,17 +36,17 @@
     height: auto; 
 }
 
-.example-card {
-    max-width: 400px;
-    display: inline-block;
-    margin: 5px;
-  }
-  
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-  }
+.no-padding{
+    padding: 0px;
+}
 
+.container-fluid{
+    padding: 0px;
+}
+
+.card{
+    display: inline-block;
+}
 
  @media all and (max-width: 500px) {
     .card-title-custom{

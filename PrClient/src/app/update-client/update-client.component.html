@@ -35,9 +35,15 @@
     </div>
 
 
+    <!-- <div class="form-group">
+      <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
+      <input  type="date" class="form-control" required id="inputDob" [ngModel]="client.dob | date:'yyyy-MM-dd'" name="inputDob">
+      
+    </div> -->
+
     <div class="form-group" [class.has-error]="dob.invalid && dob.touched">
       <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
-      <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [(ngModel)]="client.dob" placeholder="Enter DOB">
+      <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [ngModel]="client.dob | date:'yyyy-MM-dd'" value="02-04-2016">
       <div *ngIf="dob.invalid && dob.touched">
           Date of Birth is Required
         </div>

@@ -30,7 +30,7 @@ export class AddPropertyComponent implements OnInit {
 
     addProperty(property: Property) {
       console.log(property);
-     this.propertyService.postProperty(property);
+      this.propertyService.postProperty(property);
     }
 
     onChoseLocation($event){
