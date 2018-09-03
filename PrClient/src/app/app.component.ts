@@ -12,5 +12,6 @@ export class AppComponent {
   constructor(public authService: AuthService) {
     
     authService.handleAuthentication();
+    console.log(authService.userProfile);
   }
 }

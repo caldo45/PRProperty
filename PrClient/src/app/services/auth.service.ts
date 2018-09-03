@@ -22,14 +22,28 @@ export class AuthService {
 
   isAdmin = false;
 
+  userProfile: any;
+
   constructor(public router: Router) {}
 
   public login(): void {
     this.auth0.authorize();
   }
 
+  public setProfile(): void {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access Token must exist to fetch profile');
+    }
+    const self = this;
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+    });
+  }
+
   public handleAuthentication(): void {
-    
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
