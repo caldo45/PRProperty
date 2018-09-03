@@ -20,6 +20,8 @@ export class AuthService {
     scope: 'openid profile'
   });
 
+  isAdmin = false;
+
   constructor(public router: Router) {}
 
   public login(): void {
@@ -28,10 +30,11 @@ export class AuthService {
 
   public handleAuthentication(): void {
     
-    this.auth0.parseHash((err, authResult, test) => {
+    this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
+        this.setRoles(authResult);
         this.router.navigate(['/home']);
       } else if (err) {
         this.router.navigate(['/home']);
@@ -43,11 +46,21 @@ export class AuthService {
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    console.log(authResult.accessToken);
+    console.log(authResult);
+    
+  //  const roles = profile[AUTH_CONFIG.NAMESPACE] || [];
+  //  return roles.indexOf('admin') > -1;    
+
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     console.log(authResult);
+  }
+
+  private setRoles(authResult){
+    if (authResult.idTokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/roles'].indexOf('admin') > -1){
+      this.isAdmin = true;
+    }
   }
 
   public logout(): void {

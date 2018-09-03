@@ -18,7 +18,6 @@
                 <a [routerLink]="['/updateClient', client.id]" class="btn btn-green">Update Client Details</a>
                 <a *ngIf="client.clientTypeId === 1" [routerLink]="['/addContract/', client.id]" class="btn btn-green">Add Contract For {{client.firstName}}</a>
             </div>
-          </div>
           <div class="col-lg-4 col-md-4 sm-6 mb-3" >
           <div class="card">
               <p class="card-title" *ngIf="client.clientTypeId === 2">Properties Owned
@@ -29,4 +28,32 @@
                   <p class="card-text"> {{activeContract.dateFrom | date: 'dd/MM/yyyy'}}</p>
                 </div>
               </div>
+              </div>
+              <div *ngIf="client">
+                  <div class="container">
+                      <h4>Clients Upcoming Contracts</h4>
+                      <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of upcomingContracts">
+                        <div class="card">
+                          <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>
+                          <p class="card-title"><strong>Tenant: </strong>{{contract.client.firstName}} {{contract.client.lastName}}</p>
+                          <p class="card-title"><strong>Start Date: </strong>{{contract.dateFrom | date: 'dd/MM/yyyy'}}</p>
+                          <p class="card-title"><strong>End Date: </strong> {{contract.dateTo | date: 'dd/MM/yyyy'}}</p>
+                          <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
+                          <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
+                          </div>
+                      </div>
+                      </div>
+                      <div class="container">
+                      <h4>Clients Old Contracts</h4>
+                      <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of oldContracts">
+                        <div class="card">
+                          <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>
+                          <p class="card-title"><strong>Tenant: </strong>{{contract.client.firstName}} {{contract.client.lastName}}</p>
+                          <p class="card-title"><strong>Start Date: </strong>{{contract.dateFrom | date: 'dd/MM/yyyy'}}</p>
+                          <p class="card-title"><strong>End Date: </strong> {{contract.dateTo | date: 'dd/MM/yyyy'}}</p>
+                          <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
+                          <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
+                          </div>
+                      </div>
+                    </div>
               </div>

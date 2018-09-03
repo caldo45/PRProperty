@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +16,12 @@ namespace PrApi.Controllers
     public class PropertiesController : Controller
     {
         private readonly IUserRepository _repository;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public PropertiesController(IUserRepository repository)
+        public PropertiesController(IUserRepository repository, IHostingEnvironment hostingEnvironment)
         {
             _repository = repository;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -70,6 +74,13 @@ namespace PrApi.Controllers
             return Ok(propertyImages);
         }
 
+        [HttpGet("imageForEach")]
+        public IActionResult GetImageForEachProperty()
+        {
+            var propertyImages = _repository.GetImageForEachProperty();
+            return Ok(propertyImages);
+        }
+
         [HttpGet("allProperties")]
         public IActionResult GetAllPropertiesImages()
         {
@@ -80,8 +91,13 @@ namespace PrApi.Controllers
         [HttpPost("deleteImage")]
         public IActionResult Post([FromBody]PropertyImage image)
         {
-            var deleted = _repository.DeletePropertyImage(image);
-            return StatusCode(201, deleted);
+            var imageFromDb = _repository.GetPropertyImage(image.Id);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+
+            var imagePath = imageFromDb.ImagePath.Replace('/', '\\');
+            var fullPath = Path.Combine(webRootPath,"uploads", imagePath);
+            _repository.DeletePropertyImage(imageFromDb, fullPath);
+            return StatusCode(202);
         }
 
     }

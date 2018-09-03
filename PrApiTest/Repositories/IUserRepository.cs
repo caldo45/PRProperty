@@ -21,6 +21,14 @@ namespace PrApi.Repositories
         NextOfKin GetNextOfKin(int id);
         NextOfKin AddNextOfKin(NextOfKin nextOfKin);
         Client DeleteClient(Client client);
+        IEnumerable<Contract> GetUpcomingContractsByClient(int clientId);
+        IEnumerable<Contract> GetOldContractsByClient(int clientId);
+        IEnumerable<Contract> GetAllOldContracts();
+        IEnumerable<Contract> GetOldContractsByRoom(int roomId);
+        IEnumerable<Contract> GetUpcomingContractsByRoom(int roomId);
+        IEnumerable<RoomImage> GetImageForEachRoomInProperty(int propertyId);
+        IEnumerable<PropertyImage> GetImageForEachProperty();
+        Contract UpdateContract(Contract contract);
 
         Client UpdateUser(Client user);
         Property UpdateProperty(Property property);
@@ -41,7 +49,7 @@ namespace PrApi.Repositories
         IEnumerable<PropertyImage> GetAllPropertiesImages();
         ContractNotification MarkAsRead(ContractNotification contractNotification);
         IEnumerable<Contract> GetAllActiveContracts();
-        IEnumerable<Contract> GetAllInactiveContracts();
+        IEnumerable<Contract> GetAllUpcomingContracts();
 
         IEnumerable<Contract> GetContracts();
         Contract GetContract(int id);
@@ -83,11 +91,9 @@ namespace PrApi.Repositories
         IEnumerable<Lease> GetLeasesByProperty(int propertyId);
         Lease GetActiveLeaseByProperty(int propertyId);
         IEnumerable<Lease> GetActiveLeases();
-        string DeletePropertyImage(PropertyImage image);
+        string DeletePropertyImage(PropertyImage image, string fileName);
 
 
-
-
-
+        PropertyImage GetPropertyImage(int imageId);
     }
 }

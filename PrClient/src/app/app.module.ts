@@ -42,6 +42,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ContractNotificationsComponent } from './contract-notifications/contract-notifications.component';
 import { DatePipe } from '@angular/common';
 import { ContractComponent } from './contract/contract.component';
+import { UpdateContractComponent } from './update-contract/update-contract.component';
 
 
 
@@ -75,7 +76,8 @@ import { ContractComponent } from './contract/contract.component';
     AddLeaseComponent,
     NotificationsComponent,
     ContractNotificationsComponent,
-    ContractComponent
+    ContractComponent,
+    UpdateContractComponent
   ],
   imports: [
     BrowserModule,

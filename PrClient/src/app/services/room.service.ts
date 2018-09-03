@@ -27,6 +27,11 @@ export class RoomService {
     return this.http.get<RoomImage[]>(url);
   }
 
+  getRoomsImage(propertyId: number): Observable<RoomImage[]>{
+    let url =  environment.baseUrl + '/api/rooms/image/'+propertyId;
+    return this.http.get<RoomImage[]>(url);
+  }
+
   postRoom(room: Room){
     return this.http.post( environment.baseUrl + '/api/rooms',room)
       .subscribe( res => 

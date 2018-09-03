@@ -17,6 +17,8 @@ export class ClientComponent implements OnInit {
   client: Client;
   properties: Property[];
   activeContract: Contract;
+  oldContracts: Contract[];
+  upcomingContracts: Contract[];
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService, private propertyService: PropertyService, private contractService: ContractsService) {
    }
@@ -26,10 +28,18 @@ export class ClientComponent implements OnInit {
     this.clientService.getClient(id)
     .subscribe(response => { this.client = response;
                             this.propertyService.getPropertiesByLandlord(id)
-                             .subscribe(response => { this.properties = response;
+                             .subscribe(response => { 
+                             this.properties = response;
                              this.contractService.getActiveContractByClient(id)
-                             .subscribe(response => this.activeContract = response)
+                             .subscribe(response => { this.activeContract = response;
                               console.log(this.activeContract);
+                              if(this.client.clientTypeId == 1){
+                                  this.contractService.getUpcomingByClient(id)
+                                      .subscribe(response => this.upcomingContracts = response);
+                                 this.contractService.getOldByClient(id)
+                                      .subscribe(response => this.oldContracts = response);
+                              }
+                             });
                              });
     });
   }

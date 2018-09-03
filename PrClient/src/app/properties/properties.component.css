@@ -46,7 +46,9 @@ p{
 
 .card{
     display: inline-block;
+    width: 100%;
 }
+
 
  @media all and (max-width: 500px) {
     .card-title-custom{

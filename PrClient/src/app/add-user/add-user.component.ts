@@ -11,7 +11,8 @@ import { Client } from '../models/client';
 export class AddUserComponent implements OnInit {
 
   clientTypes: ClientType[];
-
+  saveSuccess: boolean;
+  userMessage: string = null;
   client: Client;
   uploadSuccess: number;
 
@@ -24,10 +25,18 @@ export class AddUserComponent implements OnInit {
   }
 
   addUser(client: Client) {
+    this.userMessage = null;
     this.client.clientTypeId = +this.client.clientTypeId;
-    console.log(client);
     this.clientService.postClient(client)
-    ;
+      .subscribe( res => {
+          this.saveSuccess = true;
+          this.userMessage = 'Client Details Saved';
+      },
+      err => {
+          this.saveSuccess = false;
+          this.userMessage = 'Error Saving Client Details';
+      }
+     );
   }
 
 }

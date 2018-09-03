@@ -8,8 +8,9 @@ export class Contract {
     room: Room;
     clientId: number;
     tenant: Client;
-    dateFrom: Date;
-    dateTo: Date;
+    dateFrom: string;
+    dateTo: string;
+
     monthlyAmount: number;
     paymentDate: number;
     paymentTypeId: number;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PrApi.Model
 {
+    [Table("contracts")]
     public class Contract
     {
         [Column("contract_id")]

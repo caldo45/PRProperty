@@ -34,46 +34,43 @@ namespace PrApi.Controllers
                 var imageTypeFolder = HttpContext.Request.Form["imageType"];
                 string rootFolderName = "Uploads";
                 string imageFolder = assetId;
-                string fullPath = null;
                 string apiPath = null;
                 string webRootPath = _hostingEnvironment.WebRootPath;
-                string newPath = Path.Combine(webRootPath, rootFolderName, imageTypeFolder, imageFolder);
-                if (!Directory.Exists(newPath))
-                {
-                    Directory.CreateDirectory(newPath);
-                }
+              
                 if (file.Length > 0)
                 {
                     string uploadFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     string ext = Path.GetExtension(uploadFileName);
                     int assetIdInt = Int32.Parse(assetId);
 
+                    string time = DateTime.Now.ToString("hh.mm.ss.ffffff");
+                    var fileName = imageTypeFolder.Equals("client") ? assetId + ext : assetId + time + ext;
+                    apiPath = Path.Combine(imageTypeFolder, imageFolder, fileName);
+                    apiPath = apiPath.Replace('\\', '/');
+                    // var uri = new Uri(apiPath);
+
                     if (imageTypeFolder.Equals("client"))
                     {
-                        string fileName = assetId + ext;
-                        fullPath = Path.Combine(newPath, fileName);
-                        apiPath = Path.Combine(rootFolderName, imageTypeFolder, imageFolder, fileName);
                         _repository.AddUserImage(assetIdInt, apiPath);
                     }
 
-                    else if (imageTypeFolder.Equals("room"))
+                    if (imageTypeFolder.Equals("room"))
                     {
-                        string time = DateTime.Now.ToString("hh.mm.ss.ffffff");
-                        string fileName = assetId + time + ext;
-                        fullPath = Path.Combine(newPath, fileName);
-                        apiPath = Path.Combine(rootFolderName, imageTypeFolder, imageFolder, fileName);
                         _repository.AddRoomImage(assetIdInt, apiPath);
                     }
-                    else if (imageTypeFolder.Equals("property"))
+
+                    if (imageTypeFolder.Equals("property"))
                     {
-                        string time = DateTime.Now.ToString("hh.mm.ss.ffffff");
-                        string fileName = assetId + time + ext;
-                        fullPath = Path.Combine(newPath, fileName);
-                        apiPath = Path.Combine(rootFolderName, imageTypeFolder, imageFolder, fileName);
                         _repository.AddPropertyImage(assetIdInt, apiPath);
                     }
 
 
+                    var fullPath = Path.Combine(webRootPath, rootFolderName, apiPath);
+                    string fileFolder = Path.Combine(webRootPath, rootFolderName, imageTypeFolder, imageFolder);
+                    if (!Directory.Exists(fileFolder))
+                    {
+                        Directory.CreateDirectory(fileFolder);
+                    }
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);

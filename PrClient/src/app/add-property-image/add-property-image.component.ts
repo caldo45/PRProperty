@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../services/file.service';
 import { HttpClient } from '@angular/common/http';
 import { PropertyService } from '../services/property.service';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-add-property-image',
@@ -25,7 +26,9 @@ export class AddPropertyImageComponent implements OnInit {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.propertyService.getPropertyImages(this.id)
       .subscribe(response => { this.propertyImages = response;
-      console.log(this.propertyImages)
+        for(let image of this.propertyImages){
+          image.imagePath = environment.imageRoot + image.imagePath;
+        }
       });
 
     this.propertyService.getProperty(this.id)
@@ -51,14 +54,24 @@ export class AddPropertyImageComponent implements OnInit {
       .subscribe(response => {
         path = response;
         this.propertyService.getPropertyImages(this.id)
-        .subscribe(response => this.propertyImages = response);
+        .subscribe(response => { 
+          this.propertyImages = response;
+          for(let image of this.propertyImages){
+            image.imagePath = environment.imageRoot + image.imagePath;
+          }
+        });
+
 
       })
     }
 
     deleteImage(image: PropertyImage){
-      console.log("start");
-      this.propertyService.deletePropertyImage(image);
+      this.propertyService.deletePropertyImage(image)
+        .subscribe(response => {
+          this.propertyImages = this.propertyImages.filter(propImage => propImage.id !== image.id);
+        })
+      
+
     }
   
 }

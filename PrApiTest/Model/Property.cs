@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PrApi.Model
 {
+    [Table("properties")]
     public class Property
     {
         [Column("property_id")]

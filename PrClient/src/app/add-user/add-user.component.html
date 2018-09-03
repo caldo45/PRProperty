@@ -1,4 +1,7 @@
 <div class="container list-object">
+    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+        {{userMessage}}
+      </div>
   <form #addUserForm="ngForm">
 
     <div class="form-group" [class.has-error]="firstName.invalid && firstName.touched">

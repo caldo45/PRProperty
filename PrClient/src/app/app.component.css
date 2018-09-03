@@ -1,17 +1,118 @@
 @import '~font-awesome/css/font-awesome.css';
 
-.navbar-green{
-    background-color: #aad8cd;
-    border-color: #aad8cd;
-    color: #aad8cd;
-}
-
-a {
-    color: grey;
-    text-decoration: none;
-}
-
 body{
     background-color: #f3f6f9;
     color: rgba(70,90,110,.85);
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.navbar{
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+h4{
+    font-size: 20pt;
+}
+
+.no-margins{
+    margin: 0px;
+}
+
+.first-container{
+    margin-top: 5px;
+}
+
+.container-fluid{
+    padding: 0px;
+}
+
+.dark {
+    color: rgba(160,180,200,.85);
+    background-color: #19222d;
+    background-color: #233447;
+}
+
+.card{
+    box-shadow: 0 1px 2px rgba(0,0,0,.1), 0 -1px 0 rgba(0,0,0,.02);
+}
+
+.primary {
+    color: rgba(255,255,255,.85);
+    background-color: #53a6fa;
+    border: none;
+}
+
+.primary-text {
+    color: #53a6fa;
+}
+
+.navbar-dark .navbar-brand  {
+    color: #53a6fa;
+}
+
+.info {
+    color: rgba(255,255,255,.85); 
+    background-color: #14baa8;
+}
+
+.success {
+    color: rgba(255,255,255,.85);
+    background-color: #22b66e;
+}
+
+.warning {
+    color: rgba(255,255,255,.85);
+    background-color: #fdab29;
+}
+
+.danger {
+    color: rgba(255,255,255,.85);
+    background-color: #dc3545;
+}
+
+
+.small-padding{
+    padding: 10px 25px;
+}
+
+.btn-green{
+    color: rgba(255,255,255,.85);
+    padding: 5px;
+    margin: 5px;
+    background-color: #53a6fa;
+}
+
+.field-name{
+    color: #53a6fa;
+    font-size: 10pt;
+}
+
+.btn-secondary{
+    padding: 5px;
+    margin: 5px;
+}
+
+
+.nav-item a{ 
+    margin-left: 10px;
+}
+
+.login-btn {
+    margin-left: 15px !important;
+}
+
+.active-link{
+    color: #fff !important;
+}
+
+@media (min-width: 768px){
+    .navbar-nav {
+        float: right;
+        margin: 0;
+    }
+    .login-btn {
+        margin-left: 0;
+    }
 }

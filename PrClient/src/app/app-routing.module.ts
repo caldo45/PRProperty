@@ -30,6 +30,7 @@ import { AddLeaseComponent } from './add-lease/add-lease.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ContractsComponent } from './contracts/contracts.component';
 import { ContractComponent } from './contract/contract.component';
+import { UpdateContractComponent } from './update-contract/update-contract.component';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent},
@@ -56,8 +57,9 @@ const routes: Routes = [
   { path: 'addLease/:id', component: AddLeaseComponent},
   { path: 'callback', component: CallbackComponent},
   { path: 'notifications', component: NotificationsComponent},
-  { path: 'contracts/:id', component: ContractsComponent},
-  { path: 'contract/:id', component: ContractComponent}
+  { path: 'contracts', component: ContractsComponent},
+  { path: 'contract/:id', component: ContractComponent},
+  { path: 'updateContract/:id', component: UpdateContractComponent}
  // { path: '**', component: PageNotFoundComponent }
 ]
 

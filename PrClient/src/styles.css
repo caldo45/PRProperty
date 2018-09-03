@@ -3,6 +3,7 @@ body{
     color: rgba(70,90,110,.85);
 }
 
+
 h4{
     font-size: 20pt;
 }
@@ -13,6 +14,10 @@ h4{
 
 .first-container{
     margin-top: 5px;
+}
+
+.container-fluid{
+    padding: 0px;
 }
 
 .dark {
@@ -29,6 +34,11 @@ h4{
     color: rgba(255,255,255,.85);
     background-color: #53a6fa;
     border: none;
+}
+
+.btn.primary:hover {
+    background-color: #286090;
+    color: #fff;
 }
 
 .primary-text {
@@ -59,9 +69,6 @@ h4{
     background-color: #dc3545;
 }
 
-.no-padding{
-    padding: 0;
-}
 
 .small-padding{
     padding: 10px 25px;

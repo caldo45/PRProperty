@@ -6,24 +6,23 @@ agm-map {
     height: 300px;
   }
 
-.carousel-image{
+.carousel-image, .default-image{
     max-width: 500px;
-    max-height:300px;
-    height: auto;
+    height:300px;
     object-fit: cover;
     align-content: center; 
 }
 
 .carousel{
-   width: 500px;
-    max-height:300px;
+    width: 500px;
+    height:300px;
     border: 2px;
     border-color: fuchsia;
     background-color: rgb(252, 250, 250);
 }
 
 @media all and (max-width: 500px) {
-    .carousel-image{
+    .carousel-image, .default-image{
         width: auto;
         height: 200px;
         align-content: center; 

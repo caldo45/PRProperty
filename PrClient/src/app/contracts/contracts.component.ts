@@ -11,17 +11,19 @@ import { ActivatedRoute } from '@angular/router';
 export class ContractsComponent implements OnInit {
 
   activeContracts: Contract[];
-  inactiveContracts: Contract[];
+  upcomingContracts: Contract[];
+  oldContracts: Contract[];
   clientId: number;
 
   constructor(private contractService: ContractsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.clientId = +this.route.snapshot.paramMap.get('id');
     this.contractService.getAllActiveContracts()
         .subscribe(response => this.activeContracts = response);
-        this.contractService.getAllInactiveContracts()
-          .subscribe(response => this.inactiveContracts = response);
+        this.contractService.getAllUpcoming()
+          .subscribe(response => this.upcomingContracts = response);
+        this.contractService.getAllOld()
+          .subscribe(response => this.oldContracts = response);
   }
 
 }

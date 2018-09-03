@@ -35,6 +35,20 @@ namespace PrApi.Controllers
             return contract;
         }
 
+        [HttpGet("upcomingByRoom{roomId}")]
+        public IActionResult GetUpcomingContractByRoom(int roomId)
+        {
+            var contract = _repository.GetUpcomingContractsByRoom(roomId);
+            return Ok(contract);
+        }
+
+        [HttpGet("oldByRoom{roomId}")]
+        public IActionResult GetOldContractsByRoom(int roomId)
+        {
+            var contract = _repository.GetOldContractsByRoom(roomId);
+            return Ok(contract);
+        }
+
         [HttpGet("byPaymentReference{paymentRefernce}")]
         public Contract GetByPaymentReference(string paymentReference)
         {
@@ -63,12 +77,34 @@ namespace PrApi.Controllers
             return Ok(contracts);
         }
 
-        [HttpGet("allInactive")]
-        public IActionResult GetAllInactiveContracts()
+        [HttpGet("allUpcoming")]
+        public IActionResult GetAllUpcomingContracts()
         {
-            var contracts = _repository.GetAllInactiveContracts();
+            var contracts = _repository.GetAllUpcomingContracts();
             return Ok(contracts);
         }
+
+        [HttpGet("allOld")]
+        public IActionResult GetAllOldContracts()
+        {
+            var contracts = _repository.GetAllUpcomingContracts();
+            return Ok(contracts);
+        }
+
+        [HttpGet("upcomingByClient{clientId}")]
+        public IActionResult GetUpComingByUser(int clientId)
+        {
+            var contracts = _repository.GetUpcomingContractsByClient(clientId);
+            return Ok(contracts);
+        }
+
+        [HttpGet("oldByClient{clientId}")]
+        public IActionResult GetUpOldByUser(int clientId)
+        {
+            var contracts = _repository.GetOldContractsByClient(clientId);
+            return Ok(contracts);
+        }
+
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -80,14 +116,27 @@ namespace PrApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Contract contract)
         {
-            var added = _repository.AddContract(contract);
-
-            if (added.Id == 0)
+            if (contract.Id == 0)
             {
-                return StatusCode(400, "Contract exists or overlaps");
+                var added = _repository.AddContract(contract);
+
+                if (added.Id == 0)
+                {
+                    return StatusCode(400, "Contract exists or overlaps");
+                }
+                return StatusCode(201, added);
+            }
+            
+            {
+                var updated = _repository.UpdateContract(contract);
+                if (updated.Id == 0)
+                {
+                    return StatusCode(400, "Contract exists or overlaps");
+                }
+                return StatusCode(201, updated);
             }
 
-            return StatusCode(201, added);
+           
         }
 
         [HttpPost("payments")]

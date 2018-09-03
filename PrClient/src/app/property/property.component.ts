@@ -36,7 +36,9 @@ export class PropertyComponent implements OnInit {
     .subscribe(response => {
         this.property = response;
         this.propertyService.getPropertyImages(id)
-            .subscribe(response => this.images = response)
+            .subscribe(response => {
+                this.images = response
+            });
     });
 
     this.roomService.getRoomsByProperty(id)

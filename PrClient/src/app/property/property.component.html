@@ -1,26 +1,38 @@
 <div class="container">
-     
+
   <div class="card flex-row flex-wrap" *ngIf="property">
-      <div class="card-header border-0">
-            <ngb-carousel class="carousel border" *ngIf="images">
-                    <ng-template ngbSlide *ngFor="let image of images" >
-                      <img [src]="image.imagePath" class="center-block carousel-image" alt="Random first slide">
-                    </ng-template>
-                  </ngb-carousel>
-      </div>
-      <div class="card-block px-2">
-          <p class="card-title field-name">Property Address</p>
-          <h4 class="card-title">{{property.firstLineAddress}}</h4>
-          <p class="card-title field-name">Area - Postcode</p>
-          <p class="card-text card-text-custom">{{property.secondLineAddress}} -  {{property.postcode}}</p>
-          <p class="card-title field-name">Landlord</p>
-         <a [routerLink]="['/clients', property.landlord.id]"><p class="card-text-custom">Landlord - {{property.landlord.firstName}} {{property.landlord.lastName}}</p></a><br>
-         <a [routerLink]="['/updateProperty', property.id]" class="btn btn-green"><p class="btn-text">Update Property Details</p></a>
-         <a [routerLink]="['/rooms', property.id]" class="btn btn-green"><p class="btn-text">View Rooms</p></a>
-          <a [routerLink]="['/rooms', property.id]" class="btn btn-green"><p class="btn-text">Edit / Update Details</p></a>
-          <a [routerLink]="['/addPropertyImage', property.id]" class="btn btn-green"><p class="btn-text">Edit Images</p></a>
-      </div>
-      <div class="w-100"></div>
+    <div class="card-header border-0">
+      <ngb-carousel class="carousel border" *ngIf="images && images.length > 0">
+        <ng-template ngbSlide *ngFor="let image of images">
+          <img [src]="image.imagePath" class="center-block carousel-image" alt="Property Image">
+        </ng-template>
+      </ngb-carousel>
+      <img *ngIf="!images || images.length == 0" class="default-image" src="http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png" />
+    </div>
+    <div class="card-block px-2">
+      <p class="card-title field-name">Property Address</p>
+      <h4 class="card-title">{{property.firstLineAddress}}</h4>
+      <p class="card-title field-name">Area - Postcode</p>
+      <p class="card-text card-text-custom">{{property.secondLineAddress}} - {{property.postcode}}</p>
+      <p class="card-title field-name">Landlord</p>
+      <a [routerLink]="['/clients', property.landlord.id]">
+        <p class="card-text-custom">Landlord - {{property.landlord.firstName}} {{property.landlord.lastName}}</p>
+      </a>
+      <br>
+      <a [routerLink]="['/updateProperty', property.id]" class="btn btn-green">
+        <p class="btn-text">Update Property Details</p>
+      </a>
+      <a [routerLink]="['/rooms', property.id]" class="btn btn-green">
+        <p class="btn-text">View Rooms</p>
+      </a>
+      <a [routerLink]="['/rooms', property.id]" class="btn btn-green">
+        <p class="btn-text">Edit / Update Details</p>
+      </a>
+      <a [routerLink]="['/addPropertyImage', property.id]" class="btn btn-green">
+        <p class="btn-text">Edit Images</p>
+      </a>
+    </div>
+    <div class="w-100"></div>
 
 
   </div>
@@ -31,8 +43,8 @@
   </agm-map>
   <a class="btn btn-primary btn-green" *ngIf="geolocationPosition" (click)="getDirection(geolocationPosition)">Get Route To Property</a>
 
-  </div>
+</div>
 
 <div class="container">
 
-    </div>
+</div>

@@ -1,10 +1,10 @@
 <div class="container list-object">
     <form #addroomForm="ngForm">
   
-      <div class="form-group" [class.has-error]="roomName.invalid && roomName.touched">
-        <label for="roomName" class="control-label field-name control-label" >Room Name</label>
-        <input #roomName="ngModel" required type="string" class="form-control" name="roomName" id="roomName" [(ngModel)]="room.name" placeholder="Enter Room Name">
-        <div *ngIf="roomName.invalid && roomName.touched">
+      <div class="form-group" [class.has-error]="name.invalid && name.touched">
+        <label for="name" class="control-label field-name control-label" >Room Name</label>
+        <input #name="ngModel" required type="string" class="form-control" name="name" id="name" [(ngModel)]="room.name" placeholder="Enter Room Name">
+        <div *ngIf="name.invalid && name.touched">
           Room Name is Required
         </div>
       </div>

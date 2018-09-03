@@ -62,8 +62,12 @@ namespace PrApi
             });
 
             app.UseAuthentication();
-            app.UseMvc();
             app.UseStaticFiles();
+            app.UseMvc(routes =>
+            {
+                routes.MapSpaFallbackRoute("Spa-fallback", new{ controller="Home", action="Spa"});
+            });
+
         }
     }
 }

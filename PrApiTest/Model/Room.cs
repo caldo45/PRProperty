@@ -18,7 +18,7 @@ namespace PrApi.Model
         public virtual Property Property { get; set; }
 
         [Column("name")]
-        public String RoomName { get; set; }
+        public String Name { get; set; }
         
     }
 }

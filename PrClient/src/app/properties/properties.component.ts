@@ -4,6 +4,7 @@ import { PropertyService } from '../services/property.service';
 import { LeaseService } from '../services/lease.service';
 import { Lease } from '../models/lease';
 import { PropertyImage } from '../models/propertyImage';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-properties',
@@ -16,8 +17,10 @@ export class PropertiesComponent implements OnInit {
   _listFilter: string;
   filteredProperties: Property[] = [];
   pageTitle: 'Properties';
-  activeLeases: Lease[];
-  propertiesImages: PropertyImage[];
+  activeLeases: Lease[] = [];
+  propertiesImages: PropertyImage[] = [];
+  loading: boolean = false;
+  imageRoot = environment.imageRoot;
 
   constructor(private propertyService:PropertyService, private leaseService: LeaseService) { 
     this.filteredProperties = this.properties;
@@ -43,23 +46,36 @@ export class PropertiesComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loading = true;
     this.propertyService.getProperties()
       .subscribe(response => {
         this.properties = response;
+        this.propertyService.getImageForEachProperty()
+            .subscribe(response => {
+              this.propertiesImages = response;
+              for(let property of this.properties){
+                property.imagePath = "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png";
+                for(let image of this.propertiesImages){                  
+                  if(image.propertyId == property.id){
+                    property.imagePath = this.imageRoot +  image.imagePath
+                  }
+                }
+              }
+              this.loading = false;
+            });
         this.filteredProperties = this.properties;
         this.leaseService.getActiveLeases()
             .subscribe(response => { this.activeLeases = response;
-        for(let lease of this.activeLeases){
-          for(let property of this.properties){
-            if(lease.propertyId == property.id){
-              (property.lease = lease) && (property.activeLease = 1);
-              this.propertyService.getAllPropertiesImages();
-            }
-          }
-        
-        }
+                for(let lease of this.activeLeases){
+                  for(let property of this.properties){
+                    if(lease.propertyId == property.id){
+                      (property.lease = lease) && (property.activeLease = 1);
+                    }
+                  }       
+                }
       });
     });
+   
   }
 
 }

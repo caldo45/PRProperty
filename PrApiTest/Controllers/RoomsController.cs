@@ -57,5 +57,12 @@ namespace PrApi.Controllers
             return Ok(roomImages);
         }
 
+        [HttpGet("image/{propertyId}")]
+        public IActionResult GetOneImagesForEachRoom(int propertyId)
+        {
+            var roomImages = _repository.GetImageForEachRoomInProperty(propertyId);
+            return Ok(roomImages);
+        }
+
     }
 }

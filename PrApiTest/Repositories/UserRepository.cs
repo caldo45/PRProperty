@@ -71,16 +71,24 @@ namespace PrApi.Repositories
             return user;
         }
 
-        public string DeletePropertyImage(PropertyImage image)
+        public string DeletePropertyImage(PropertyImage image, string fileName)
         {
-            string fileName = image.ImagePath;
+           // string fileName = image.ImagePath;
             if (System.IO.File.Exists(fileName))
             {
                 System.IO.File.Delete(fileName);
-                _db.PropertyImages.Remove(image);
-                return "File Deleted";
             }
-            return "File Could Not Be Found";
+
+            _db.PropertyImages.Remove(image);
+            _db.SaveChanges();
+            return "File Deleted";
+            
+        }
+
+        public PropertyImage GetPropertyImage(int imageId)
+        {
+            var image = _db.PropertyImages.FirstOrDefault(i => i.Id == imageId);
+            return image;
         }
 
         public Client AddUserImage(int id, string path)
@@ -123,7 +131,6 @@ namespace PrApi.Repositories
             _db.SaveChanges();
             return user;
         }
-
 
         public Property AddProperty(Property property)
         {
@@ -269,6 +276,56 @@ namespace PrApi.Repositories
             return contract;
         }
 
+        public IEnumerable<Contract> GetOldContractsByRoom(int roomId)
+        {
+            DateTime date = DateTime.Now;
+            var contracts = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.DateTo.CompareTo(date) < 0 && r.DateFrom.CompareTo(date) < 0 && r.RoomId == roomId);
+            return contracts;
+        }
+
+        public IEnumerable<Contract> GetUpcomingContractsByRoom(int roomId)
+        {
+            DateTime date = DateTime.Now;
+            var contracts = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.DateTo.CompareTo(date) > 0 && r.DateFrom.CompareTo(date) > 0 && r.RoomId == roomId);
+            return contracts;
+        }
+
+        public IEnumerable<PropertyImage> GetImageForEachProperty()
+        {
+            var properties = _db.Properties;
+            List<PropertyImage> images = new List<PropertyImage>();
+            foreach (Property property in properties)
+            {
+                var image = _db.PropertyImages.FirstOrDefault(pi => pi.PropertyId == property.Id);
+                if (image != null)
+                {
+                    images.Add(image);
+                }
+                
+            }
+
+            return images;
+        }
+
+        public IEnumerable<RoomImage> GetImageForEachRoomInProperty(int propertyId)
+        {
+            var rooms = _db.Rooms.Where(r => r.PropertyId == propertyId);
+            List<RoomImage> images = new List<RoomImage>();
+            foreach (Room room in rooms)
+            {
+                var image = _db.RoomImages.FirstOrDefault(ri => ri.RoomId == room.Id);
+                images.Add(image);
+            }
+
+            return images;
+        }
+
         public Lease GetActiveLeaseByProperty(int propertyId)
         {
             DateTime date = DateTime.Now;
@@ -330,15 +387,24 @@ namespace PrApi.Repositories
 
         }
 
-        public IEnumerable<Contract> GetAllInactiveContracts()
+        public IEnumerable<Contract> GetAllUpcomingContracts()
         {
             DateTime date = DateTime.Now;
-            var contract = _db.Contracts.Include(r => r.Room)
+            var contracts = _db.Contracts.Include(r => r.Room)
                 .Include(u => u.Client)
                 .Include(p => p.PaymentType)
-                .Include(c => c.Room.Property).Where(r => r.DateFrom.CompareTo(date) >= 0
-                                                          || r.DateTo.CompareTo(date) <= 0);
-            return contract;
+                .Include(c => c.Room.Property).Where(r => r.DateTo.CompareTo(date) > 0 && r.DateFrom.CompareTo(date) > 0);
+            return contracts;
+        }
+
+        public IEnumerable<Contract> GetAllOldContracts()
+        {
+            DateTime date = DateTime.Now;
+            var contracts = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.DateTo.CompareTo(date) < 0 && r.DateFrom.CompareTo(date) < 0);
+            return contracts;
         }
 
 
@@ -348,9 +414,9 @@ namespace PrApi.Repositories
                                           && c.Overlaps(contract));
             var overlapTenantExists = _db.Contracts.Any(c => c.ClientId == contract.ClientId
                                                              && c.Overlaps(contract));
-          //  var lease = CheckContractValidWithLease(contract);
-
-            if (!overlapRoomExists && !overlapTenantExists)
+            bool leaseValid = CheckContractValidWithLease(contract);
+            
+            if (!overlapRoomExists && !overlapTenantExists && leaseValid)
             {
                 _db.Contracts.Add(contract);
                 _db.SaveChanges();
@@ -361,10 +427,42 @@ namespace PrApi.Repositories
 
         }
 
-        public Lease CheckContractValidWithLease(Contract contract)
+        public bool CheckContractValidWithLease(Contract contract)
         {
-            var lease = _db.Lease.FirstOrDefault(l => l.PropertyId == contract.Room.PropertyId && l.DateFrom <= contract.DateFrom && l.DateTo >= contract.DateTo);
-            return lease;
+            bool leaseValid;
+            var room = _db.Rooms.FirstOrDefault(r => r.Id == contract.RoomId);
+            var leases = _db.Leases.Where(l => l.PropertyId == room.PropertyId);
+            foreach (Lease lease in leases)
+            {
+                if (lease.DateFrom.CompareTo(contract.DateFrom) <= 0 && lease.DateTo.CompareTo(contract.DateTo) >= 0)
+                {
+                    leaseValid = true;
+                    return leaseValid;
+                }
+            }
+
+            leaseValid = false;
+            return leaseValid;
+        }
+
+        public IEnumerable<Contract> GetUpcomingContractsByClient(int clientId)
+        {
+            DateTime date = DateTime.Now;
+            var contracts = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.ClientId == clientId && r.DateTo.CompareTo(date) >= 0 && r.DateFrom.CompareTo(date) >= 0);
+            return contracts;
+        }
+
+        public IEnumerable<Contract> GetOldContractsByClient(int clientId)
+        {
+            DateTime date = DateTime.Now;
+            var contracts = _db.Contracts.Include(r => r.Room)
+                .Include(u => u.Client)
+                .Include(p => p.PaymentType)
+                .Include(c => c.Room.Property).Where(r => r.ClientId == clientId && r.DateTo.CompareTo(date) <= 0 && r.DateFrom.CompareTo(date) <= 0);
+            return contracts;
         }
 
 
@@ -418,23 +516,22 @@ namespace PrApi.Repositories
 
         public Contract UpdateContract(Contract contract)
         {
-            var existingContract = _db.Contracts.FirstOrDefault(c => c.Id == contract.Id);
             var overlapRoomExists = _db.Contracts.Any(c => c.RoomId == contract.RoomId
                                                            && c.Overlaps(contract) && c.Id != contract.Id);
             var overlapTenantExists = _db.Contracts.Any(c => c.ClientId == contract.ClientId
                                                              && c.Overlaps(contract) && c.Id != contract.Id);
-            //  var lease = CheckContractValidWithLease(contract);
+            bool leaseValid = CheckContractValidWithLease(contract);
 
-            if (!overlapRoomExists && !overlapTenantExists)
+            if (!overlapRoomExists && !overlapTenantExists && leaseValid)
             {
-                existingContract = contract;
-                _db.Contracts.Update(existingContract);
+                _db.Entry(contract).State = EntityState.Modified;
                 _db.SaveChanges();
                 return contract;
             }
-            else
+
             {
-                throw new HttpRequestException("Contract Overlaps With Another for this Room Or Client, Please Amend Dates");
+                contract.Id = 0;
+                return contract;
             }
 
         }

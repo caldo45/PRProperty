@@ -1,60 +1,58 @@
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
 </head>
 <header>
-    
+
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">PR Properties</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        <div class="container">
+            <a class="navbar-brand" routerLink="/home">PR Properties</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
+                    <!-- <li class="nav-item">
+                    <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home
                         <span class="sr-only">(current)</span>
                     </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" *ngIf="authService.isAuthenticated()" routerLink="/clients" routerLinkActive="active-link">Clients</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-item nav-link" routerLink="/clients">Clients</a>                         
+                        <a class="nav-item nav-link" *ngIf="authService.isAuthenticated()" routerLink="/properties" routerLinkActive="active-link">Properties</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-item nav-link" routerLink="/properties">Properties</a>
+                        <a class="nav-item nav-link" *ngIf="authService.isAuthenticated() && authService.isAdmin" routerLink="/payments" routerLinkActive="active-link">Payments</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-item nav-link" routerLink="/payments">Payments</a>
+                        <a class="nav-item nav-link" *ngIf="authService.isAuthenticated()" routerLink="/notifications" routerLinkActive="active-link">Notifications</a>
                     </li>
-                    <button
-                    class="btn btn-primary btn-margin"
-                    *ngIf="!authService.isAuthenticated()"
-                    (click)="authService.login()">
-                      Log In
-                  </button>
-            
-                  <button
-                    class="btn btn-primary btn-margin"
-                    *ngIf="authService.isAuthenticated()"
-                    (click)="authService.logout()">
-                      Log Out
-                  </button>
+                    <button class="btn btn-primary btn-margin login-btn" *ngIf="!authService.isAuthenticated()" (click)="authService.login()">
+                        Log In
+                    </button>
+
+                    <button class="btn btn-primary btn-margin login-btn" *ngIf="authService.isAuthenticated()" (click)="authService.logout()">
+                        Log Out
+                    </button>
 
                 </ul>
 
-                </div>
             </div>
-            </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
 <body>
-        <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 
-        <div class="container-fluid no-padding no-margins">
-                <footer class="py-5 dark">
-                  <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-                </footer>
-         </div>
-    </body>
-    
-
+    <div class="container-fluid no-padding no-margins">
+        <footer class="py-5 dark">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        </footer>
+    </div>
+</body>

@@ -37,6 +37,11 @@ export class PropertyService {
     return this.http.get<PropertyImage>(url);
   }
 
+  getImageForEachProperty(): Observable<PropertyImage[]>{
+    let url =  environment.baseUrl + '/api/properties/imageForEach';
+    return this.http.get<PropertyImage[]>(url);
+  }
+
   postProperty(property: Property){
     return this.http.post( environment.baseUrl + '/api/properties',property)
       .subscribe( res => 
@@ -50,7 +55,7 @@ export class PropertyService {
     }
 
     deletePropertyImage(image: PropertyImage){
-      return this.http.post( environment.baseUrl + '/api/properties/deleteImage',image)
-        .subscribe(response => console.log(response));
+      return this.http.post( environment.baseUrl + '/api/properties/deleteImage',image);
+      
     }
 }

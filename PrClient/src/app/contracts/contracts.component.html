@@ -9,14 +9,30 @@
       <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
       </div>
   </div>
-  <h2>All Inactive Contracts</h2>
-  <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of inactiveContracts">
+</div>
+<div class="container">
+  <h2>All Upcoming Contracts</h2>
+  <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of upcomingContracts">
     <div class="card">
       <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>
       <p class="card-title"><strong>Tenant: </strong>{{contract.client.firstName}} {{contract.client.lastName}}</p>
       <p class="card-title"><strong>Start Date: </strong>{{contract.dateFrom | date: 'dd/MM/yyyy'}}</p>
       <p class="card-title"><strong>End Date: </strong> {{contract.dateTo | date: 'dd/MM/yyyy'}}</p>
       <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
+      <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <h2>All Old Contracts</h2>
+  <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of oldContracts">
+    <div class="card">
+      <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>
+      <p class="card-title"><strong>Tenant: </strong>{{contract.client.firstName}} {{contract.client.lastName}}</p>
+      <p class="card-title"><strong>Start Date: </strong>{{contract.dateFrom | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>End Date: </strong> {{contract.dateTo | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
+      <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
       </div>
   </div>
 </div>

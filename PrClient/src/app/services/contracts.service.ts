@@ -47,8 +47,37 @@ export class ContractsService {
   postPayments(payments: Payment[]){
     return this.http.post(environment.baseUrl + '/api/contract/payments', payments)
       .subscribe( res =>
-        {console.log(res);})
-      
+        {console.log(res);})     
+  }
+
+  getAllUpcoming(): Observable<Contract[]>{
+    let url = environment.baseUrl + '/api/contract/allUpcoming';
+    return this.http.get<Contract[]>(url);
+  }
+
+  getAllOld(): Observable<Contract[]>{
+    let url = environment.baseUrl + '/api/contract/allOld';
+    return this.http.get<Contract[]>(url);
+  }
+
+  getUpcomingByClient(clientId: number): Observable<Contract[]>{
+    let url = environment.baseUrl + '/api/contract/upcomingByClient'+clientId;
+    return this.http.get<Contract[]>(url);
+  }
+
+  getUpcomingByRoom(roomId: number): Observable<Contract[]>{
+    let url = environment.baseUrl + '/api/contract/upcomingByRoom'+roomId;
+    return this.http.get<Contract[]>(url);
+  }
+
+  getOldByRoom(roomId: number): Observable<Contract[]>{
+    let url = environment.baseUrl + '/api/contract/oldByRoom'+roomId;
+    return this.http.get<Contract[]>(url);
+  }
+
+  getOldByClient(clientId: number): Observable<Contract[]>{
+    let url = environment.baseUrl + '/api/contract/oldByClient'+clientId;
+    return this.http.get<Contract[]>(url);
   }
 
   getAllInactiveContracts(): Observable<Contract[]> {
