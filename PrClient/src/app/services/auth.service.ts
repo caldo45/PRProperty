@@ -17,7 +17,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'PrPropertiesAPI',
     redirectUri: environment.redirectUri,
-    scope: 'openid profile'
+    scope: 'openid profile email role:admin'
   });
 
   isAdmin = false;
