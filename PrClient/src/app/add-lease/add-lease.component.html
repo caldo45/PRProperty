@@ -1,4 +1,7 @@
 <div class="container list-object" *ngIf="property">
+    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+        {{userMessage}}
+      </div>
   <form #addLeaseForm="ngForm" *ngIf="newLease">
     <h4>Add New Lease for {{property.firstLineAddress}}</h4>
     <p *ngIf="activeLease != null">Current Lease Runs From {{ activeLease.dateFrom | date: 'dd/MM/yyyy' }} to {{activeLease.dateTo  | date: 'dd/MM/yyyy'}} </p>
@@ -16,10 +19,10 @@
         Date To is Required
         </div>
     </div>
-    <div class="form-group" [class.has-error]="monthlyAmount.invalid && monthlyAmount.touched">
-      <label for="monthlyAmount" class="field-name" >Monthly Amount</label>
-      <input #monthlyAmount="ngModel" type="number" class="form-control" required id="monthlyAmount" name="monthlyAmount" [(ngModel)]="newLease.monthlyAmount" placeholder="Enter Monthly Amount">
-      <div *ngIf="monthlyAmount.invalid && monthlyAmount.touched">
+    <div class="form-group" [class.has-error]="amountMonthly.invalid && amountMonthly.touched">
+      <label for="amountMonthly" class="field-name" >Monthly Amount</label>
+      <input #amountMonthly="ngModel" type="number" class="form-control" required id="amountMonthly" name="amountMonthly" [(ngModel)]="newLease.amountMonthly" placeholder="Enter Monthly Amount">
+      <div *ngIf="amountMonthly.invalid && amountMonthly.touched">
           Monthly Amount is Required
           </div>
       </div>

@@ -1,5 +1,8 @@
 <div class="container">
   <div class="card">
+      <div class="text-center mb-5" *ngIf="loading">
+          <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+        </div>
     <h5 *ngIf="property">Upload Images for Property</h5>
     <input #file type="file" multiple (change)="upload(file.files, path, id)" />
     <br/>

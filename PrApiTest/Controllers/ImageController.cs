@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {

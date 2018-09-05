@@ -10,11 +10,13 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using PrApi.Model;
 using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : Controller
     {

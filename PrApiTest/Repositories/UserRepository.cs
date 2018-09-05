@@ -162,7 +162,7 @@ namespace PrApi.Repositories
 
         public NextOfKin GetNextOfKin(int clientId)
         {
-            var nextOfKin = _db.NextOfKins.FirstOrDefault(b => b.ClientId == clientId);
+            var nextOfKin = _db.NextOfKins.Include(n => n.Client).FirstOrDefault(b => b.ClientId == clientId);
             return nextOfKin;
         }
 

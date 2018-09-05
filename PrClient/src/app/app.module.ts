@@ -43,6 +43,8 @@ import { ContractNotificationsComponent } from './contract-notifications/contrac
 import { DatePipe } from '@angular/common';
 import { ContractComponent } from './contract/contract.component';
 import { UpdateContractComponent } from './update-contract/update-contract.component';
+import { NextOfKinComponent } from './next-of-kin/next-of-kin.component';
+import { AddNextOfKinComponent } from './add-next-of-kin/add-next-of-kin.component';
 
 
 
@@ -77,7 +79,9 @@ import { UpdateContractComponent } from './update-contract/update-contract.compo
     NotificationsComponent,
     ContractNotificationsComponent,
     ContractComponent,
-    UpdateContractComponent
+    UpdateContractComponent,
+    NextOfKinComponent,
+    AddNextOfKinComponent
   ],
   imports: [
     BrowserModule,

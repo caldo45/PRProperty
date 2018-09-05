@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PrApi.Model;
 using PrApi.Repositories;
@@ -18,6 +19,7 @@ namespace PrApi.Controllers
             _repository = repository;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -40,6 +42,7 @@ namespace PrApi.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("asRead")]
         public IActionResult PostRead([FromBody]ContractNotification contractNotification
         )

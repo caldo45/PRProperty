@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class ContractController : Controller
     {
@@ -150,8 +152,9 @@ namespace PrApi.Controllers
             foreach (Payment payment in payments)
                 {
                     var contract = _repository.GetContractByPaymentReference(payment.Reference);
-                        payment.ContractId = contract.Id;
-                        var added = _repository.AddPayment(payment);  
+                    payment.ContractId = contract.Id;
+      
+                    var added = _repository.AddPayment(payment);  
                     }
                 return Json(201);
             }

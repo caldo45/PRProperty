@@ -60,7 +60,7 @@ export class AuthService {
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    console.log(authResult);
+
     
   //  const roles = profile[AUTH_CONFIG.NAMESPACE] || [];
   //  return roles.indexOf('admin') > -1;    
@@ -68,10 +68,10 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    console.log(authResult);
+
   }
 
-  private setRoles(authResult){
+  public setRoles(authResult){
     if (authResult.idTokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/roles'].indexOf('admin') > -1){
       this.isAdmin = true;
     }

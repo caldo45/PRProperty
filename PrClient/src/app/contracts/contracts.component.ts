@@ -18,12 +18,7 @@ export class ContractsComponent implements OnInit {
   constructor(private contractService: ContractsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.contractService.getAllActiveContracts()
-        .subscribe(response => this.activeContracts = response);
-        this.contractService.getAllUpcoming()
-          .subscribe(response => this.upcomingContracts = response);
-        this.contractService.getAllOld()
-          .subscribe(response => this.oldContracts = response);
+
   }
 
 }

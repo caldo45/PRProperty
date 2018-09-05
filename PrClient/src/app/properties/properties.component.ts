@@ -54,7 +54,7 @@ export class PropertiesComponent implements OnInit {
             .subscribe(response => {
               this.propertiesImages = response;
               for(let property of this.properties){
-                property.imagePath = "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png";
+                property.imagePath = environment.imageRoot + "default/defaultImage.jpg";
                 for(let image of this.propertiesImages){                  
                   if(image.propertyId == property.id){
                     property.imagePath = this.imageRoot +  image.imagePath

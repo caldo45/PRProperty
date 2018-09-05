@@ -8,7 +8,9 @@
     object-fit: cover;
     align-content: center; 
 }
-
+.primary-text{
+    font-size: 14pt;
+}
 h4{
     font-size: 20pt;
 }

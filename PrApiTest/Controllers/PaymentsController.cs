@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using PrApi.Model;
 using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class PaymentsController : Controller
     {

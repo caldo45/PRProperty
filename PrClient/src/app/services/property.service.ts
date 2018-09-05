@@ -9,41 +9,77 @@ import { environment } from '../environment';
   providedIn: 'root'
 })
 export class PropertyService {
+  
 
   constructor(private http:HttpClient) { }
 
   getProperties(): Observable<Property[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/properties';
-    return this.http.get<Property[]>(url);
+    return this.http.get<Property[]>(url, httpOptions);
   }
 
   getProperty(id: number): Observable<Property>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/properties/'+id;
-    return this.http.get<Property>(url);
+    return this.http.get<Property>(url, httpOptions);
   }
 
   getPropertiesByLandlord(landlordId: number): Observable<Property[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/properties/byLandlord'+landlordId;
-    return this.http.get<Property[]>(url);
+    return this.http.get<Property[]>(url, httpOptions);
   }
 
   getPropertyImages(propertyId: number): Observable<PropertyImage[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/properties/images/'+propertyId;
-    return this.http.get<PropertyImage[]>(url);
+    return this.http.get<PropertyImage[]>(url, httpOptions);
   }
 
   getAllPropertiesImages(): Observable<PropertyImage>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/properties/allImages';
-    return this.http.get<PropertyImage>(url);
+    return this.http.get<PropertyImage>(url, httpOptions);
   }
 
   getImageForEachProperty(): Observable<PropertyImage[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/properties/imageForEach';
-    return this.http.get<PropertyImage[]>(url);
+    return this.http.get<PropertyImage[]>(url, httpOptions);
   }
 
   postProperty(property: Property){
-    return this.http.post( environment.baseUrl + '/api/properties',property)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    return this.http.post( environment.baseUrl + '/api/properties',property, httpOptions)
       .subscribe( res => 
         {console.log(res);
        },
@@ -55,7 +91,12 @@ export class PropertyService {
     }
 
     deletePropertyImage(image: PropertyImage){
-      return this.http.post( environment.baseUrl + '/api/properties/deleteImage',image);
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'bearer ' + localStorage.getItem('access_token')
+        })
+      };
+      return this.http.post( environment.baseUrl + '/api/properties/deleteImage',image, httpOptions);
       
     }
 }

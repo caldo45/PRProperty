@@ -26,6 +26,7 @@ export class AddUserComponent implements OnInit {
 
   addUser(client: Client) {
     this.userMessage = null;
+    this.client.imagePath = "default/defaultImage.jpg";
     this.client.clientTypeId = +this.client.clientTypeId;
     this.clientService.postClient(client)
       .subscribe( res => {

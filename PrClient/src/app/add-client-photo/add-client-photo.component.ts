@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { uploadClientImage } from '../models/uploadImage';
 import { ClientsService } from '../services/clients.service';
 import { Client } from '../models/client';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-add-client-photo',
@@ -27,15 +28,13 @@ export class AddClientPhotoComponent implements OnInit {
     this.clientService.getClient(this.id)
     .subscribe(response => {
       this.client = response;
-      this.imgPath = this.client.imagePath;
+      this.imgPath = environment.imageRoot + this.client.imagePath;
       console.log(this.imgPath)});
   }
 
   upload(files, path, imgPath, id) {
     if (files.length === 0)
       return;
-    console.log(files);
-    console.log(this.id);
 
     const formData = new FormData();
 
@@ -50,7 +49,7 @@ export class AddClientPhotoComponent implements OnInit {
       .subscribe(response => {
         path = response;
         console.log(path);
-        this.imgPath = path;
+        this.imgPath = environment.imageRoot + path;
       })
     }
   

@@ -7,6 +7,7 @@ import { ClientsService } from '../services/clients.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room';
 import { PropertyImage } from '../models/propertyImage';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-property',
@@ -22,6 +23,7 @@ export class PropertyComponent implements OnInit {
   markerLongitude: number;
   geolocationPosition: {};
   images: PropertyImage[];
+  loading: boolean = false;
 
 
     dir = undefined;
@@ -32,12 +34,17 @@ export class PropertyComponent implements OnInit {
 
   ngOnInit() {
     let id = +this.route.snapshot.paramMap.get('id');
+    this.loading = true;
     this.propertyService.getProperty(id)
     .subscribe(response => {
         this.property = response;
         this.propertyService.getPropertyImages(id)
             .subscribe(response => {
-                this.images = response
+                this.images = response;
+                for(let img of this.images){
+                    img.imagePath = environment.imageRoot + img.imagePath;
+                }
+                this.loading = false;
             });
     });
 

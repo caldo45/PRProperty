@@ -49,6 +49,12 @@ p{
     width: 100%;
 }
 
+.card-img-top{
+    max-height: 200px;
+    object-fit: cover;
+    align-content: center; 
+}
+
 
  @media all and (max-width: 500px) {
     .card-title-custom{

@@ -1,4 +1,7 @@
 <div class="container list-object">
+        <div class="text-center mb-5" *ngIf="loading">
+                <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+              </div>
     <h3 *ngIf="client">Add Contract for Tenant - {{client.firstName}} {{client.lastName}}</h3>
     <div class="alert alert-info" *ngIf="userMessage">
         {{ userMessage }}

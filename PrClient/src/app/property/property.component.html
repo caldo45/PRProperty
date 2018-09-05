@@ -1,5 +1,8 @@
-<div class="container">
-
+<div class="container" >
+    <div class="text-center mb-5" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+      </div>
+<div *ngIf="!loading">
   <div class="card flex-row flex-wrap" *ngIf="property">
     <div class="card-header border-0">
       <ngb-carousel class="carousel border" *ngIf="images && images.length > 0">
@@ -31,6 +34,9 @@
       <a [routerLink]="['/addPropertyImage', property.id]" class="btn btn-green">
         <p class="btn-text">Edit Images</p>
       </a>
+      <a [routerLink]="['/addLease', property.id]" class="btn btn-green">
+        <p class="btn-text">Add Lease For Property</p>
+      </a>
     </div>
     <div class="w-100"></div>
 
@@ -42,9 +48,5 @@
     <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
   </agm-map>
   <a class="btn btn-primary btn-green" *ngIf="geolocationPosition" (click)="getDirection(geolocationPosition)">Get Route To Property</a>
-
-</div>
-
-<div class="container">
 
 </div>

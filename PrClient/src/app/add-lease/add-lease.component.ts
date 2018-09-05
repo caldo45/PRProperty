@@ -18,6 +18,9 @@ export class AddLeaseComponent implements OnInit {
   propertyId: number;
   newLease: Lease;
   property: Property;
+  saveSuccess: boolean;
+  userMessage: string = null;
+  uploadSuccess: number;
 
   ngOnInit() {
     let propertyId = +this.route.snapshot.paramMap.get('id');
@@ -39,7 +42,16 @@ export class AddLeaseComponent implements OnInit {
 
   addLease(newLease: Lease){
     console.log(newLease);
-    this.leaseService.postLease(newLease);
+    this.leaseService.postLease(newLease)
+    .subscribe( res => {
+      this.saveSuccess = true;
+      this.userMessage = 'Lease Added';
+  },
+  err => {
+      this.saveSuccess = false;
+      this.userMessage = 'Lease Could Not Be Added';
+  }
+ );
 
   }
 

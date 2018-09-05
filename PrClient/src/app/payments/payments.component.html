@@ -1,6 +1,8 @@
-<div class="container" *ngIf="payments">
-    <div *ngIf="loaded">
-      <!-- <h4>Filter by date:</h4> -->
+<div class="container" >
+  <div *ngIf="payments">
+    <div class="text-center mb-5" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+      </div>
       <form>
           <div class="row">          
             <div class="col-4">

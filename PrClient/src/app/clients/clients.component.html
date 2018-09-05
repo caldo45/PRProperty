@@ -15,13 +15,11 @@
           <span class="input-group-text" id="basic-addon1">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-primary" *ngFor="let clientType of clientTypes" [class.active]="filters.clientType===clientType.id.toString()">
-                  <input type="radio" name="clientType" id="tenant" value="{{clientType.id}}" (click)="changeClientType(clientType)"> {{clientType.type}}
+                  <input type="radio" name="clientType" id="clientType" value="{{clientType.id}}" (click)="changeClientType(clientType)"> {{clientType.type}}
                 </label>
-              
+             
             </div>
-          </span>      
-
-     
+          </span>        
     </header>
 
     <div class="row mb-5">

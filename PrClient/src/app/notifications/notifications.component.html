@@ -1,5 +1,8 @@
 <div class="container">
-    <div class="card">
+        <div class="text-center mb-5" *ngIf="loading">
+                <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+              </div>
+    <div class="card" *ngIf="!loading">
         <div *ngIf="unreadNotifications">
             <h3 class="primary-text">Unread Notifications</h3>
             <div *ngFor="let notification of unreadNotifications">
@@ -20,6 +23,7 @@
                     <button class="primary float-right" (click)="markAsDeleted(notification)">Delete</button>
                 </div>
             </div>
+            <h4 *ngIf="readNotifications.length ==0" class="mt-5 mb-5"> There are no New Notifications</h4>
         </div>
     </div>
 

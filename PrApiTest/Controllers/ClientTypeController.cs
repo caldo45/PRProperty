@@ -11,7 +11,7 @@ using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize]
     [Route("api/[controller]")]
     public class ClientTypesController : Controller
     {

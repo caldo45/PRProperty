@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../models/client';
 import { ClientsService } from '../services/clients.service';
 import { ClientType } from '../models/ClientType';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-clients',
@@ -28,6 +29,9 @@ export class ClientsComponent implements OnInit {
     this.clientsService.getClients()
       .subscribe(response => {
       this.clients = response;
+      for(let client of this.clients){
+        client.imagePath = environment.imageRoot + client.imagePath;
+      }
       console.log(this.clients);    
       this.clientsService.getClientTypes()
           .subscribe(response => {
@@ -36,8 +40,7 @@ export class ClientsComponent implements OnInit {
             if(response && response[0]){
               this.filters.clientType = response[0].id.toString();
               this.filteredClients = this.performFilter("");
-              console.log(this.filteredClients);
-             
+              console.log(this.filteredClients);             
             } 
             this.loading = false;
         });
@@ -47,7 +50,7 @@ export class ClientsComponent implements OnInit {
 
   changeClientType(clientType: ClientType){
     this.filters.clientType = clientType.id.toString();
-    this.filteredClients= this.listFilter ? this.performFilter(this.listFilter) : this.performFilter("");
+    this.filteredClients = this.listFilter ? this.performFilter(this.listFilter) : this.performFilter("");
   }
 
   get listFilter(): string {

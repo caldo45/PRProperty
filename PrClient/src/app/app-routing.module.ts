@@ -24,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { CallbackComponent } from './callback/callback.component';
 import { AuthService } from './services/auth.service';
 import { RouteGuardService } from './services/route-guard.service';
+import { AdminGuardService } from './services/admin-guard-service.service';
 import { UpdateClientComponent } from './update-client/update-client.component';
 import { UpdatePropertyComponent } from './update-property/update-property.component';
 import { AddLeaseComponent } from './add-lease/add-lease.component';
@@ -31,35 +32,39 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ContractsComponent } from './contracts/contracts.component';
 import { ContractComponent } from './contract/contract.component';
 import { UpdateContractComponent } from './update-contract/update-contract.component';
+import { NextOfKinComponent } from './next-of-kin/next-of-kin.component';
+import { AddNextOfKinComponent } from './add-next-of-kin/add-next-of-kin.component';
 
 const routes: Routes = [
-  { path: 'properties', component: PropertiesComponent},
-  { path: 'properties/:id', component: PropertyComponent},
+  { path: 'properties', component: PropertiesComponent, canActivate: [RouteGuardService]},
+  { path: 'properties/:id', component: PropertyComponent, canActivate: [RouteGuardService]},
   { path: 'clients', component: ClientsComponent, canActivate: [RouteGuardService]},
-  { path: 'clients/:id', component: ClientComponent},
-  { path: 'rooms/:id', component: RoomsInPropertyComponent},
-  { path: 'addUser', component: AddUserComponent },
-  { path: 'test', component: TestComponent},
-  { path: 'addProperty', component: AddPropertyComponent},
-  { path: 'addRoom/:id', component: AddRoomComponent},
-  { path: 'room/:id', component: RoomComponent},
-  { path: 'mapTest', component: MapTestComponent},
-  { path: 'addContract/:id', component: AddContractComponent },
-  { path: 'addClientPhoto/:id', component: AddClientPhotoComponent},
-  { path: 'addRoomPhoto/:id', component: AddRoomPhotoComponent},
-  { path: 'addPropertyImage/:id', component: AddPropertyImageComponent},
-  { path: 'payments', component: PaymentsComponent},
-  { path: 'addPayment', component: AddPaymentComponent},
+  { path: 'clients/:id', component: ClientComponent, canActivate: [RouteGuardService]},
+  { path: 'rooms/:id', component: RoomsInPropertyComponent, canActivate: [RouteGuardService]},
+  { path: 'addUser', component: AddUserComponent, canActivate: [RouteGuardService] },
+  { path: 'test', component: TestComponent, canActivate: [RouteGuardService]},
+  { path: 'addProperty', component: AddPropertyComponent, canActivate: [RouteGuardService]},
+  { path: 'addRoom/:id', component: AddRoomComponent, canActivate: [RouteGuardService]},
+  { path: 'room/:id', component: RoomComponent, canActivate: [RouteGuardService]},
+  { path: 'mapTest', component: MapTestComponent, canActivate: [RouteGuardService]},
+  { path: 'addContract/:id', component: AddContractComponent, canActivate: [RouteGuardService]},
+  { path: 'addClientPhoto/:id', component: AddClientPhotoComponent, canActivate: [RouteGuardService]},
+  { path: 'addRoomPhoto/:id', component: AddRoomPhotoComponent, canActivate: [RouteGuardService]},
+  { path: 'addPropertyImage/:id', component: AddPropertyImageComponent, canActivate: [RouteGuardService]},
+  { path: 'payments', component: PaymentsComponent, canActivate: [RouteGuardService]},
+  { path: 'addPayment', component: AddPaymentComponent, canActivate: [AdminGuardService]},
   { path: 'home', component: HomeComponent},
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
-  { path: 'updateClient/:id', component: UpdateClientComponent},
-  { path: 'updateProperty/:id', component: UpdatePropertyComponent},
-  { path: 'addLease/:id', component: AddLeaseComponent},
+  { path: 'updateClient/:id', component: UpdateClientComponent, canActivate: [RouteGuardService]},
+  { path: 'updateProperty/:id', component: UpdatePropertyComponent, canActivate: [RouteGuardService]},
+  { path: 'addLease/:id', component: AddLeaseComponent, canActivate: [AdminGuardService]},
   { path: 'callback', component: CallbackComponent},
-  { path: 'notifications', component: NotificationsComponent},
-  { path: 'contracts', component: ContractsComponent},
-  { path: 'contract/:id', component: ContractComponent},
-  { path: 'updateContract/:id', component: UpdateContractComponent}
+  { path: 'notifications', component: NotificationsComponent, canActivate: [AdminGuardService]},
+  { path: 'contracts', component: ContractsComponent, canActivate: [AdminGuardService]},
+  { path: 'contract/:id', component: ContractComponent, canActivate: [AdminGuardService]},
+  { path: 'updateContract/:id', component: UpdateContractComponent, canActivate: [AdminGuardService]},
+  { path: 'nextOfKin/:id', component: NextOfKinComponent, canActivate: [RouteGuardService] },
+  { path: 'addNextOfKin/:id', component: AddNextOfKinComponent, canActivate: [RouteGuardService]}
  // { path: '**', component: PageNotFoundComponent }
 ]
 

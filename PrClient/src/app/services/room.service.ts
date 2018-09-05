@@ -13,27 +13,52 @@ export class RoomService {
   constructor(private http:HttpClient) { }
 
   getRoomsByProperty(propertyId: number): Observable<Room[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/rooms/byProperty'+propertyId;
-    return this.http.get<Room[]>(url);
+    return this.http.get<Room[]>(url, httpOptions);
   }
 
   getRoom(id: number): Observable<Room>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/rooms/'+id;
-    return this.http.get<Room>(url);
+    return this.http.get<Room>(url, httpOptions);
   }
 
   getRoomPhotos(id: number): Observable<RoomImage[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/rooms/images/'+id;
-    return this.http.get<RoomImage[]>(url);
+    return this.http.get<RoomImage[]>(url, httpOptions);
   }
 
   getRoomsImage(propertyId: number): Observable<RoomImage[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
     let url =  environment.baseUrl + '/api/rooms/image/'+propertyId;
-    return this.http.get<RoomImage[]>(url);
+    return this.http.get<RoomImage[]>(url, httpOptions);
   }
 
   postRoom(room: Room){
-    return this.http.post( environment.baseUrl + '/api/rooms',room)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    return this.http.post( environment.baseUrl + '/api/rooms',room, httpOptions)
       .subscribe( res => 
         {console.log(res);
        },

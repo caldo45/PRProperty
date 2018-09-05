@@ -1,4 +1,7 @@
 <div class="container">   
+    <div class="text-center mb-5" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+      </div>
   <div class="card flex-row flex-wrap" *ngIf="client">
       <div class="card-header border-0">
     <img class="client-image" src="{{client.imagePath}}" alt="Card image cap">

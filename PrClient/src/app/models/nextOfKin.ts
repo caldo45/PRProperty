@@ -1,3 +1,5 @@
+import { Client } from "./client";
+
 export class NextOfKin {
     id: number;
     firstName: string;
@@ -5,4 +7,5 @@ export class NextOfKin {
     phone: string;
     email: string;
     clientId: number;
+    client: Client;
 }

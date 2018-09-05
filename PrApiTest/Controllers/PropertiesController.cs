@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class PropertiesController : Controller
     {
