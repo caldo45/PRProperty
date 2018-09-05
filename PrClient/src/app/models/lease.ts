@@ -5,8 +5,8 @@ export class Lease{
     id: number;
     propertyId: number;
     property: Property;
-    dateFrom: Date;
-    dateTo: Date;
+    dateFrom: string;
+    dateTo: string;
     monthlyAmount: number;
 
     

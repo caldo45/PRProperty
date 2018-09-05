@@ -1,14 +1,24 @@
-<div class="container">
+<div class="container p-5">
+    <div class="alert alert-danger" role="alert" *ngIf="!success">
+        <strong>Error</strong> {{message}}
+      </div>
   <div class="card">
       <div class="text-center mb-5" *ngIf="loading">
           <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
         </div>
-    <h5 *ngIf="property">Upload Images for Property</h5>
-    <input #file type="file" multiple (change)="upload(file.files, path, id)" />
-    <br/>
-    <div class="holder" *ngFor="let img of propertyImages">
-      <img  [src]="img.imagePath" style="max-width: 300px; max-height: 200px;">
-      <button class="btn btn-green" (click)="deleteImage(img)">Delete Image</button>    
-   </div>
- 
-</div>
+    <div *ngIf="property">
+            <h5>Upload Images for Property</h5>
+            <div>       
+            </div>
+            <input #file type="file" multiple (change)="upload(file.files, path, id)" />
+            <button [routerLink]="['/properties', property.id]" class="btn btn-primary mb-5 mt-2">Return to Property</button>
+            <br/>
+            <div class="holder" *ngFor="let img of propertyImages">
+              <img  [src]="img.imagePath" style="max-width: 300px; max-height: 200px;">
+              <button class="btn btn-green" (click)="deleteImage(img)">Delete Image</button>    
+           </div>
+         
+        </div>
+
+    </div> 
+   

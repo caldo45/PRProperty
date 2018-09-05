@@ -7,6 +7,7 @@ import { Property } from '../models/property';
 import { Contract } from '../models/contract';
 import { ContractsService } from '../services/contracts.service';
 import { RoomImage } from '../models/roomImage';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-rooms-in-property',
@@ -31,11 +32,13 @@ export class RoomsInPropertyComponent implements OnInit {
         this.roomService.getRoomsImage(propertyId)
           .subscribe(response => {
             this.roomsImage = response;
+            console.log(this.rooms);
+            console.log(this.roomsImage);
             for(let room of this.rooms){
               for(let roomImage of this.roomsImage){
-                room.imagePath = "http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png";
+                room.imagePath = environment.imageRoot + "default/defaultImage.jpg";
                 if(room.id == roomImage.roomId){
-                  room.imagePath = roomImage.imagePath
+                  room.imagePath = environment.imageRoot + roomImage.imagePath;
                 }
               }
 
@@ -47,12 +50,10 @@ export class RoomsInPropertyComponent implements OnInit {
           for(let room of this.rooms){
             for(let contract of this.contracts){
               if(contract.roomId === room.id){
-               // (room.activeContract = 1)
                (room.contract = contract) && (room.activeContract = 1)              
               }
             }
-          }
-          
+          }    
           //loop through rooms and contracts - if there is a contract for the room set property contractId to id of contract
         });  
       });

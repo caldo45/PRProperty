@@ -35,7 +35,6 @@
       <div *ngIf="phone.invalid && phone.touched">
           Only Numeric Values or + Accepted
         </div>
-        {{phone.className}}
     </div>
 
 
@@ -53,6 +52,7 @@
       <option *ngFor="let clientType of clientTypes" [value]=clientType.id> {{clientType.type}}</option>
     </select>
     </div>
-    <button type="submit" class="btn btn-green" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
+    <button type="submit" class="btn btn-green m-2" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
+    <button type="submit" class="btn btn-green m-2" [routerLink]="['/clients']"> Cancel</button>
   </form>
   </div>

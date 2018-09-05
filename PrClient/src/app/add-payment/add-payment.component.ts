@@ -18,6 +18,7 @@ export class AddPaymentComponent implements OnInit {
   payments: Payment[] = [];
   dataList: Payment[];
   path: String;
+  success = true;
 
   ngOnInit(): void {
   }
@@ -25,19 +26,28 @@ export class AddPaymentComponent implements OnInit {
   constructor(private http: HttpClient, private papa: Papa, private fileService: FileService, private contractService: ContractsService ) { }
 
   onChange(files: File[], payments) {
-    if (files[0]) {
-      this.payments = [];
-      console.log(files[0]);
-      this.papa.parse(files[0], {
-        header: true,
-        skipEmptyLines: true,
-        complete: (result, file) => {
-          console.table(result.data);
-          this.payments = result.data as Payment[];
-        }
-      });
+    var ext ="";
+    for (let file of files){
+      var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
     }
-  }
+    if(ext == "csv"){
+        if (files[0]) {
+          this.payments = [];
+          console.log(files[0]);
+          this.papa.parse(files[0], {
+            header: true,
+            skipEmptyLines: true,
+            complete: (result, file) => {
+              console.table(result.data);
+              this.payments = result.data as Payment[];
+            }
+          });
+        }
+      }else{
+        this.success = false;
+        this.message = "Please Ensure File is of Type CSV";
+      }
+    }
 
   postPayments(payments){
     this.contractService.postPayments(payments);

@@ -8,6 +8,8 @@ import { RoomService } from '../services/room.service';
 import { Room } from '../models/room';
 import { PropertyImage } from '../models/propertyImage';
 import { environment } from '../environment';
+import { Lease } from '../models/lease';
+import { LeaseService } from '../services/lease.service';
 
 @Component({
   selector: 'app-property',
@@ -24,11 +26,12 @@ export class PropertyComponent implements OnInit {
   geolocationPosition: {};
   images: PropertyImage[];
   loading: boolean = false;
+  activeLease: Lease;
 
 
     dir = undefined;
 
-  constructor(private route: ActivatedRoute, private propertyService:PropertyService, private clientService:ClientsService, private roomService:RoomService) { 
+  constructor(private route: ActivatedRoute, private propertyService:PropertyService, private clientService:ClientsService, private roomService:RoomService, private leaseService: LeaseService) { 
 
   }
 
@@ -38,6 +41,8 @@ export class PropertyComponent implements OnInit {
     this.propertyService.getProperty(id)
     .subscribe(response => {
         this.property = response;
+        this.leaseService.getActiveLeaseProperty(id)
+            .subscribe( response => this.activeLease = response);
         this.propertyService.getPropertyImages(id)
             .subscribe(response => {
                 this.images = response;

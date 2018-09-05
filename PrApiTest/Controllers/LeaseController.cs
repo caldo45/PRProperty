@@ -51,6 +51,20 @@ namespace PrApi.Controllers
             return Ok(lease);
         }
 
+        [HttpGet("upcomingByProperty{propertyId}")]
+        public IActionResult GetUpComingLeasesByProperty(int propertyId)
+        {
+            var leases = _repository.GetUpcomingLeasesByProperty(propertyId);
+            return Ok(leases);
+        }
+
+        [HttpGet("oldByProperty{propertyId}")]
+        public IActionResult GetOldLeasesByProperty(int propertyId)
+        {
+            var leases = _repository.GetOldLeasesByProperty(propertyId);
+            return Ok(leases);
+        }
+
         [HttpGet("active")]
         public IActionResult GetActiveLeases()
         {
@@ -62,8 +76,27 @@ namespace PrApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Lease lease)
         {
-            var added = _repository.AddLease(lease);
-            return StatusCode(201, added);
+           
+            if (lease.Id == 0)
+            {
+                var added = _repository.AddLease(lease);
+
+                if (added.Id == 0)
+                {
+                    return StatusCode(400, "Lease exists or overlaps");
+                }
+                return StatusCode(201, added);
+            }
+
+            {
+                var updated = _repository.UpdateLease(lease);
+                if (updated.Id == 0)
+                {
+                    return StatusCode(400, "Lease Overlaps with another for this property");
+                }
+                return StatusCode(201, updated);
+            }
+
         }
 
     }

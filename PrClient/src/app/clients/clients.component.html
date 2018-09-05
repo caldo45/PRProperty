@@ -16,10 +16,10 @@
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-primary" *ngFor="let clientType of clientTypes" [class.active]="filters.clientType===clientType.id.toString()">
                   <input type="radio" name="clientType" id="clientType" value="{{clientType.id}}" (click)="changeClientType(clientType)"> {{clientType.type}}
-                </label>
-             
-            </div>
-          </span>        
+                </label>              
+            </div>           
+          </span>
+          <button routerLink="/addUser" class="btn-primary rounded m-4">Add New Client</button>     
     </header>
 
     <div class="row mb-5">

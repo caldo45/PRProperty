@@ -6,24 +6,31 @@
     <div class="card-header border-0">
         <ngb-carousel class="carousel border" *ngIf="images">
             <ng-template ngbSlide *ngFor="let image of images" >
-              <img [src]="image.imagePath" class="center-block carousel-image" alt="Random first slide">
+              <img [src]="image.imagePath" class="center-block carousel-image" alt="Room Image">
             </ng-template>
           </ngb-carousel>
           </div>
           <div class="card-block px-2">
             <h4 class="card-title"> {{room.name}}</h4>
+            <div *ngIf="!contract">
+              <h4>This Room is not currently Occupied</h4>
+            </div>
             <div *ngIf="contract">
             <p class="card-text"><a [routerLink]="['/clients', contract.clientId]"> {{contract.client.firstName}} {{contract.client.lastName}}</a> </p>
             <p class="card-text">Contract Finishes on {{contract.dateTo | date: 'dd/MM/yyyy'}}  </p>
             <p class="card-text">Monthly Rent {{contract.monthlyAmount | currency:'GBP'}}  </p>
-            <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
+            <a [routerLink]="['/contract', contract.id]" class="btn btn-primary m-3">View Contract</a>
           </div>
-          </div>
+          <div> <a [routerLink]="['/addRoomImage', room.id]" class="btn btn-primary m-3">Add Photos</a></div>
+         
         </div>
+        
     </div>
     <div *ngIf="room">
+    <div *ngIf="upcomingContracts">
         <div class="container">
             <h5>{{room.name}}'s Upcoming Contracts</h5>
+            <h6 *ngIf="upcomingContracts.length ==0"> No Upcoming Contracts For This Room</h6>
             <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of upcomingContracts">
               <div class="card p-3">
                 <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>
@@ -33,10 +40,12 @@
                 <p class="card-title"><strong>Monthly Amount: </strong> {{contract.monthlyAmount| currency:'£'}}</p>
                 <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
                 </div>
+          </div>
             </div>
             </div>
-            <div class="container">
+            <div class="container" *ngIf="oldContracts">
             <h5>{{room.name}}'s Old Contracts</h5>
+            <h6 *ngIf="oldContracts.length ==0"> No Old Contracts For This Room</h6>
             <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let contract of oldContracts">
               <div class="card p-3">
                 <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>
@@ -49,3 +58,4 @@
             </div>
           </div>
     </div>
+  </div>

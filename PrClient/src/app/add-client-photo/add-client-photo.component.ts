@@ -23,6 +23,7 @@ export class AddClientPhotoComponent implements OnInit {
   imgPath: string;
   path;
   loading = false;
+  success = true;
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
@@ -30,7 +31,7 @@ export class AddClientPhotoComponent implements OnInit {
     .subscribe(response => {
       this.client = response;
       this.imgPath = environment.imageRoot + this.client.imagePath;
-      console.log(this.imgPath)});
+      });
   }
 
   upload(files, path, imgPath, id) {
@@ -42,16 +43,25 @@ export class AddClientPhotoComponent implements OnInit {
     formData.append('assetId', id);
     formData.append('imageType', 'client');
     console.log(this.id);
+    var ext;
 
-    for (let file of files)
+    for (let file of files){
       formData.append(file.name, file);
+      var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+    }
+
+    if(ext == "jpg" || ext == "jpeg" || ext == "png"){
 
     this.fileService.uploadFiles(formData)
       .subscribe(response => {
         path = response;
-        console.log(path);
         this.imgPath = environment.imageRoot + path;
+        this.success = true;
       })
+    } else{
+      this.success = false;
+      this.message = "Please Ensure File is of Type JPG, JPEG or PNG";
     }
+  }
   
 }

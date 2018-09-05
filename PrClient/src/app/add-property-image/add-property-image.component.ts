@@ -17,6 +17,7 @@ export class AddPropertyImageComponent implements OnInit {
 
   public progress: number;
   public message: string;
+  success = true;
   id: number;
   property: Property;
   propertyImages: PropertyImage[];
@@ -42,17 +43,24 @@ export class AddPropertyImageComponent implements OnInit {
     if (files.length === 0)
       return;
 
+
     const formData = new FormData();
 
     formData.append('assetId', id);
     formData.append('imageType', 'property');
     console.log(this.id);
 
-    for (let file of files)
-      formData.append(file.name, file);
+    var ext;
 
-    this.fileService.uploadFiles(formData)
+    for (let file of files){
+      formData.append(file.name, file);
+      var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+    }
+
+    if(ext == "jpg" || ext == "jpeg" || ext == "png"){
+      this.fileService.uploadFiles(formData)
       .subscribe(response => {
+        this.success = true;
         path = response;
         this.propertyService.getPropertyImages(this.id)
         .subscribe(response => { 
@@ -61,9 +69,13 @@ export class AddPropertyImageComponent implements OnInit {
             image.imagePath = environment.imageRoot + image.imagePath;
           }
         });
-
-
       })
+    }else{
+      this.success = false;
+      this.message = "Please Ensure File is of Type JPG, JPEG or PNG";
+    }
+
+
     }
 
     deleteImage(image: PropertyImage){

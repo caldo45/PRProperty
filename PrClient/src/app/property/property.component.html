@@ -12,7 +12,7 @@
       </ngb-carousel>
       <img *ngIf="!images || images.length == 0" class="default-image" src="http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png" />
     </div>
-    <div class="card-block px-2">
+    <div class="card-block px-2 p-2">
       <p class="card-title field-name">Property Address</p>
       <h4 class="card-title">{{property.firstLineAddress}}</h4>
       <p class="card-title field-name">Area - Postcode</p>
@@ -21,6 +21,10 @@
       <a [routerLink]="['/clients', property.landlord.id]">
         <p class="card-text-custom">Landlord - {{property.landlord.firstName}} {{property.landlord.lastName}}</p>
       </a>
+      <div *ngIf="activeLease">
+          <p class="card-title field-name">Current Lease Runs From</p>
+          <p class="card-text card-text-custom">{{activeLease.dateFrom | date: 'dd/MM/yyyy'}} - {{activeLease.dateTo | date: 'dd/MM/yyyy'}}</p>
+      </div>
       <br>
       <a [routerLink]="['/updateProperty', property.id]" class="btn btn-green">
         <p class="btn-text">Update Property Details</p>
@@ -28,14 +32,12 @@
       <a [routerLink]="['/rooms', property.id]" class="btn btn-green">
         <p class="btn-text">View Rooms</p>
       </a>
-      <a [routerLink]="['/rooms', property.id]" class="btn btn-green">
-        <p class="btn-text">Edit / Update Details</p>
-      </a>
+      <br>
       <a [routerLink]="['/addPropertyImage', property.id]" class="btn btn-green">
         <p class="btn-text">Edit Images</p>
       </a>
-      <a [routerLink]="['/addLease', property.id]" class="btn btn-green">
-        <p class="btn-text">Add Lease For Property</p>
+      <a [routerLink]="['/leasesInProperty', property.id]" class="btn btn-green">
+        <p class="btn-text">Edit / View Leases For Property</p>
       </a>
     </div>
     <div class="w-100"></div>
@@ -47,6 +49,6 @@
     <agm-marker [latitude]="property.latitude" [longitude]="property.longitude"></agm-marker>
     <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
   </agm-map>
-  <a class="btn btn-primary btn-green" *ngIf="geolocationPosition" (click)="getDirection(geolocationPosition)">Get Route To Property</a>
+  <a class="btn btn-green" *ngIf="geolocationPosition" (click)="getDirection(geolocationPosition)"> <p class="btn-text">Get Route To Property</p></a>
 
 </div>

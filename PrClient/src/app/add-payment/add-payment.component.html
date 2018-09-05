@@ -1,5 +1,8 @@
 <div class="container-fluid">
   <div class="card">
+      <div class="alert alert-danger" role="alert" *ngIf="!success">
+          <strong>Error</strong> {{message}}
+        </div>
     <h4>Add Payments</h4>
     <input type="file" name="files" class="form-control" #uploads (change)="onChange(uploads.files, payments)" multiple value="process"
     />

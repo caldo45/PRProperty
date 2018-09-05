@@ -34,6 +34,8 @@ import { ContractComponent } from './contract/contract.component';
 import { UpdateContractComponent } from './update-contract/update-contract.component';
 import { NextOfKinComponent } from './next-of-kin/next-of-kin.component';
 import { AddNextOfKinComponent } from './add-next-of-kin/add-next-of-kin.component';
+import { LeasesInPropertyComponent } from './leases-in-property/leases-in-property.component';
+import { UpdateLeaseComponent } from './update-lease/update-lease.component';
 
 const routes: Routes = [
   { path: 'properties', component: PropertiesComponent, canActivate: [RouteGuardService]},
@@ -49,7 +51,7 @@ const routes: Routes = [
   { path: 'mapTest', component: MapTestComponent, canActivate: [RouteGuardService]},
   { path: 'addContract/:id', component: AddContractComponent, canActivate: [RouteGuardService]},
   { path: 'addClientPhoto/:id', component: AddClientPhotoComponent, canActivate: [RouteGuardService]},
-  { path: 'addRoomPhoto/:id', component: AddRoomPhotoComponent, canActivate: [RouteGuardService]},
+  { path: 'addRoomImage/:id', component: AddRoomPhotoComponent, canActivate: [RouteGuardService]},
   { path: 'addPropertyImage/:id', component: AddPropertyImageComponent, canActivate: [RouteGuardService]},
   { path: 'payments', component: PaymentsComponent, canActivate: [RouteGuardService]},
   { path: 'addPayment', component: AddPaymentComponent, canActivate: [AdminGuardService]},
@@ -64,7 +66,9 @@ const routes: Routes = [
   { path: 'contract/:id', component: ContractComponent, canActivate: [AdminGuardService]},
   { path: 'updateContract/:id', component: UpdateContractComponent, canActivate: [AdminGuardService]},
   { path: 'nextOfKin/:id', component: NextOfKinComponent, canActivate: [RouteGuardService] },
-  { path: 'addNextOfKin/:id', component: AddNextOfKinComponent, canActivate: [RouteGuardService]}
+  { path: 'addNextOfKin/:id', component: AddNextOfKinComponent, canActivate: [RouteGuardService]},
+  { path: 'leasesInProperty/:id', component: LeasesInPropertyComponent, canActivate: [AdminGuardService]},
+  { path: 'updateLease/:id', component: UpdateLeaseComponent, canActivate: [AdminGuardService]}
  // { path: '**', component: PageNotFoundComponent }
 ]
 

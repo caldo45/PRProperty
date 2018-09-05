@@ -7,6 +7,7 @@ import { ClientsService } from '../services/clients.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room';
 import { RoomImage } from '../models/roomImage';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-add-room-photo',
@@ -24,18 +25,23 @@ export class AddRoomPhotoComponent implements OnInit {
   roomImages: RoomImage[];
   imgPaths: string[] = [];
   path;
+  client: Client;
+  uploadSuccess: number;
+  success = true;
+
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.roomService.getRoomPhotos(this.id)
       .subscribe(response => { this.roomImages = response;
-      console.log(this.roomImages)
+        for(let image of this.roomImages){
+          image.imagePath = environment.imageRoot + image.imagePath;
+        }
       });
 
     this.roomService.getRoom(this.id)
     .subscribe(response => {
       this.room = response;
-      console.log(this.room);
     });
   }
 
@@ -48,17 +54,39 @@ export class AddRoomPhotoComponent implements OnInit {
     formData.append('assetId', id);
     formData.append('imageType', 'room');
     console.log(this.id);
+    var ext;
 
-    for (let file of files)
+    for (let file of files){
       formData.append(file.name, file);
-
-    this.fileService.uploadFiles(formData)
-      .subscribe(response => {
-        path = response;
-        this.roomService.getRoomPhotos(this.id)
-        .subscribe(response => this.roomImages = response);
-
-      })
+      var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
     }
+
+
+    if(ext == "jpg" || ext == "jpeg" || ext == "png" || ext == "PNG"){
+      this.success = true;
+        this.fileService.uploadFiles(formData)
+          .subscribe(response => {
+            path = response;
+            this.roomService.getRoomPhotos(this.id)
+            .subscribe(response => {
+              this.roomImages = response;
+              for(let image of this.roomImages){
+                image.imagePath = environment.imageRoot + image.imagePath;
+              }
+            });
+          });
+        }
+        else{
+            this.success = false;
+            this.message = "Please Ensure File is of Type JPG, JPEG or PNG";
+
+        }
+      }
+
+    deleteImage(image: RoomImage){
+      this.roomService.deleteRoomImage(image)
+        .subscribe(response => 
+          this.roomImages = this.roomImages.filter(propImage => propImage.id !== image.id))              
+      }
   
-}
+}      

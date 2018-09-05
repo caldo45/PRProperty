@@ -1,4 +1,7 @@
 <div class="container list-object">
+    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+        {{userMessage}}
+      </div>
     <form #addroomForm="ngForm">
   
       <div class="form-group" [class.has-error]="name.invalid && name.touched">
@@ -10,5 +13,6 @@
       </div>
 
       <button type="submit" class="btn btn-green" (click)="addRoom(room)">Submit</button>
+      <a [routerLink]="['/properties', propertyId]" class="btn btn-primary primary">Back To Property</a>
     </form>
     </div>

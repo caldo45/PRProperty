@@ -7,6 +7,7 @@ import { Room } from '../models/room';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import { RoomImage } from '../models/roomImage';
+import { environment } from '../environment';
 
 
 
@@ -37,7 +38,12 @@ export class RoomComponent implements OnInit {
     this.contractService.getOldByRoom(roomId)
       .subscribe(response => this.oldContracts = response);
     this.roomService.getRoomPhotos(roomId)
-      .subscribe(response => this.images = response);
+      .subscribe(response => {
+        this.images = response;
+        for(let image of this.images){
+          image.imagePath = environment.imageRoot + image.imagePath;
+        }
+      });
     });
 
   }

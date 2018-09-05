@@ -3,6 +3,7 @@
       <div class="card">
         <img class="card-img-top" src="{{room.imagePath}}" alt="">
         <div class="card-body">
+            <h4>{{room.name}}</h4>
             <div *ngIf="(room.activeContract == 1)">
                 <div class="card-text" ><p>Current Tenant: {{room.contract.client.firstName}} {{room.contract.client.lastName}} - {{room.contract.monthlyAmount | currency:'£'}}pcm </p>
                  <p>Contract Ends on {{room.contract.dateTo | date: 'dd/MM/yyyy'}} </p></div>
@@ -17,4 +18,5 @@
 </div>
 <div class="container">
     <a *ngIf="property" [routerLink]="['/addRoom', property.id]" class="btn btn-primary m-5">Add Room For This Property</a>
+    <a *ngIf="property" [routerLink]="['/properties', property.id]" class="btn btn-primary m-5">Back To Property</a>
   </div>

@@ -22,6 +22,16 @@ export class LeaseService {
     return this.http.get<Lease[]>(url, httpOptions);
   }
 
+  getLease(leaseId: number): Observable<Lease> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    let url =  environment.baseUrl + '/api/lease/'+leaseId;
+    return this.http.get<Lease>(url, httpOptions);
+  }
+
   getLeasesProperty(propertyId: number): Observable<Lease[]>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -60,4 +70,25 @@ export class LeaseService {
     };
     return this.http.post(environment.baseUrl + '/api/lease', lease, httpOptions);
   }
+
+  getUpcomingLeasesByProperty(propertyId: number): Observable<Lease[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    let url =  environment.baseUrl + '/api/lease/upcomingByProperty'+propertyId;
+    return this.http.get<Lease[]>(url, httpOptions);
+  }
+
+  getOldLeasesByProperty(propertyId: number): Observable<Lease[]>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    let url =  environment.baseUrl + '/api/lease/upcomingByProperty'+propertyId;
+    return this.http.get<Lease[]>(url, httpOptions);
+  }
+
 }

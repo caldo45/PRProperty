@@ -32,41 +32,28 @@ export class ClientsComponent implements OnInit {
       for(let client of this.clients){
         client.imagePath = environment.imageRoot + client.imagePath;
       }
-      console.log(this.clients);    
-      this.clientsService.getClientTypes()
-          .subscribe(response => {
-            this.clientTypes = response;
-            console.log(this.clientTypes);
-            if(response && response[0]){
-              this.filters.clientType = response[0].id.toString();
-              this.filteredClients = this.performFilter("");
-              console.log(this.filteredClients);             
-            } 
-            this.loading = false;
-        });
+      console.log(this.clients); 
+      this.filteredClients = this.clients;
+      this.loading = false; 
+
       });
     
   }
 
-  changeClientType(clientType: ClientType){
-    this.filters.clientType = clientType.id.toString();
-    this.filteredClients = this.listFilter ? this.performFilter(this.listFilter) : this.performFilter("");
-  }
 
   get listFilter(): string {
     return this._listFilter;
   }
   set listFilter(value: string){
     this._listFilter = value;
-    this.filteredClients= this.listFilter ? this.performFilter(this.listFilter) : this.performFilter("");
+    this.filteredClients= this.listFilter ? this.performFilter(this.listFilter) : this.clients;
   }
  
 
   performFilter(filterBy: string): Client[] {
     filterBy = filterBy.toLocaleLowerCase();
-    console.log(this.clients);
     let filtered = this.clients.filter((client: Client) =>
-      client.firstName.toLocaleLowerCase().indexOf(filterBy) > -1 && client.clientType.id.toString() === this.filters.clientType);
+      client.firstName.toLocaleLowerCase().indexOf(filterBy) > -1);
     return filtered;
   }
 

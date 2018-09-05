@@ -55,15 +55,6 @@ namespace PrApi.Repositories
             return propertyImage;
         }
 
-//        public IEnumerable<PropertyImage> GetOneImageForEachProperty()
-//        {
-//            var propertyImages = _db.PropertyImages;
-//            foreach(PropertyImage image in propertyImages)
-//            {
-//                if()
-//            }
-//            return propertyImage;
-//        }
 
         public Client GetUser(int id)
         {
@@ -73,7 +64,6 @@ namespace PrApi.Repositories
 
         public string DeletePropertyImage(PropertyImage image, string fileName)
         {
-           // string fileName = image.ImagePath;
             if (System.IO.File.Exists(fileName))
             {
                 System.IO.File.Delete(fileName);
@@ -83,6 +73,19 @@ namespace PrApi.Repositories
             _db.SaveChanges();
             return "File Deleted";
             
+        }
+
+        public string DeleteRoomImage(RoomImage image, string fileName)
+        {
+            if (System.IO.File.Exists(fileName))
+            {
+                System.IO.File.Delete(fileName);
+            }
+
+            _db.RoomImages.Remove(image);
+            _db.SaveChanges();
+            return "File Deleted";
+
         }
 
         public PropertyImage GetPropertyImage(int imageId)
@@ -296,6 +299,22 @@ namespace PrApi.Repositories
             return contracts;
         }
 
+        public IEnumerable<Lease> GetUpcomingLeasesByProperty(int propertyId)
+        {
+            DateTime date = DateTime.Now;
+            var leases = _db.Leases.Where(l => l.DateTo.CompareTo(date) > 0 && l.DateFrom.CompareTo(date) > 0);
+            return leases;
+        }
+
+        public IEnumerable<Lease> GetOldLeasesByProperty(int propertyId)
+        {
+            DateTime date = DateTime.Now;
+            var leases = _db.Leases.Where(l => l.DateTo.CompareTo(date) < 0 && l.DateFrom.CompareTo(date) < 0);
+            return leases;
+        }
+
+        
+
         public IEnumerable<PropertyImage> GetImageForEachProperty()
         {
             var properties = _db.Properties;
@@ -320,10 +339,18 @@ namespace PrApi.Repositories
             foreach (Room room in rooms)
             {
                 var image = _db.RoomImages.FirstOrDefault(ri => ri.RoomId == room.Id);
-                images.Add(image);
+                if (image != null)
+                {
+                    images.Add(image);
+                }               
             }
-
             return images;
+        }
+
+        public RoomImage GetRoomImage(int imageId)
+        {
+            var image = _db.RoomImages.FirstOrDefault(r => r.Id == imageId);
+            return image;
         }
 
         public Lease GetActiveLeaseByProperty(int propertyId)
@@ -482,7 +509,7 @@ namespace PrApi.Repositories
         public Lease AddLease(Lease lease)
         {
             var overlapPropertyExists = _db.Lease.Any(l => l.PropertyId == lease.PropertyId
-                                                           && l.Overlaps(lease));
+                                                           && l.Overlaps(lease) && l.Id != lease.Id);
             if (!overlapPropertyExists)
             {
                 _db.Leases.Add(lease);
@@ -498,13 +525,11 @@ namespace PrApi.Repositories
 
         public Lease UpdateLease(Lease lease)
         {
-            var existingLease = _db.Lease.FirstOrDefault(l => l.Id == lease.Id);
             var overlapPropertyExists = _db.Lease.Any(l => l.PropertyId == lease.PropertyId
-                                                           && l.Overlaps(lease));
+                                                           && l.Overlaps(lease) && l.Id != lease.Id);
             if (!overlapPropertyExists)
             {
-                existingLease = lease;
-                _db.Lease.Update(existingLease);
+                _db.Entry(lease).State = EntityState.Modified;
                 _db.SaveChanges();
                 return lease;
             }
@@ -715,5 +740,6 @@ namespace PrApi.Repositories
             _db.SaveChanges();
             return contractNotification;
         }
+
     }
 }

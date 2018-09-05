@@ -1,10 +1,15 @@
 <div class="container">
+    <div class="alert alert-danger" role="alert" *ngIf="!success">
+        <strong>Error</strong> {{message}}
+      </div>
   <div class="card">
     <h5 *ngIf="room">Upload Images for Room - {{room.name}} - {{room.property.firstLineAddress}}</h5>
     <input #file type="file" multiple (change)="upload(file.files, path, imgPaths, id)" />
+    <a [routerLink]="['/rooms', room.id]" class="btn btn-primary m-5">Return to Room</a>
     <br/>
-    <div class="holder">
-      <img *ngFor="let img of roomImages" [src]="img.imagePath" style="max-width: 500px; max-height: 500px;">     
+    <div class="holder" *ngFor="let img of roomImages" >
+      <img [src]="img.imagePath" style="max-width: 500px; max-height: 500px;">
+      <button class="btn btn-green" (click)="deleteImage(img)">Delete Image</button>   
    </div>
  
 </div>

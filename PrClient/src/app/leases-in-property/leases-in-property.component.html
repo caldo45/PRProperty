@@ -1,0 +1,36 @@
+<div class="container" *ngIf="property">
+  <h3>Leases For {{property.firstLineAddress}}</h3>
+<h4>Active Lease</h4>
+<div class="col-lg-6 col-md-6 sm-6 mb-3" *ngIf="activeLease">
+  <div class="card p-4">
+      <p class="card-title"><strong>Start Date: </strong>{{activeLease.dateFrom | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>End Date: </strong> {{activeLease.dateTo | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>Monthly Amount: </strong> {{activeLease.monthlyAmount | currency:'£'}}</p>
+      <a [routerLink]="['/updateLease', activeLease.id]" class="btn btn-primary">Edit Lease</a>
+    </div>
+  </div>
+  <div>
+      <h5 *ngIf="upcomingLeases.length == 0">No Upcoming Leases</h5>  
+  <h4>Upcoming Lease's</h4>
+<div class="col-lg-6 col-md-6 sm-6 mb-3" *ngFor="let lease of upcomingLeases">
+  <h4 *ngIf="upcomingLeases.length == 0">No Upcoming Leases</h4>
+  <div class="card p-4">
+      <p class="card-title"><strong>Start Date: </strong>{{lease.dateFrom | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>End Date: </strong> {{lease.dateTo | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>Monthly Amount: </strong> {{lease.monthlyAmount| currency:'£'}}</p>
+      <a [routerLink]="['/updateLease', lease.id]" class="btn btn-primary">Edit Lease</a>
+    </div>
+  </div>
+  </div>
+  <div>
+      <h5 *ngIf="oldLeases.length == 0">No Old Leases</h5>  
+  <h4>Old Lease's</h4>
+<div class="col-lg-6 col-md-6 sm-6 mb-3" *ngFor="let lease of oldLeases">
+  <div class="card p-4">
+      <p class="card-title"><strong>Start Date: </strong>{{lease.dateFrom | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>End Date: </strong> {{lease.dateTo | date: 'dd/MM/yyyy'}}</p>
+      <p class="card-title"><strong>Monthly Amount: </strong> {{lease.monthlyAmount| currency:'£'}}</p>
+    </div>
+  </div>
+</div>
+</div>

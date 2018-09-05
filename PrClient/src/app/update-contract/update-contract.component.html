@@ -67,9 +67,8 @@
       </div>
 
       <button type="submit" class="btn btn-green" (click)="addContract(contract)" [disabled]="addContract.invalid"> Submit</button>
-
+      <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">Cancel</a>
         </form>
 
 
 </div>
-<button type="submit" class="btn btn-green" (click)="log(paymentTypes)" >Submit</button>

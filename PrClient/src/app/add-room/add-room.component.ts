@@ -11,17 +11,29 @@ import { ActivatedRoute } from '@angular/router';
 export class AddRoomComponent implements OnInit {
 
   room: Room;
+  saveSuccess: boolean;
+  userMessage: string = null;
+  propertyId: number;
 
   constructor(private route: ActivatedRoute, private roomService: RoomService) { }
 
   ngOnInit() {
-    let id = +this.route.snapshot.paramMap.get('id');
+    this.propertyId = +this.route.snapshot.paramMap.get('id');
     this.room = new Room();
-    this.room.propertyId = id;
+    this.room.propertyId = this.propertyId;
   }
 
   addRoom(room){
-    this.roomService.postRoom(room);
+    this.roomService.postRoom(room)
+    .subscribe( res => {
+      this.saveSuccess = true;
+      this.userMessage = 'Room Added';
+  },
+  err => {
+      this.saveSuccess = false;
+      this.userMessage = 'Problem Adding Room, Please Try Again';
+  }
+ );
   }
 
 }

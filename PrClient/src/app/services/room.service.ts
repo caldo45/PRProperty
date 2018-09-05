@@ -59,12 +59,15 @@ export class RoomService {
       })
     };
     return this.http.post( environment.baseUrl + '/api/rooms',room, httpOptions)
-      .subscribe( res => 
-        {console.log(res);
-       },
-      err => {
-        console.log("Error Occured");
-       }
-       );
+    }
+
+    deleteRoomImage(image: RoomImage){
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'bearer ' + localStorage.getItem('access_token')
+        })
+      };
+      return this.http.post( environment.baseUrl + '/api/rooms/deleteImage',image, httpOptions);
+      
     }
 }

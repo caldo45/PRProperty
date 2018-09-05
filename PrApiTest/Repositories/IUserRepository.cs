@@ -35,12 +35,8 @@ namespace PrApi.Repositories
 
         IEnumerable<Client> GetUserByType(int id);
 
-        //IEnumerable<Client> GetUserByType(int clientTypeId);
-
         IEnumerable<Property> GetByLandlordId(int id);
         Client AddUserImage(int id, string path);
-
-        //Client GetLandlordByProperty(int propertyId);
 
         IEnumerable<Room> GetRooms();
         Room GetRoom(int id);
@@ -86,14 +82,19 @@ namespace PrApi.Repositories
         IEnumerable<ContractNotification> GetContractNotifications();
         ContractNotification GetContractNotification(int id);
         ContractNotification AddContractNotification(ContractNotification contractNotification);
-
+       
         Contract GetContractByPaymentReference(string paymentReference);
         IEnumerable<Lease> GetLeasesByProperty(int propertyId);
         Lease GetActiveLeaseByProperty(int propertyId);
         IEnumerable<Lease> GetActiveLeases();
         string DeletePropertyImage(PropertyImage image, string fileName);
-
-
+        string DeleteRoomImage(RoomImage image, string fileName);
+        RoomImage GetRoomImage(int imageId);
+        IEnumerable<Lease> GetUpcomingLeasesByProperty(int propertyId);
+        IEnumerable<Lease> GetOldLeasesByProperty(int propertyId);
         PropertyImage GetPropertyImage(int imageId);
+        Lease UpdateLease(Lease lease);
+
+
     }
 }

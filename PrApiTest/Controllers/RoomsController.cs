@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using PrApi.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using PrApi.Model;
 using PrApi.Repositories;
+
 
 namespace PrApi.Controllers
 {
@@ -16,10 +19,12 @@ namespace PrApi.Controllers
     public class RoomsController : Controller
     {
         private readonly IUserRepository _repository;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public RoomsController(IUserRepository repository)
+        public RoomsController(IUserRepository repository, IHostingEnvironment hostingEnvironment)
         {
             _repository = repository;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -64,6 +69,17 @@ namespace PrApi.Controllers
         {
             var roomImages = _repository.GetImageForEachRoomInProperty(propertyId);
             return Ok(roomImages);
+        }
+
+        [HttpPost("deleteImage")]
+        public IActionResult Post([FromBody]RoomImage image)
+        {
+            var imageFromDb = _repository.GetRoomImage(image.Id);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var imagePath = imageFromDb.ImagePath.Replace('/', '\\');
+            var fullPath = Path.Combine(webRootPath, "uploads", imagePath);
+            _repository.DeleteRoomImage(imageFromDb, fullPath);
+            return StatusCode(202);
         }
 
     }

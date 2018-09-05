@@ -45,6 +45,8 @@ import { ContractComponent } from './contract/contract.component';
 import { UpdateContractComponent } from './update-contract/update-contract.component';
 import { NextOfKinComponent } from './next-of-kin/next-of-kin.component';
 import { AddNextOfKinComponent } from './add-next-of-kin/add-next-of-kin.component';
+import { UpdateLeaseComponent } from './update-lease/update-lease.component';
+import { LeasesInPropertyComponent } from './leases-in-property/leases-in-property.component';
 
 
 
@@ -81,7 +83,9 @@ import { AddNextOfKinComponent } from './add-next-of-kin/add-next-of-kin.compone
     ContractComponent,
     UpdateContractComponent,
     NextOfKinComponent,
-    AddNextOfKinComponent
+    AddNextOfKinComponent,
+    UpdateLeaseComponent,
+    LeasesInPropertyComponent
   ],
   imports: [
     BrowserModule,

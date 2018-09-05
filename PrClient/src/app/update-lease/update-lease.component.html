@@ -1,0 +1,39 @@
+<div class="container list-object">
+        <div class="text-center mb-5" *ngIf="loading">
+                <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
+              </div>
+    <div *ngIf="property">
+    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+        {{userMessage}}
+      </div>
+  <form #addLeaseForm="ngForm" *ngIf="lease">
+    <h4>Add New Lease for {{property.firstLineAddress}}</h4>
+    <p *ngIf="activeLease != null">Current Lease Runs From {{ activeLease.dateFrom | date: 'dd/MM/yyyy' }} to {{activeLease.dateTo  | date: 'dd/MM/yyyy'}} </p>
+  <div class="form-group" [class.has-error]="dateFrom.invalid && dateFrom.touched">
+    <label for="dateFrom" class="field-name datepicker" >Date From</label>
+    <input #dateFrom="ngModel" type="date" class="form-control" required id="dateFrom" name="dateFrom" [(ngModel)]="lease.dateFrom" placeholder="Enter Date From">
+    <div *ngIf="dateFrom.invalid && dateFrom.touched">
+        Date From is Required
+      </div>
+  </div>
+  <div class="form-group" [class.has-error]="dateTo.invalid && dateTo.touched">
+    <label for="dateTo" class="field-name datepicker" >Date To</label>
+    <input #dateTo="ngModel" type="date" class="form-control" required id="dateTo" name="dateTo" [(ngModel)]=" lease.dateTo" placeholder="Enter Date To">
+    <div *ngIf="dateTo.invalid && dateTo.touched">
+        Date To is Required
+        </div>
+    </div>
+    <div class="form-group" [class.has-error]="amountMonthly.invalid && amountMonthly.touched">
+      <label for="amountMonthly" class="field-name" >Monthly Amount</label>
+      <input #amountMonthly="ngModel" type="number" class="form-control" required id="amountMonthly" name="amountMonthly" [(ngModel)]="lease.amountMonthly" placeholder="Enter Monthly Amount">
+      <div *ngIf="amountMonthly.invalid && amountMonthly.touched">
+          Monthly Amount is Required
+          </div>
+      </div>
+      <button type="submit" class="btn btn-green" (click)="addLease(lease)" [disabled]="addLeaseForm.invalid"> Submit</button>
+    </form>
+    <a [routerLink]="['/leasesInProperty', property.id]" class="btn btn-green">
+        <p class="btn-text">Cancel</p>
+      </a>
+</div>
+</div>

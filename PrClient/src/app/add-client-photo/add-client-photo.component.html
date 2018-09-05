@@ -1,13 +1,19 @@
 <div class="container">
+    <div class="alert alert-danger" role="alert" *ngIf="!success">
+        <strong>Error</strong> {{message}}
+      </div>
   <div class="card">
       <div class="text-center mb-5" *ngIf="loading">
           <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
         </div>
-    <h5 *ngIf="client">Upload File for Client - {{client.firstName}}</h5>
-    <input #file type="file" multiple (change)="upload(file.files, path, imgPath, id)" />
+        <div *ngIf="client">
+    <h5>Upload File for Client - {{client.firstName}}</h5>
+    <input #file type="file" class="mt-2 mb-2" multiple (change)="upload(file.files, path, imgPath, id)" />
+    <a [routerLink]="['/clients', client.id]" class="btn btn-primary m-5">Back To Profile</a>
     <br/>
     <div class="holder">
-      <img *ngIf="imgPath" [src]='imgPath' style="max-width: 500px; max-height: 500px;">     
+      <img *ngIf="imgPath" [src]='imgPath' style="max-width: 1000px; max-height: 1000px;">     
    </div>
+</div>
 </div>
 

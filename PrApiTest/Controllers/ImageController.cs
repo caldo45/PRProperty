@@ -43,42 +43,46 @@ namespace PrApi.Controllers
                 {
                     string uploadFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     string ext = Path.GetExtension(uploadFileName);
-                    int assetIdInt = Int32.Parse(assetId);
-
-                    string time = DateTime.Now.ToString("hh.mm.ss.ffffff");
-                    var fileName = imageTypeFolder.Equals("client") ? assetId + ext : assetId + time + ext;
-                    apiPath = Path.Combine(imageTypeFolder, imageFolder, fileName);
-                    apiPath = apiPath.Replace('\\', '/');
-                    // var uri = new Uri(apiPath);
-
-                    if (imageTypeFolder.Equals("client"))
+                    if (ext == ".jpg" || ext == ".jpeg" || ext == ".png")
                     {
-                        _repository.AddUserImage(assetIdInt, apiPath);
-                    }
+                        int assetIdInt = Int32.Parse(assetId);
+                        string time = DateTime.Now.ToString("hh.mm.ss.ffffff");
+                        var fileName = imageTypeFolder.Equals("client") ? assetId + ext : assetId + time + ext;
+                        apiPath = Path.Combine(imageTypeFolder, imageFolder, fileName);
+                        apiPath = apiPath.Replace('\\', '/');
+                        // var uri = new Uri(apiPath);
 
-                    if (imageTypeFolder.Equals("room"))
-                    {
-                        _repository.AddRoomImage(assetIdInt, apiPath);
-                    }
+                        if (imageTypeFolder.Equals("client"))
+                        {
+                            _repository.AddUserImage(assetIdInt, apiPath);
+                        }
 
-                    if (imageTypeFolder.Equals("property"))
-                    {
-                        _repository.AddPropertyImage(assetIdInt, apiPath);
-                    }
+                        if (imageTypeFolder.Equals("room"))
+                        {
+                            _repository.AddRoomImage(assetIdInt, apiPath);
+                        }
+
+                        if (imageTypeFolder.Equals("property"))
+                        {
+                            _repository.AddPropertyImage(assetIdInt, apiPath);
+                        }
 
 
-                    var fullPath = Path.Combine(webRootPath, rootFolderName, apiPath);
-                    string fileFolder = Path.Combine(webRootPath, rootFolderName, imageTypeFolder, imageFolder);
-                    if (!Directory.Exists(fileFolder))
-                    {
-                        Directory.CreateDirectory(fileFolder);
+                        var fullPath = Path.Combine(webRootPath, rootFolderName, apiPath);
+                        string fileFolder = Path.Combine(webRootPath, rootFolderName, imageTypeFolder, imageFolder);
+                        if (!Directory.Exists(fileFolder))
+                        {
+                            Directory.CreateDirectory(fileFolder);
+                        }
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
                     }
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
+                    return Json(apiPath);
+                    
                     }
-                }
-                return Json(apiPath);
+                return Json("Upload Failed, Please Ensure Image is either JPG, PNG or JPEG Format");
             }
             catch (System.Exception ex)
             {
