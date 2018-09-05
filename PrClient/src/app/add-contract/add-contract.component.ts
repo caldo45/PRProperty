@@ -29,7 +29,7 @@ export class AddContractComponent implements OnInit {
   contract: Contract;
   paymentTypes: PaymentType[];
   depositPaid: number;
-
+  loading = false;
   userMessage: string = null;
 
 

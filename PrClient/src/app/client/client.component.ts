@@ -20,6 +20,7 @@ export class ClientComponent implements OnInit {
   activeContract: Contract;
   oldContracts: Contract[];
   upcomingContracts: Contract[];
+  loading = false;
 
   constructor(private route: ActivatedRoute, private clientService: ClientsService, private propertyService: PropertyService, private contractService: ContractsService) {
    }

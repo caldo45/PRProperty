@@ -24,7 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { CallbackComponent } from './callback/callback.component';
 import { AuthService } from './services/auth.service';
 import { RouteGuardService } from './services/route-guard.service';
-import { AdminGuardService } from './services/admin-guard-service.service';
+import { AdminGuardService } from './services/admin-guard.service';
 import { UpdateClientComponent } from './update-client/update-client.component';
 import { UpdatePropertyComponent } from './update-property/update-property.component';
 import { AddLeaseComponent } from './add-lease/add-lease.component';

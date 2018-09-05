@@ -22,6 +22,7 @@ export class AddClientPhotoComponent implements OnInit {
   client: Client;
   imgPath: string;
   path;
+  loading = false;
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');

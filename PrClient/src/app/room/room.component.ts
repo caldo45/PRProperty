@@ -22,6 +22,7 @@ export class RoomComponent implements OnInit {
   images: RoomImage[];
   oldContracts: Contract[];
   upcomingContracts: Contract[];
+  loading = false;
 
   constructor(private route: ActivatedRoute, private contractService: ContractsService, private roomService: RoomService, private _http: HttpClient) { }
 

@@ -11,7 +11,7 @@ export class AdminGuardService {
   constructor(public authService: AuthService, public router: Router) { }
 
   canActivate(): boolean {
-    if (this.authService.isAdmin) {
+    if (!this.authService.isAdmin) {
       this.router.navigate(['home']);
       return false;
     }

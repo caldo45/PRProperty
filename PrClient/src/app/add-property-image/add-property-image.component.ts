@@ -21,6 +21,7 @@ export class AddPropertyImageComponent implements OnInit {
   property: Property;
   propertyImages: PropertyImage[];
   path;
+  loading = false;
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
