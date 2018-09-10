@@ -1,8 +1,21 @@
-<div class="container" >
+<div class="container">
+    <div class="alert alert-danger" role="alert" *ngIf="delete && property">
+        <strong>Warning!</strong> This will delete the Property if it does not have any Lease's. Are you sure you want to Delete This Property?
+        <button type="submit" class="btn primary m-3" (click)="deleteProperty(property)" > Confirm Delete</button>
+        <button type="submit" class="btn primary m-3" (click)="cancelDelete()" > Cancel</button>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="deleted">
+          <strong> The Property has been deleted</strong>
+          <button type="submit" class="btn primary m-3" [routerLink]="['/properties']" > Back To Properties</button>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="deleteFailed">
+            <strong> The Property could Not Be Deleted. Please ensure there are no Lease's or contracts attached to this Property.</strong>
+          </div>
     <div class="text-center mb-5" *ngIf="loading">
         <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
       </div>
-<div *ngIf="!loading">
+
+<div *ngIf="!loading && !deleted">
   <div class="card flex-row flex-wrap" *ngIf="property">
     <div class="card-header border-0">
       <ngb-carousel class="carousel border" *ngIf="images && images.length > 0">
@@ -16,7 +29,7 @@
       <p class="card-title field-name">Property Address</p>
       <h4 class="card-title">{{property.firstLineAddress}}</h4>
       <p class="card-title field-name">Area - Postcode</p>
-      <p class="card-text card-text-custom">{{property.secondLineAddress}} - {{property.postcode}}</p>
+      <p class="card-text card-text-custom">{{property.secondLineAddress}} - {{property.postcode | uppercase}}</p>
       <p class="card-title field-name">Landlord</p>
       <a [routerLink]="['/clients', property.landlord.id]">
         <p class="card-text-custom">Landlord - {{property.landlord.firstName}} {{property.landlord.lastName}}</p>
@@ -37,8 +50,11 @@
         <p class="btn-text">Edit Images</p>
       </a>
       <a [routerLink]="['/leasesInProperty', property.id]" class="btn btn-green">
-        <p class="btn-text">Edit / View Leases For Property</p>
+        <p class="btn-text">Edit/View Property Leases</p>
       </a>
+      <button class="btn btn-green">
+        <p class="btn-text" (click)="clickDelete()">Delete Property</p>
+      </button>
     </div>
     <div class="w-100"></div>
 

@@ -15,11 +15,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <!-- <li class="nav-item">
-                    <a class="nav-link" routerLink="/home" routerLinkActive="active-link">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-item nav-link" *ngIf="authService.isAuthenticated()" routerLink="/clients" routerLinkActive="active-link">Clients</a>
                     </li>
@@ -48,11 +43,21 @@
 </header>
 
 <body>
+    <div class="container" *ngIf="!authService.isAuthenticated()">
+                <div class="card text-center mt-5 mb-5" style="width: 50%;">
+                        <img class="card-img-top" src="{{logoPath}}" alt="Card image cap">
+                        <div class="card-body">
+                          <h3>Welcome.</h3>
+                          <p class="card-text">Please Login using the button below.</p>
+                          <button (click)="authService.login()" class="btn primary" style="width: 50%">Login</button>
+                        </div>
+                      </div>
+    </div>
     <router-outlet></router-outlet>
 
     <div class="container-fluid no-padding no-margins">
         <footer class="py-5 dark">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+            <p class="m-0 text-center text-white">Copyright PR Properties 2018</p>
         </footer>
     </div>
 </body>

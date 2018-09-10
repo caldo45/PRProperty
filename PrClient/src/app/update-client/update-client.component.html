@@ -1,65 +1,66 @@
-<div class="container list-object">
-  <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
-    {{userMessage}}
-  </div>
+<div class="container list-object p-5">
+  <form #addUserForm="ngForm" *ngIf="client && !deleted">
 
-  <form #addUserForm="ngForm" *ngIf="client">
-
-    <div class="form-group" [class.has-error]="firstName.invalid && firstName.touched">
+    <div class="form-group" [class.has-error]="firstName.invalid && addUserForm.submitted">
       <label for="inputFirstName" class="field-name" >First Name </label>
       <input #firstName="ngModel" required type="string" class="form-control" name="inputfirstName" id="inputfirstName" [(ngModel)]="client.firstName" placeholder="Enter First Name">
-      <div *ngIf="firstName.invalid && firstName.touched">
+      <div *ngIf="firstName.invalid && addUserForm.submitted">
           First Name is Required
         </div>
     </div>
     
 
-    <div class="form-group" [class.has-error]="lastName.invalid && lastName.touched">
+    <div class="form-group" [class.has-error]="lastName.invalid && addUserForm.submitted">
       <label for="inputLastName" class="field-name" >Last Name </label>
       <input #lastName="ngModel" required type="string" class="form-control"  id="inputLastName"  name="inputLastName" [(ngModel)]="client.lastName" placeholder="Enter Last Name">
-      <div *ngIf="lastName.invalid && lastName.touched">
+      <div *ngIf="lastName.invalid && addUserForm.submitted">
           Last Name is Required
         </div>
     </div>
 
-    <div class="form-group" [class.has-error]="email.invalid && email.touched">
+    <div class="form-group" [class.has-error]="email.invalid && addUserForm.submitted">
       <label for="inputEmail" class="field-name" >Email address</label>
       <input #email="ngModel" type="email" class="form-control" required id="inputEmail" name="inputEmail" [(ngModel)]="client.email" aria-describedby="emailHelp" placeholder="Enter email">
-      <div *ngIf="email.invalid && email.touched">
+      <div *ngIf="email.invalid && addUserForm.submitted">
           Email is Required, Please Ensure Email is in Correct Format, abc@email.com
         </div>
     </div>
 
 
-    <div class="form-group" [class.has-error]="phone.invalid && phone.touched">
+    <div class="form-group" [class.has-error]="phone.invalid && addUserForm.submitted">
       <label for="inputPhone" class="field-name" >Phone Number</label>
       <input #phone type="text" pattern="^[0-9-+s()]*$" class="form-control" required id="inputPhone" name="inputPhone" [(ngModel)]="client.phone" placeholder="Enter Phone Number">
-      <div *ngIf="phone.invalid && phone.touched">
+      <div *ngIf="phone.invalid && addUserForm.submitted">
           Only Numeric Values or + Accepted
         </div>
     </div>
 
-<!-- 
-  <div class="form-group">
-      <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
-      <input  type="date" class="form-control" required id="inputDob" [ngModel]="client.dob | date:'yyyy-MM-dd'" name="inputDob">
-      
-    </div>  -->
-
-    <div class="form-group" [class.has-error]="dob.invalid && dob.touched">
+    <div class="form-group" [class.has-error]="dob.invalid && addUserForm.submitted">
       <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
       <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [(ngModel)]="client.dob">
-      <div *ngIf="dob.invalid && dob.touched">
+      <div *ngIf="dob.invalid && addUserForm.submitted">
           Date of Birth is Required
         </div>
     </div>
 
-    <div class="form-group">
-      <label for="inputClientTypeId" class="field-name" >Client Type</label>
-      <select class="form-control" input type="number" required  id="inputClientTypeId" name="inputClientTypeId" [(ngModel)]="client.clientTypeId" placeholder="Select Client Type">
-      <option *ngFor="let clientType of clientTypes" [value]=clientType.id> {{clientType.type}}</option>
-    </select>
-    </div>
-    <button type="submit" class="btn primary" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
+    <button type="submit" class="btn primary m-3" (click)="addUser(client)"> Submit</button>
+    <button type="submit" class="btn primary m-3" (click)="deleteTrue()"> Delete Client</button>
   </form>
+  <div class="alert alert-danger" role="alert" *ngIf="delete">
+      <strong>Warning!</strong> This will delete the Client if they have have no Contract history, or delete their information if they have a contract history
+      <button type="submit" class="btn primary m-3" (click)="deleteClient(client)" > Confirm Delete</button>
+      <button type="submit" class="btn primary m-3" (click)="cancelDelete()" > Cancel</button>
+    </div>
+        <div class="alert alert-danger" role="alert" *ngIf="deleted">
+            <strong> The Client has been deleted</strong>
+            <button type="submit" class="btn primary m-3" [routerLink]="['/clients']" > Back To Clients</button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="deleteFailed">
+              <strong> The Client could Not Be Deleted. Please ensure there are no Upcoming or Active Contracts for this Client.</strong>
+              <button type="submit" class="btn primary m-3" [routerLink]="['/clients']" > Back To Clients</button>
+            </div>
+  <button *ngIf="client" type="submit" class="btn primary m-3" [routerLink]="['/clients', client.id]" > Back To Profile</button>
+ 
+
+ 
   </div>

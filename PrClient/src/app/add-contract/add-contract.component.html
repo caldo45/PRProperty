@@ -1,11 +1,13 @@
-<div class="container list-object">
+<div class="container list-object" *ngIf="client">
+        <a [routerLink]="['/clients', client.id]" class="btn btn-primary">Profile</a>
         <div class="text-center mb-5" *ngIf="loading">
                 <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
               </div>
     <h3 *ngIf="client">Add Contract for Tenant - {{client.firstName}} {{client.lastName}}</h3>
-    <div class="alert alert-info" *ngIf="userMessage">
-        {{ userMessage }}
-    </div>
+    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+            {{userMessage}}
+            <button class="btn btn-green m-2" [routerLink]="['/clients']"> Back To Clients</button>
+          </div>
     <form #selectPropertyForm="ngForm">
         <div class="form-group">
             <label for="landlordId" class="field-name" >Property</label>
@@ -25,27 +27,27 @@
         </select>
         </div>
 
-    <div class="form-group" [class.has-error]="dateFrom.invalid && dateFrom.touched">
+    <div class="form-group" [class.has-error]="dateFrom.invalid && addContractForm.submitted">
         <label for="dateFrom" class="field-name datepicker" >Date From</label>
         <input #dateFrom="ngModel" type="date" class="form-control" required id="dateFrom" name="dateFrom" [(ngModel)]="contract.dateFrom" placeholder="Enter Date From">
-        <div *ngIf="dateFrom.invalid && dateFrom.touched">
+        <div *ngIf="dateFrom.invalid && addContractForm.submitted">
             Date From is Required
           </div>
       </div>
 
-    <div class="form-group" [class.has-error]="dateTo.invalid && dateTo.touched">
+    <div class="form-group" [class.has-error]="dateTo.invalid && addContractForm.submitted">
         <label for="dateTo" class="field-name datepicker" >Date To</label>
         <input #dateTo="ngModel" type="date" class="form-control" required id="dateTo" name="dateTo" [(ngModel)]="contract.dateTo" placeholder="Enter Date To">
-        <div *ngIf="dateTo.invalid && dateTo.touched">
+        <div *ngIf="dateTo.invalid && addContractForm.submitted">
             Date To is Required
             </div>
         </div>
 
-    <div class="form-group" [class.has-error]="monthlyAmount.invalid && monthlyAmount.touched">
+    <div class="form-group" [class.has-error]="monthlyAmount.invalid && addContractForm.submitted">
         <label for="monthlyAmount" class="field-name" >Monthly Amount</label>
         <input #monthlyAmount="ngModel" type="number" class="form-control" required id="monthlyAmount" name="monthlyAmount" [(ngModel)]="contract.monthlyAmount" placeholder="Enter Monthly Amount">
-        <div *ngIf="monthlyAmount.invalid && monthlyAmount.touched">
-            Date To is Required
+        <div *ngIf="monthlyAmount.invalid && addContractForm.submitted">
+            Monthly Amount is Required
             </div>
         </div>
     
@@ -61,15 +63,16 @@
     </select>
     </div>
 
-    <div class="form-group" [class.has-error]="paymentReference.invalid && paymentReference.touched" *ngIf="contract.paymentTypeId==1">
+    <div class="form-group" [class.has-error]="paymentReference.invalid && addContractForm.submitted" *ngIf="contract.paymentTypeId==1">
         <label for="paymentTypeId" class="field-name" >Payment Reference </label>
         <input #paymentReference="ngModel" required type="string" class="form-control" name="paymentReference" id="paymentReference" [(ngModel)]="contract.paymentReference" placeholder="Enter Payment Reference">
-        <div *ngIf="paymentReference.invalid && paymentReference.touched">
+        <div *ngIf="paymentReference.invalid && addContractForm.submitted">
             Payment Reference is Required
           </div>
       </div>
 
-      <button type="submit" class="btn btn-green" (click)="addContract(contract)" [disabled]="addContract.invalid"> Submit</button>
+      <button type="submit" class="btn btn-green" (click)="addContract(contract)"> Submit</button>
+      <button type="submit" class="btn btn-green" routerLink="/clients"> Cancel</button>
 
         </form>
 

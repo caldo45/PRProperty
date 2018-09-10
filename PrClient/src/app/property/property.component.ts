@@ -27,6 +27,11 @@ export class PropertyComponent implements OnInit {
   images: PropertyImage[];
   loading: boolean = false;
   activeLease: Lease;
+  delete = false;
+  deleted = false;
+  deletedProperty: Property;
+  userMessage: string;
+  deleteFailed = false;
 
 
     dir = undefined;
@@ -55,14 +60,17 @@ export class PropertyComponent implements OnInit {
 
     this.roomService.getRoomsByProperty(id)
     .subscribe(response => this.rooms = response);
+    /** Request Access to Users Location */
     if (window.navigator && window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(
           position => {
+              /** Save Position to Local Veriable */
               this.geolocationPosition = position,
                   console.log(this.geolocationPosition)
           },
           error => {
               switch (error.code) {
+                  /** Console Log permission errors */
                   case 1:
                       console.log('Location Permission Denied');
                       break;
@@ -78,16 +86,33 @@ export class PropertyComponent implements OnInit {
   };
   }
 
-
+  /** Method calls get Direction from current location to Propert Location  */
   getDirection(geolocationPosition, property) {
     this.dir = {
       origin:  { lat: geolocationPosition.coords.latitude , lng: geolocationPosition.coords.longitude },
       destination: { lat: this.property.latitude, lng: this.property.longitude}
-  }
-  
+  }  
 }
 
-
+clickDelete(){
+    this.delete =true;
+}
+cancelDelete(){
+    this.delete = false;
+}
+deleteProperty(property){
+    this.propertyService.deleteProperty(property)
+        .subscribe( res => {
+            this.deletedProperty = res;
+            if(this.deletedProperty.id ==0){
+                this.deleted = true;
+                this.userMessage = 'Property Deleted';
+            }else {
+                this.deleteFailed = true;
+                this.userMessage = 'Error Deleting Property Details, Please Ensure Property Has No Leases or Contracts';
+            }
+        });
+}
 
 
 }

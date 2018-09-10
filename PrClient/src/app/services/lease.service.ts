@@ -87,8 +87,17 @@ export class LeaseService {
         'Authorization': 'bearer ' + localStorage.getItem('access_token')
       })
     };
-    let url =  environment.baseUrl + '/api/lease/upcomingByProperty'+propertyId;
+    let url =  environment.baseUrl + '/api/lease/oldByProperty'+propertyId;
     return this.http.get<Lease[]>(url, httpOptions);
   }
+
+  deleteLease(lease: Lease): Observable<Lease>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    return this.http.post<Lease>( environment.baseUrl + '/api/lease/delete',lease, httpOptions);
+    }
 
 }

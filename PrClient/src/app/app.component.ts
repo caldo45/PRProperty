@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { environment } from './environment';
 
 
 @Component({
@@ -9,9 +10,10 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
 
+  logoPath = environment.imageRoot +"default/logo.png"
+;
   constructor(public authService: AuthService) {
     
     authService.handleAuthentication();
-    console.log(authService.userProfile);
   }
 }

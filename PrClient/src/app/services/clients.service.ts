@@ -75,4 +75,13 @@ export class ClientsService {
     };
     return this.http.post(environment.baseUrl + '/api/user', client, httpOptions);
     }
+
+    deleteClient(client: Client): Observable<Client> {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'bearer ' + localStorage.getItem('access_token')
+        })
+      };
+      return this.http.post<Client>(environment.baseUrl + '/api/user/delete', client, httpOptions);
+      }
   }

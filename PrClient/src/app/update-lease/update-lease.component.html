@@ -3,10 +3,7 @@
                 <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
               </div>
     <div *ngIf="property">
-    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
-        {{userMessage}}
-      </div>
-  <form #addLeaseForm="ngForm" *ngIf="lease">
+  <form #addLeaseForm="ngForm" *ngIf="lease && !deleted">
     <h4>Add New Lease for {{property.firstLineAddress}}</h4>
     <p *ngIf="activeLease != null">Current Lease Runs From {{ activeLease.dateFrom | date: 'dd/MM/yyyy' }} to {{activeLease.dateTo  | date: 'dd/MM/yyyy'}} </p>
   <div class="form-group" [class.has-error]="dateFrom.invalid && dateFrom.touched">
@@ -32,6 +29,20 @@
       </div>
       <button type="submit" class="btn btn-green" (click)="addLease(lease)" [disabled]="addLeaseForm.invalid"> Submit</button>
     </form>
+    <div class="alert alert-danger" role="alert" *ngIf="delete">
+      <strong>Warning!</strong> This will delete the Lease it it is Upcoming & has no contracts, if it is past it must be kept for Business Records
+      <button type="submit" class="btn primary m-3" (click)="deleteLease(lease)" > Confirm Delete</button>
+      <button type="submit" class="btn primary m-3" (click)="cancelDelete()" > Cancel</button>
+    </div>
+        <div class="alert alert-danger" role="alert" *ngIf="deleted">
+            <strong> The Lease has been deleted</strong>
+            <button type="submit" class="btn primary m-3" [routerLink]="['/home']" > Back To Home</button>
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="deleteFailed">
+              <strong> The Lease could Not Be Deleted.</strong>
+              <button type="submit" class="btn primary m-3" [routerLink]="['/properties', property.id]" > Back To Property</button>
+            </div>
+    <button class="btn primary m-3" (click)="deleteStart()" > Delete</button>
     <a [routerLink]="['/leasesInProperty', property.id]" class="btn btn-green">
         <p class="btn-text">Cancel</p>
       </a>

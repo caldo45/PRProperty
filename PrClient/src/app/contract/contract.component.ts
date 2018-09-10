@@ -12,6 +12,9 @@ export class ContractComponent implements OnInit {
 
   contract: Contract;
   contractId: number;
+  delete = false;
+  deleteSuccess: boolean;
+  userMessage: string = null;
 
   constructor(private route: ActivatedRoute, private contractService: ContractsService) { }
 
@@ -20,6 +23,28 @@ export class ContractComponent implements OnInit {
     this.contractService.getContract(this.contractId)
         .subscribe(response => this.contract = response);
     
+  }
+
+  deleteStart(){
+    this.delete = true;
+  }
+
+  cancelDelete(){
+    this.delete = false;
+  }
+
+  deleteContract(contract: Contract){
+    this.contractService.deleteContract(contract)
+    .subscribe( res => {
+      this.contract = res;
+      this.deleteSuccess = true;
+      this.userMessage = 'Contract Deleted';
+  },
+  err => {
+      this.deleteSuccess = false;
+      this.userMessage = 'Contract Could not be Deleted';
+  }
+ );
   }
 
 }

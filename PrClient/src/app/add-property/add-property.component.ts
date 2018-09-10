@@ -3,6 +3,7 @@ import { PropertyService } from '../services/property.service';
 import { Property } from '../models/Property';
 import { Client } from '../models/client';
 import { ClientsService } from '../services/clients.service';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-add-property',
@@ -17,6 +18,9 @@ export class AddPropertyComponent implements OnInit {
   belfastLongitude: number;
   markerLatitude: number;
   markerLongitude: number;
+  saveSuccess: boolean;
+  userMessage: string = null;
+  @ViewChild('addPropertyForm') form;
 
   constructor(private propertyService: PropertyService, private clientService: ClientsService) { }
 
@@ -29,9 +33,25 @@ export class AddPropertyComponent implements OnInit {
     }
 
     addProperty(property: Property) {
-      console.log(property);
-      this.propertyService.postProperty(property);
-    }
+      if(this.form.invalid){
+        this.saveSuccess = false;
+        this.userMessage = 'Please Check Details are Correct';
+
+      }else{
+        this.propertyService.postProperty(property)
+        .subscribe( res => {
+          this.property = res;
+          this.saveSuccess = true;
+          this.userMessage = 'Property Details Saved';
+      },
+      err => {
+          this.saveSuccess = false;
+          this.userMessage = 'Error Saving Property Details';
+      }
+     );
+      }
+
+  }
 
     onChoseLocation($event){
       this.markerLatitude = $event.coords.lat;

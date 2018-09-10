@@ -13,9 +13,9 @@ export class Property {
     longitude: number;
     imagePath: string;
     landlord: Client;
-    activeLease: number;
-    lease: Lease;
     country: string;
     city: string;
+    activeLease: number;
+    lease: Lease;
     
 }

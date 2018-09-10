@@ -1,5 +1,17 @@
 <div class="container">
-<div class="card" *ngIf="contract">
+    <div class="alert alert-danger" role="alert" *ngIf="delete && contract && !deleteSuccess">
+        <strong>Warning!</strong> Only Contracts that have not yet started can be deleted. Are you sure you want to delete this contract?
+        <button type="submit" class="btn primary m-3" (click)="deleteContract(contract)" > Confirm Delete</button>
+        <button type="submit" class="btn primary m-3" (click)="cancelDelete()" > Cancel</button>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="deleteSuccess">
+          Contract Deleted
+          <button  class="btn primary m-3" routerLink="/clients"> Clients</button>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="!deleteSuccess && delete">
+            Contract Could Not Be Deleted
+          </div>
+<div class="card" *ngIf="contract && !deleteSuccess">
     <div class="card-body">
       <h5 class="card-title ml-3">Contract Details</h5>
       <div class="col-lg-2 col-md-2 sm-4 mb-4">
@@ -17,6 +29,7 @@
     </div>
     <div>
     <a [routerLink]="['/updateContract', contract.id]" class="btn btn-primary m-5">Edit Contract</a>
+    <button class="btn btn-primary m-5" (click)="deleteStart()">Delete contract</button>
   </div>
   </div>
 </div>

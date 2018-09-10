@@ -106,6 +106,12 @@ h4{
     color: #fff !important;
 }
 
+.card {
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px; 
+}
+
 @media (min-width: 768px){
     .navbar-nav {
         float: right;

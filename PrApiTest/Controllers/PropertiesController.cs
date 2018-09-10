@@ -34,6 +34,7 @@ namespace PrApi.Controllers
 
         }
 
+        //Get specific Property
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -100,6 +101,13 @@ namespace PrApi.Controllers
             var fullPath = Path.Combine(webRootPath,"uploads", imagePath);
             _repository.DeletePropertyImage(imageFromDb, fullPath);
             return StatusCode(202);
+        }
+
+        [HttpPost("delete")]
+        public IActionResult Delete([FromBody] Property property)
+        {
+            var deleted = _repository.DeleteProperty(property);
+            return StatusCode(201, deleted);
         }
 
     }

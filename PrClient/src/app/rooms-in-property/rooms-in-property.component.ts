@@ -35,8 +35,8 @@ export class RoomsInPropertyComponent implements OnInit {
             console.log(this.rooms);
             console.log(this.roomsImage);
             for(let room of this.rooms){
-              for(let roomImage of this.roomsImage){
-                room.imagePath = environment.imageRoot + "default/defaultImage.jpg";
+              room.imagePath = environment.imageRoot + "default/defaultImage.jpg";
+              for(let roomImage of this.roomsImage){                
                 if(room.id == roomImage.roomId){
                   room.imagePath = environment.imageRoot + roomImage.imagePath;
                 }

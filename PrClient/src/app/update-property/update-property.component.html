@@ -1,4 +1,7 @@
 <div class="container list-object">
+    <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+        {{userMessage}}
+      </div>
   <form #addPropertyForm="ngForm" *ngIf="property">
 
     <div class="form-group" [class.has-error]="firstLineAddress.invalid && firstLineAddress.touched">
@@ -35,7 +38,7 @@
 
       <div class="form-group" [class.has-error]="postcode.invalid && postcode.touched">
           <label for="postcode" class="control-label field-name control-label" >Postcode</label>
-          <input #postcode="ngModel" required type="string" style="text-transform:uppercase" maxlength="7" class="form-control" name="postcode" id="postcode" [(ngModel)]="property.postcode" placeholder="">
+          <input #postcode="ngModel" required type="string" style="text-transform:uppercase" maxlength="8" class="form-control" name="postcode" id="postcode" [(ngModel)]="property.postcode" placeholder="">
           <div *ngIf="postcode.invalid && postcode.touched">
              Postcode is Required
             </div>
@@ -55,6 +58,7 @@
               </agm-map>
             </div>
 
-    <button type="submit" class="btn btn-green" (click)="addProperty(property)" [disabled]="addPropertyForm.invalid">Submit</button>
+    <button type="submit" class="btn btn-green" (click)="addProperty(property)">Submit</button>
+    <button *ngIf="property" type="submit" class="btn primary m-3" [routerLink]="['/properties', property.id]" > Back To Profile</button>
   </form>
   </div>

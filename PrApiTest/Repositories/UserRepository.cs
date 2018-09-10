@@ -24,27 +24,35 @@ namespace PrApi.Repositories
             _db = db;
         }
 
+        //Return All Properties
         public IEnumerable<Property> GetProperties()
         {
             var properties = _db.Properties
+                 //Include the Client Object Subclass
                 .Include(c => c.Landlord);
             return properties;
         }
 
+        //Return Properties
         public IEnumerable<Property> GetByLandlordId(int landlordId)
         {
+            //Dependant on the LandlordId passed
             var properties = _db.Properties.Where(b => b.LandlordId == landlordId);
             return properties;
         }
 
+        //Get Specific Property 
         public Property GetProperty(int id)
         {
+            //Including Client object, where equals passed Property ID
             var property = _db.Properties.Include(c => c.Landlord).FirstOrDefault(b => b.Id == id);
             return property;
         }
 
+        //Get Specific Property Image
         public IEnumerable<PropertyImage> GetPropertyImages(int propertyId)
         {
+            //Including Property Subclass
             var propertyImages = _db.PropertyImages.Include(p => p.Property).Where(p => p.PropertyId == propertyId);
             return propertyImages;
         }
@@ -268,14 +276,18 @@ namespace PrApi.Repositories
             return contract; 
         }
 
+        // Returns Active Contract for a Room if Exists
         public Contract GetActiveContract(int roomId)
         {
+            //Get current time
             DateTime date = DateTime.Now;
+            //Include 
             var contract = _db.Contracts.Include(r => r.Room)
-               .Include(u => u.Client)
-              .Include(p => p.PaymentType).FirstOrDefault(r => r.RoomId == roomId
-                                                   && (r.DateFrom.CompareTo(date) <= 0)
-                                                     && (r.DateTo.CompareTo(date) >= 0)) ;
+                                        .Include(r => r.Room.Property)
+                                        .Include(u => u.Client)
+                                        .Include(p => p.PaymentType).FirstOrDefault(r => r.RoomId == roomId
+                                                                      && (r.DateFrom.CompareTo(date) <= 0)
+                                                                      && (r.DateTo.CompareTo(date) >= 0));
             return contract;
         }
 
@@ -383,10 +395,11 @@ namespace PrApi.Repositories
         {
             DateTime date = DateTime.Now;
             var contract = _db.Contracts.Include(r => r.Room)
-               .Include(u => u.Client)
-              .Include(p => p.PaymentType).FirstOrDefault(r => r.ClientId == tenantId
-                                                   && (r.DateFrom.CompareTo(date) <= 0)
-                                                     && (r.DateTo.CompareTo(date) >= 0));
+                                        .Include(c => c.Room.Property)
+                                        .Include(u => u.Client)
+                                        .Include(p => p.PaymentType).FirstOrDefault(r => r.ClientId == tenantId
+                                                                               && (r.DateFrom.CompareTo(date) <= 0)
+                                                                                 && (r.DateTo.CompareTo(date) >= 0));
             return contract;
         }
 
@@ -563,17 +576,111 @@ namespace PrApi.Repositories
 
         public Client DeleteClient(Client client)
         {
-            var contract = _db.Contracts.FirstOrDefault(c => c.Id == client.Id);
-            if (contract == null)
+            //Checks if Client has any Contracts
+            var contract = _db.Contracts.FirstOrDefault(c => c.ClientId == client.Id);
+            //Checks if Client has an Active Contract
+            var activeContracts = GetActiveContractByClient(client.Id);
+            //Checks if Client is Landlord to any Properties
+            var property = _db.Properties.FirstOrDefault(p => p.LandlordId == client.Id);
+            //if no contract history or properties owned
+            if (contract == null && property == null)
             {
+                //remove Client from DB
                 _db.Users.Remove(client);
+                _db.SaveChanges();
+                client.Id = 0;
+                return client;
+            }
+            //if Client has a any previous contracts, remove their personal information from the DB.
+            if (activeContracts == null)
+            {
+                client.Email = "";
+                client.FirstName = "Client Details Removed";
+                client.LastName = "";
+                client.Dob = DateTime.Now;
+                client.Phone = "";
+                client.ImagePath = "default/defaultImage.jpg";
+                _db.Entry(client).State = EntityState.Modified;
                 _db.SaveChanges();
                 return client;
             }
-
             {
-                throw new Exception("Client Cannot Be Deleted Once ");
+                //else return the client unmodified
+                return client;
             }
+        }
+
+        public Lease DeleteLease(Lease lease)
+        {
+            DateTime date = DateTime.Now;
+            if (lease.DateTo.CompareTo(date) <= 0 && lease.DateFrom.CompareTo(date) <= 0)
+            {
+                var contract = _db.Contracts.Include(c=> c.Room).FirstOrDefault(c =>
+                    c.DateFrom.CompareTo(lease.DateFrom) >= 0 && c.DateTo.CompareTo(lease.DateTo) <= 0 && c.Room.PropertyId == lease.PropertyId);
+                if (contract == null)
+                {
+                    _db.Lease.Remove(lease);
+                    _db.SaveChanges();
+                    lease.Id = 0;
+                    return lease;
+                }
+                             
+            }
+            return lease;
+        }
+
+        public Contract DeleteContract(Contract contract)
+        {
+            DateTime date = DateTime.Now;
+            if (contract.DateFrom.CompareTo(date) >= 0 && contract.DateTo.CompareTo(date) >= 0)
+            {
+                _db.Contracts.Remove(contract);
+                _db.SaveChanges();
+                contract.Id = 0;
+                return contract;
+            }
+
+            return contract;
+        }
+
+        //delete Property
+        public Property DeleteProperty(Property property)
+        {
+            //checks to see if Property has any Leases associated to it
+            var leases = _db.Leases.FirstOrDefault(l => l.PropertyId == property.Id);
+            if (leases == null)
+            {
+                //checks to see if any Contracts are associated to Property
+                var contract = _db.Contracts.Include(c => c.Room).FirstOrDefault(c => c.Room.PropertyId == property.Id);
+                if (contract == null)
+                {
+                    //if not collect images and rooms associated and remove all
+                    var images = _db.PropertyImages.Where(pi => pi.PropertyId == property.Id);
+                    var rooms = _db.Rooms.Where(r => r.PropertyId == property.Id);
+                    var roomImages =  _db.RoomImages.Include(r => r.Room).Where(r => r.Room.PropertyId == property.Id);
+                    foreach (RoomImage image in roomImages)
+                    {
+                        _db.RoomImages.Remove(image);
+                    }
+                    foreach (Room room in rooms)
+                    {
+                        _db.Rooms.Remove(room);
+                    }
+
+                    foreach (PropertyImage image in images)
+                    {
+                        _db.PropertyImages.Remove(image);
+                    }
+                    //remove Property
+                    _db.Properties.Remove(property);
+                    _db.SaveChanges();
+                    property.Id = 0;
+                    return property;
+                }
+           
+            }
+
+            return property;
         }
 
 
@@ -651,17 +758,20 @@ namespace PrApi.Repositories
             
         }
 
-
+        //Add Contract Notifications to DB
         public IEnumerable<Contract> AddContractNotifications(int days)
         {
+            //Gets todays date, and adds on number of days dependant on Notification
             DateTime date = DateTime.Now.AddDays(+days);
             int exists = 0;
             var contracts = _db.Contracts.Where(c => c.DateTo <= date);
+            //returns all notifications
             var existingNotifications = _db.ContractNotifications;
             foreach (Contract contract in contracts)
             {
                 ContractNotification notification = new ContractNotification();
                 notification.ContractId = contract.Id;
+                //Perfroms a Switch on Days, for the different Notification Lengths & Assigns type based on these
                 switch (days)
                 {
                     case 30:
@@ -675,6 +785,7 @@ namespace PrApi.Repositories
                         break;
                 }
 
+                //Performs check to ensure that no Notification of that type exists for that Contract
                 foreach (ContractNotification existingNotification in existingNotifications)
                 {
                     if (notification.ContractId == existingNotification.ContractId &&
@@ -683,7 +794,7 @@ namespace PrApi.Repositories
                         exists = 1;
                     }
                 }
-
+                //if not, add to Db
                 if (exists == 0)
                 {
                     notification.DateAdded = DateTime.Now;

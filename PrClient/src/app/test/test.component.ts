@@ -4,6 +4,7 @@ import { FileService } from '../services/file.service';
 import { Papa } from 'ngx-papaparse';
 import { Payment } from '../models/payment';
 import { ContractsService } from '../services/contracts.service';
+import { Client } from '../models/client';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class TestComponent implements OnInit {
   payments: Payment[] = [];
   dataList: Payment[];
   path: String;
+  client: Client;
 
   ngOnInit(): void {
   }
@@ -77,4 +79,10 @@ export class TestComponent implements OnInit {
     this.contractService.postPayments(payments);
     console.log(payments);
   }
+
+  add(isValid: boolean){
+    if(isValid){
+        //do something
+    }
+ }
 }

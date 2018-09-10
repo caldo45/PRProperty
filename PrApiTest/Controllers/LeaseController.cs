@@ -72,11 +72,18 @@ namespace PrApi.Controllers
             return Ok(lease);
         }
 
+        [HttpGet("active")]
+        public IActionResult DeleteLease(Lease lease)
+        {
+            var deleted = _repository.DeleteLease(lease);
+            return Ok(deleted);
+        }
+
 
         [HttpPost]
-        public IActionResult Post([FromBody]Lease lease)
+        public IActionResult Post([FromBody] Lease lease)
         {
-           
+
             if (lease.Id == 0)
             {
                 var added = _repository.AddLease(lease);
@@ -85,6 +92,7 @@ namespace PrApi.Controllers
                 {
                     return StatusCode(400, "Lease exists or overlaps");
                 }
+
                 return StatusCode(201, added);
             }
 
@@ -94,11 +102,18 @@ namespace PrApi.Controllers
                 {
                     return StatusCode(400, "Lease Overlaps with another for this property");
                 }
+
                 return StatusCode(201, updated);
             }
 
         }
 
+        [HttpPost("delete")]
+        public IActionResult Delete([FromBody] Lease lease)
+        {
+            var deleted = _repository.DeleteLease(lease);
+            return Ok(deleted);
+        }
     }
 }
 

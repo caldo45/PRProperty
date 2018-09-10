@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ClientsService } from '../services/clients.service';
 import { ClientType } from '../models/ClientType';
 import { Client } from '../models/client';
+import { FormGroup } from '@angular/forms';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-add-user',
@@ -9,6 +11,8 @@ import { Client } from '../models/client';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements OnInit {
+
+  @ViewChild('addUserForm') form;
 
   clientTypes: ClientType[];
   saveSuccess: boolean;
@@ -25,19 +29,27 @@ export class AddUserComponent implements OnInit {
   }
 
   addUser(client: Client) {
-    this.userMessage = null;
-    this.client.imagePath = "default/defaultImage.jpg";
-    this.client.clientTypeId = +this.client.clientTypeId;
-    this.clientService.postClient(client)
-      .subscribe( res => {
-          this.saveSuccess = true;
-          this.userMessage = 'Client Details Saved';
-      },
-      err => {
-          this.saveSuccess = false;
-          this.userMessage = 'Error Saving Client Details';
-      }
-     );
+    if(this.form.invalid){
+      this.saveSuccess = false;
+      this.userMessage = 'Please Check Details and Try Again';
+    }
+    else {
+      this.userMessage = null;
+      this.client.imagePath = "default/defaultImage.jpg";
+      this.client.clientTypeId = +this.client.clientTypeId;
+      this.clientService.postClient(client)
+        .subscribe( res => {
+            this.saveSuccess = true;
+            this.userMessage = 'Client Details Saved';
+        },
+        err => {
+            this.saveSuccess = false;
+            this.userMessage = 'Error Saving Client Details';
+        }
+       );
+    }
+   
   }
+
 
 }

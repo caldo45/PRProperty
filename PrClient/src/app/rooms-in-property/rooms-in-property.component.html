@@ -1,12 +1,11 @@
-<div class="container">
+<div class="container p-5">
    <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let room of rooms">
       <div class="card">
         <img class="card-img-top" src="{{room.imagePath}}" alt="">
         <div class="card-body">
             <h4>{{room.name}}</h4>
             <div *ngIf="(room.activeContract == 1)">
-                <div class="card-text" ><p>Current Tenant: {{room.contract.client.firstName}} {{room.contract.client.lastName}} - {{room.contract.monthlyAmount | currency:'£'}}pcm </p>
-                 <p>Contract Ends on {{room.contract.dateTo | date: 'dd/MM/yyyy'}} </p></div>
+                <div class="card-text" ><p>Current Tenant: {{room.contract.client.firstName}} {{room.contract.client.lastName}}</p></div>
              </div>
          <div *ngIf="(room.activeContract !== 1)">
                <div class="card-text" ><p>The Room is Currently Unoccupied </p></div>
@@ -16,7 +15,7 @@
       </div>
     </div>
 </div>
-<div class="container">
-    <a *ngIf="property" [routerLink]="['/addRoom', property.id]" class="btn btn-primary m-5">Add Room For This Property</a>
-    <a *ngIf="property" [routerLink]="['/properties', property.id]" class="btn btn-primary m-5">Back To Property</a>
+<div class="container" *ngIf="property">
+    <a  [routerLink]="['/addRoom', property.id]" class="btn btn-primary m-5">Add Room For This Property</a>
+    <a  [routerLink]="['/properties', property.id]" class="btn btn-primary m-5">Back To Property</a>
   </div>

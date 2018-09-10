@@ -29,6 +29,9 @@ namespace PrApi.Repositories
         IEnumerable<RoomImage> GetImageForEachRoomInProperty(int propertyId);
         IEnumerable<PropertyImage> GetImageForEachProperty();
         Contract UpdateContract(Contract contract);
+        Lease DeleteLease(Lease lease);
+        Contract DeleteContract(Contract contract);
+        Property DeleteProperty(Property property);
 
         Client UpdateUser(Client user);
         Property UpdateProperty(Property property);

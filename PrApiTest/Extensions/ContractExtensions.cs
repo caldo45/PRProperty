@@ -8,6 +8,7 @@ namespace PrApi.Extensions
 {
     public static class ContractExtensions
     {
+        //Check to see if Contract A Overlaps Contract B 
         public static bool Overlaps(this Contract contract, Contract otherContract)
         {
             var overlaps = contract.DateFrom.CompareTo(otherContract.DateTo) < 0 && contract.DateTo.CompareTo(otherContract.DateFrom) > 0;

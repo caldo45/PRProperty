@@ -38,7 +38,5 @@ namespace PrApi.Model
 
         public virtual ClientType ClientType { get; set; }
 
-
-
     }
 }

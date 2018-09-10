@@ -18,6 +18,8 @@ export class UpdatePropertyComponent implements OnInit {
   belfastLongitude: number;
   markerLatitude: number;
   markerLongitude: number;
+  saveSuccess: boolean;
+  userMessage: string = null;
 
   constructor(private route: ActivatedRoute, private propertyService: PropertyService, private clientService: ClientsService) { }
 
@@ -36,7 +38,17 @@ export class UpdatePropertyComponent implements OnInit {
 
     addProperty(property: Property) {
       console.log(property);
-     this.propertyService.postProperty(property);
+     this.propertyService.postProperty(property)
+     .subscribe( res => {
+      this.property = res;
+      this.saveSuccess = true;
+      this.userMessage = 'Property Details Updated';
+  },
+  err => {
+      this.saveSuccess = false;
+      this.userMessage = 'Error Updating Property Details';
+  }
+ );
     }
 
     onChoseLocation($event){

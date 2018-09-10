@@ -7,6 +7,7 @@ import { PropertyService } from '../services/property.service';
 import { Contract } from '../models/contract';
 import { ContractsService } from '../services/contracts.service';
 import { environment } from '../environment';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-client',
@@ -21,30 +22,33 @@ export class ClientComponent implements OnInit {
   oldContracts: Contract[];
   upcomingContracts: Contract[];
   loading = false;
+  clientId: number;
 
-  constructor(private route: ActivatedRoute, private clientService: ClientsService, private propertyService: PropertyService, private contractService: ContractsService) {
+  constructor(private route: ActivatedRoute, private clientService: ClientsService, private propertyService: PropertyService, private contractService: ContractsService, public authService: AuthService) {
    }
 
   ngOnInit() {
-    let id = +this.route.snapshot.paramMap.get('id');
-    this.clientService.getClient(id)
+    this.loading = true;
+    this.clientId = +this.route.snapshot.paramMap.get('id');
+    console.log(this.clientId);
+    this.propertyService.getPropertiesByLandlord(this.clientId)
+    .subscribe(response => { 
+         this.properties = response;
+    });
+    this.clientService.getClient(this.clientId)
     .subscribe(response => { this.client = response;
                             this.client.imagePath = environment.imageRoot + this.client.imagePath;
-                            this.propertyService.getPropertiesByLandlord(id)
-                             .subscribe(response => { 
-                             this.properties = response;
-                             this.contractService.getActiveContractByClient(id)
-                             .subscribe(response => { this.activeContract = response;
-                              console.log(this.activeContract);
-                              if(this.client.clientTypeId == 1){
-                                  this.contractService.getUpcomingByClient(id)
-                                      .subscribe(response => this.upcomingContracts = response);
-                                 this.contractService.getOldByClient(id)
-                                      .subscribe(response => this.oldContracts = response);
-                              }
-                             });
-                             });
-    });
+                                     this.contractService.getActiveContractByClient(this.clientId)
+                                          .subscribe(response => { this.activeContract = response;
+                                           if(this.client.clientTypeId == 1){
+                                                 this.contractService.getUpcomingByClient(this.clientId)
+                                                     .subscribe(response => this.upcomingContracts = response);
+                                                 this.contractService.getOldByClient(this.clientId)
+                                               .subscribe(response => this.oldContracts = response);
+                                             }
+                                         });
+                                 });
+    this.loading = false;
   }
 
 }

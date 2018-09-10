@@ -9,6 +9,7 @@ import { RoomService } from '../services/room.service';
 import { Contract } from '../models/contract';
 import { PaymentType } from '../models/paymentType';
 import { ContractsService } from '../services/contracts.service';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-add-contract',
@@ -18,6 +19,8 @@ import { ContractsService } from '../services/contracts.service';
 export class AddContractComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private propertyService: PropertyService, private clientService: ClientsService, private roomService: RoomService, private contractService: ContractsService) { }
+
+  @ViewChild('addContractForm') form;
 
   properties: Property[];
   propertyId: 0;
@@ -31,7 +34,8 @@ export class AddContractComponent implements OnInit {
   depositPaid: number;
   loading = false;
   userMessage: string = null;
-
+  saveSuccess: boolean;
+  
 
   ngOnInit() {
     let clientId = +this.route.snapshot.paramMap.get('id');
@@ -47,23 +51,49 @@ export class AddContractComponent implements OnInit {
     .subscribe(response => this.paymentTypes = response)
   }
 
-  log(paymentTypes){
-    console.log(paymentTypes);
-  }
-
   addContract(contract: Contract) {
-    this.userMessage = null;
-    console.log(contract);
-      this.contractService.postContract(this.contract)
-        .subscribe( res => 
-        {
-            this.userMessage = "Contract Added"
-        },
-        err => {
-            this.userMessage = "Add Contract Failed - Check if Contract overlaps another for same room"
-        }
-        );;
+    if(this.form.invalid){
+      this.saveSuccess = false;
+      this.userMessage = "Add Contract Failed - Check fields are Valid "
+    } else{
+      this.userMessage = null;
+        this.contractService.postContract(this.contract)
+        .subscribe( res => {
+          this.saveSuccess = true;
+          this.userMessage = 'Contract Details Saved';
+      },
+      err => {
+          this.saveSuccess = false;
+          this.userMessage = 'Error Saving Contract Details, Please Ensure that Contract does not overlap with another for same room';
+      }
+     );
+    }
+
 }
+
+addUser(client: Client) {
+  if(this.form.invalid){
+    this.saveSuccess = false;
+    this.userMessage = 'Please Check Details and Try Again';
+  }
+  else {
+    this.userMessage = null;
+    this.client.imagePath = "default/defaultImage.jpg";
+    this.client.clientTypeId = +this.client.clientTypeId;
+    this.clientService.postClient(client)
+      .subscribe( res => {
+          this.saveSuccess = true;
+          this.userMessage = 'Client Details Saved';
+      },
+      err => {
+          this.saveSuccess = false;
+          this.userMessage = 'Error Saving Client Details';
+      }
+     );
+  }
+ 
+}
+
 
   getRooms(propertyId, rooms){
     this.roomService.getRoomsByProperty(this.propertyId)

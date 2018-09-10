@@ -73,22 +73,23 @@ export class PropertyService {
     return this.http.get<PropertyImage[]>(url, httpOptions);
   }
 
-  postProperty(property: Property){
+  postProperty(property: Property): Observable<Property>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'bearer ' + localStorage.getItem('access_token')
       })
     };
-    return this.http.post( environment.baseUrl + '/api/properties',property, httpOptions)
-      .subscribe( res => 
-        {console.log(res);
-       },
-      err => {
-        console.log("Error Occured");
-        console.log(err);
-       }
-       );
+    return this.http.post<Property>( environment.baseUrl + '/api/properties',property, httpOptions)
     }
+
+    deleteProperty(property: Property): Observable<Property>{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'bearer ' + localStorage.getItem('access_token')
+        })
+      };
+      return this.http.post<Property>( environment.baseUrl + '/api/properties/delete',property, httpOptions);
+      }
 
     deletePropertyImage(image: PropertyImage){
       const httpOptions = {

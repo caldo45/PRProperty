@@ -64,16 +64,17 @@ export class PropertiesComponent implements OnInit {
               this.loading = false;
             });
         this.filteredProperties = this.properties;
-        this.leaseService.getActiveLeases()
-            .subscribe(response => { this.activeLeases = response;
-                for(let lease of this.activeLeases){
-                  for(let property of this.properties){
-                    if(lease.propertyId == property.id){
-                      (property.lease = lease) && (property.activeLease = 1);
-                    }
-                  }       
-                }
-      });
+      //   this.leaseService.getActiveLeases()
+      //       .subscribe(response => { this.activeLeases = response;
+      //         console.log(this.activeLeases);
+      //           for(let lease of this.activeLeases){
+      //             for(let property of this.properties){
+      //               if(lease.propertyId == property.id){
+      //                 (property.lease = lease) && (property.activeLease = 1);
+      //               }
+      //             }       
+      //           }
+      // });
     });
    
   }

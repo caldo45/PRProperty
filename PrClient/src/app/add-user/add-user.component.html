@@ -1,47 +1,48 @@
 <div class="container list-object">
     <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
         {{userMessage}}
+        <button class="btn btn-green m-2" [routerLink]="['/clients']"> Back To Clients</button>
       </div>
   <form #addUserForm="ngForm">
 
-    <div class="form-group" [class.has-error]="firstName.invalid && firstName.touched">
+    <div class="form-group" [class.has-error]="firstName.invalid && addUserForm.submitted">
       <label for="inputFirstName" class="field-name" >First Name </label>
       <input #firstName="ngModel" required type="string" class="form-control" name="inputfirstName" id="inputfirstName" [(ngModel)]="client.firstName" placeholder="Enter First Name">
-      <div *ngIf="firstName.invalid && firstName.touched">
+      <div *ngIf="firstName.invalid && addUserForm.submitted">
           First Name is Required
         </div>
     </div>
     
 
-    <div class="form-group" [class.has-error]="lastName.invalid && lastName.touched">
+    <div class="form-group" [class.has-error]="lastName.invalid && addUserForm.submitted">
       <label for="inputLastName" class="field-name" >Last Name </label>
       <input #lastName="ngModel" required type="string" class="form-control"  id="inputLastName"  name="inputLastName" [(ngModel)]="client.lastName" placeholder="Enter Last Name">
-      <div *ngIf="lastName.invalid && lastName.touched">
+      <div *ngIf="lastName.invalid && addUserForm.submitted">
           Last Name is Required
         </div>
     </div>
 
-    <div class="form-group" [class.has-error]="email.invalid && email.touched">
+    <div class="form-group" [class.has-error]="(email.invalid && addUserForm.submitted) || (email.invalid && email.touched)">
       <label for="inputEmail" class="field-name" >Email address</label>
       <input #email="ngModel" type="email" class="form-control" required id="inputEmail" name="inputEmail" [(ngModel)]="client.email" aria-describedby="emailHelp" placeholder="Enter email">
-      <div *ngIf="email.invalid && email.touched">
+      <div *ngIf="(email.invalid && addUserForm.submitted) || (email.invalid && email.touched)">
           Email is Required, Please Ensure Email is in Correct Format, abc@email.com
         </div>
     </div>
 
-    <div class="form-group" [class.has-error]="phone.invalid && phone.touched">
-      <label for="inputPhone" class="field-name" >Phone Number</label>
-      <input #phone type="text" pattern="^[0-9-+s()]*$" class="form-control" required id="inputPhone" name="inputPhone" [(ngModel)]="client.phone" placeholder="Enter Phone Number">
-      <div *ngIf="phone.invalid && phone.touched">
+    <div class="form-group" [class.has-error]="phone.invalid && addUserForm.submitted">
+      <label for="phone" class="field-name" >Phone Number</label>
+      <input #phone type="text" pattern="^[0-9-+s()]*$" class="form-control" required id="phone" name="phone" [(ngModel)]="client.phone" placeholder="Enter Phone Number">
+      <div *ngIf="phone.invalid && addUserForm.submitted">
           Only Numeric Values or + Accepted
         </div>
     </div>
 
 
-    <div class="form-group" [class.has-error]="dob.invalid && dob.touched">
+    <div class="form-group" [class.has-error]="dob.invalid && addUserForm.submitted">
       <label for="inputDob" class="field-name datepicker" >Date of Birth</label>
       <input #dob="ngModel" type="date" class="form-control" required id="inputDob" name="inputDob" [(ngModel)]="client.dob" placeholder="Enter DOB">
-      <div *ngIf="dob.invalid && dob.touched">
+      <div *ngIf="dob.invalid && addUserForm.submitted">
           Date of Birth is Required
         </div>
     </div>
@@ -52,7 +53,8 @@
       <option *ngFor="let clientType of clientTypes" [value]=clientType.id> {{clientType.type}}</option>
     </select>
     </div>
-    <button type="submit" class="btn btn-green m-2" (click)="addUser(client)" [disabled]="addUserForm.invalid"> Submit</button>
+    <button type="submit" class="btn btn-green m-2" (click)="addUser(client)" > Submit</button>
     <button type="submit" class="btn btn-green m-2" [routerLink]="['/clients']"> Cancel</button>
   </form>
   </div>
+  

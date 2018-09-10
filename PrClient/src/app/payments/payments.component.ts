@@ -14,7 +14,8 @@ export class PaymentsComponent implements OnInit {
   endDate: Date;
   filteredPayments: Payment[] = [];
   filters: {clientType: string };
-  loaded = false;
+  loading = false;
+  
 
   constructor(private contractService: ContractsService) {
     this.startDate = null;
@@ -22,11 +23,12 @@ export class PaymentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.contractService.getPayments()
       .subscribe(response => {
         this.payments = response;
         this.filteredPayments = this.payments;
-        this.loaded = true;
+        this.loading = true;
       });
   }
 

@@ -74,16 +74,15 @@ export class ContractsService {
     return this.http.get<PaymentType[]>(url, httpOptions);
   }
 
-  postPayments(payments: Payment[]){
+  postPayments(payments: Payment[]): Observable<string>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'bearer ' + localStorage.getItem('access_token')
       })
     };
-    return this.http.post(environment.baseUrl + '/api/contract/payments', payments, httpOptions)
-      .subscribe( res =>
-        {console.log(res);})     
+    return this.http.post<string>(environment.baseUrl + '/api/contract/payments', payments, httpOptions);   
   }
+
 
   getUpcomingByClient(clientId: number): Observable<Contract[]>{
     const httpOptions = {
@@ -153,4 +152,13 @@ export class ContractsService {
     };
     return this.http.post(environment.baseUrl + '/api/contract',contract, httpOptions);     
     }
+
+    deleteContract(contract: Contract): Observable<Contract>{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'bearer ' + localStorage.getItem('access_token')
+        })
+      };
+      return this.http.post<Contract>( environment.baseUrl + '/api/contract/delete',contract, httpOptions);
+      }
 }

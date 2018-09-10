@@ -3,10 +3,8 @@
     <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
   </div>
 
-  <!-- Jumbotron Header -->
   <header class="jumbotron search-bar small-padding" *ngIf="!loading">
-     
-
+    
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">
@@ -19,7 +17,7 @@
 
   </header>
 
-  <!-- Page Features -->
+
   <div class="row mb-5" *ngIf="!loading">
     <div class="col-lg-4 col-md-4 sm-6 mb-3" *ngFor="let property of filteredProperties">
       <div class="card">
@@ -28,10 +26,6 @@
           <h4 class="card-title text-center primary-text">
             {{property.firstLineAddress}}</h4>
           <h6 class="text-center mb-3">{{property.secondLineAddress}} </h6>
-          <p class="card-text" *ngIf="property.activeLease == 1">
-            <strong>Lease Expires:</strong> {{property.lease.dateTo | date: 'dd/MM/yyyy'}}</p>
-          <p class="card-text" *ngIf="property.activeLease != 1">
-            <strong>Lease Expires:</strong> Not Currently Leased</p>
           <p class="card-text">
             <strong>Landlord: </strong> {{property.landlord.firstName}}</p>
           <a [routerLink]="['/properties', property.id]" class="btn btn-primary primary">More Info</a>

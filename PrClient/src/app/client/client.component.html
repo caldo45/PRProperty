@@ -1,7 +1,8 @@
-<div class="container">   
+<div class="container mb-5 pt-5" *ngIf="client">   
     <div class="text-center mb-5" *ngIf="loading">
         <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
       </div>
+
   <div class="card flex-row flex-wrap" *ngIf="client">
       <div class="card-header border-0">
     <img class="client-image" src="{{client.imagePath}}" alt="Card image cap">
@@ -15,23 +16,39 @@
                 <p class="card-text"> {{client.email}}</p>
                 <div *ngIf="activeContract">         
                     <p class="card-title field-name">Active Contract End Date</p>
-                    <p class="card-text"> {{activeContract.dateTo | date: 'dd/MM/yyyy'}}</p>
+                    <a [routerLink]="['/contract', activeContract.id]" class="card-text"> {{activeContract.dateTo | date: 'dd/MM/yyyy'}}</a>
                 </div>
-                <div>
-                    <div *ngIf="client.clientTypeId === 2">
-                    <p class="card-title field-name" *ngIf="">Properties Owned
-                        <a class="rounded btn-secondary" *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>
+                    <div *ngIf="client.clientTypeId == 2">
+                        <div *ngIf="properties">
+                    <p class="card-title field-name">Properties Owned
+                        <a class="rounded btn-secondary" *ngFor="let property of properties" [routerLink]="['/properties', property.id]">{{property.firstLineAddress}}</a>               
                         <p *ngIf="properties.length ==0">No Properties Owned</p>
                     </div>
                     </div>
-                <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-green">Add / Update Client Image</a>
-                <a [routerLink]="['/updateClient', client.id]" class="btn btn-green">Update Client Details</a>
-                <a *ngIf="client.clientTypeId === 1" [routerLink]="['/addContract/', client.id]" class="btn btn-green">Add Contract For {{client.firstName}}</a>
+                <a [routerLink]="['/addClientPhoto', client.id]" class="btn btn-green">Edit Client Image</a>
+                <a [routerLink]="['/updateClient', client.id]" class="btn btn-green">Edit / Delete Client Details</a>
+                <a *ngIf="client.clientTypeId === 1 && authService.isAdmin" [routerLink]="['/addContract/', client.id]" class="btn btn-green">Add Contract </a>
             </div>
         </div>
-            <div *ngIf="client.clientTypeId === 1">
-            
+            <div *ngIf="client.clientTypeId === 1">         
               <div *ngIf="client">
+                  <div *ngIf="authService.isAdmin">
+                    <div class="container">
+                            <h4>{{client.firstName}}'s Active Contract Contracts</h4>
+                            <div class="col-lg-6 col-md-6 sm-6 mb-3" *ngIf="activeContract">
+                              <div class="card p-4">
+                                <p class="card-title"><strong>Property: </strong>{{activeContract.room.property.firstLineAddress}}</p>
+                                <p class="card-title"><strong>Tenant: </strong>{{activeContract.client.firstName}} {{activeContract.client.lastName}}</p>
+                                <p class="card-title"><strong>Start Date: </strong>{{activeContract.dateFrom | date: 'dd/MM/yyyy'}}</p>
+                                <p class="card-title"><strong>End Date: </strong> {{activeContract.dateTo | date: 'dd/MM/yyyy'}}</p>
+                                <p class="card-title"><strong>Monthly Amount: </strong> {{activeContract.monthlyAmount| currency:'£'}}</p>
+                                <a [routerLink]="['/contract', activeContract.id]" class="btn btn-primary">View Contract</a>
+                                </div>
+                            </div>
+                            <div *ngIf="!activeContract">
+                               <h5>No Active Contract</h5>
+                           </div>
+                      </div>
                   <div class="container">
                       <h4>{{client.firstName}}'s Upcoming Contracts</h4>
                       <div class="col-lg-6 col-md-6 sm-6 mb-3" *ngFor="let contract of upcomingContracts">
@@ -44,9 +61,11 @@
                           <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
                           </div>
                       </div>
-                      <h5 *ngIf="upcomingContracts.length ==0">No Old Contracts</h5>
-                      </div>
-                      <div class="container">
+                      <div *ngIf="upcomingContracts">
+                         <h5 *ngIf="upcomingContracts.length == 0">No Upcoming Contracts</h5>
+                     </div>
+                </div>
+                      <div class="container mb-5">
                       <h4>{{client.firstName}}'s' Old Contracts</h4>
                       <div class="col-lg-6 col-md-6 sm-6 mb-3" *ngFor="let contract of oldContracts">
                         <div class="card p-4">
@@ -58,7 +77,10 @@
                           <a [routerLink]="['/contract', contract.id]" class="btn btn-primary">View Contract</a>
                           </div>
                       </div>
+                      <div *ngIf="oldContracts">
                       <h5 *ngIf="oldContracts.length ==0">No Old Contracts</h5>
+                    </div>
                     </div>
               </div>
             </div>
+        </div>

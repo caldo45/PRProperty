@@ -24,6 +24,10 @@ export class UpdateLeaseComponent implements OnInit {
   userMessage: string = null;
   uploadSuccess: number;
   loading = false;
+  delete = false;
+  deleted = false;
+  deletedLease: Lease;
+  deleteFailed = false;
 
   ngOnInit() {
     let leaseId = +this.route.snapshot.paramMap.get('id');
@@ -57,5 +61,28 @@ export class UpdateLeaseComponent implements OnInit {
  );
 
   }
+
+  deleteStart(){
+    this.delete = true;
+  }
+
+  cancelDelete(){
+    this.delete = false;
+  }
+
+
+  deleteLease(lease){
+    this.leaseService.deleteLease(lease)
+        .subscribe( res => {
+            this.deletedLease = res;
+            if(this.deletedLease.id ==0){
+                this.deleted = true;
+                this.userMessage = 'Property Deleted';
+            }else{
+                this.deleteFailed = true;
+                this.userMessage = 'Error Deleting Client Details, Please Ensure Client Has No Contracts or Properties';
+            }
+        });
+      }
 
 }

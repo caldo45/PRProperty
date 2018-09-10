@@ -24,6 +24,7 @@ export class AddClientPhotoComponent implements OnInit {
   path;
   loading = false;
   success = true;
+  uploaded=false;
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
@@ -35,6 +36,7 @@ export class AddClientPhotoComponent implements OnInit {
   }
 
   upload(files, path, imgPath, id) {
+    this.imgPath = environment.imageRoot + "default/defaultImage.jpg";
     if (files.length === 0)
       return;
 
@@ -54,9 +56,9 @@ export class AddClientPhotoComponent implements OnInit {
 
     this.fileService.uploadFiles(formData)
       .subscribe(response => {
-        path = response;
-        this.imgPath = environment.imageRoot + path;
-        this.success = true;
+        this.imgPath = environment.imageRoot + response;
+        this.uploaded = true;
+        this.message = "Image Uploaded Successfully";
       })
     } else{
       this.success = false;

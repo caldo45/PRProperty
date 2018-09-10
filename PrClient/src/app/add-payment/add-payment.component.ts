@@ -19,14 +19,18 @@ export class AddPaymentComponent implements OnInit {
   dataList: Payment[];
   path: String;
   success = true;
+  saveSuccess: boolean;
+  userMessage: string = null;
 
   ngOnInit(): void {
   }
 
   constructor(private http: HttpClient, private papa: Papa, private fileService: FileService, private contractService: ContractsService ) { }
 
+  /** File Parsing */
   onChange(files: File[], payments) {
     var ext ="";
+    /**check file is of type CSV */
     for (let file of files){
       var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
     }
@@ -34,11 +38,13 @@ export class AddPaymentComponent implements OnInit {
         if (files[0]) {
           this.payments = [];
           console.log(files[0]);
+          /** Setting for PapaParse - Header - true, column headers included, skip empty rows - true */
           this.papa.parse(files[0], {
             header: true,
             skipEmptyLines: true,
             complete: (result, file) => {
               console.table(result.data);
+              /** Cast as type Payment[] */
               this.payments = result.data as Payment[];
             }
           });
@@ -50,7 +56,23 @@ export class AddPaymentComponent implements OnInit {
     }
 
   postPayments(payments){
-    this.contractService.postPayments(payments);
-    console.log(payments);
-  }
+    this.contractService.postPayments(payments)
+    .subscribe( res => {  
+      console.log(res);
+        this.saveSuccess = true;
+        this.userMessage = 'Payments Successfully Uploaded';
+      
+      // {
+      //   console.log(res)
+      //   this.saveSuccess = false;
+      //   this.userMessage = 'Following References could not be found: '+res;
+      // }
+
+  }, err => {
+            this.saveSuccess = false;
+            this.userMessage = 'Payment Not Added. Unknown References: '+err;
+        }
+       
+ );
+}
 }

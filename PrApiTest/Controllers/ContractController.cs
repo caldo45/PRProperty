@@ -141,12 +141,26 @@ namespace PrApi.Controllers
            
         }
 
+        [HttpPost("delete")]
+        public IActionResult DeleteContract([FromBody] Contract contract)
+        {
+            var deleted = _repository.DeleteContract(contract);
+            if (deleted.Id == 0)
+            {
+                return StatusCode(202, deleted);
+            }
+
+            return StatusCode(400, deleted);
+        }
+
         [HttpPost("payments")]
         public IActionResult Post([FromBody]Payment[] payments)
         {
+            //Create List of bad references within the Payments Array
             List<String> badReferences = new List<string>(_repository.CheckValidPayments(payments));
             if (badReferences.Count >= 1)
             {
+                //return the bad references
                 return Json(badReferences);
             }
             foreach (Payment payment in payments)

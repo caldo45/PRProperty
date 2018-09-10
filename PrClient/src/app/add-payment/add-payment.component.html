@@ -3,6 +3,9 @@
       <div class="alert alert-danger" role="alert" *ngIf="!success">
           <strong>Error</strong> {{message}}
         </div>
+        <div class="alert" [ngClass]="{ 'alert-success': saveSuccess, 'alert-warning': !saveSuccess }" *ngIf="userMessage">
+            {{userMessage}}
+          </div>
     <h4>Add Payments</h4>
     <input type="file" name="files" class="form-control" #uploads (change)="onChange(uploads.files, payments)" multiple value="process"
     />
