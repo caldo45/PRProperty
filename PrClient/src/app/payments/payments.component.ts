@@ -15,7 +15,10 @@ export class PaymentsComponent implements OnInit {
   filteredPayments: Payment[] = [];
   filters: {clientType: string };
   loading = false;
-  
+  deletedPayment: Payment;
+  delete: boolean;
+  userMessage: string;
+
 
   constructor(private contractService: ContractsService) {
     this.startDate = null;
@@ -28,7 +31,7 @@ export class PaymentsComponent implements OnInit {
       .subscribe(response => {
         this.payments = response;
         this.filteredPayments = this.payments;
-        this.loading = true;
+        this.loading = false;
       });
   }
 
@@ -50,6 +53,16 @@ export class PaymentsComponent implements OnInit {
     this.startDate = null;
     this.endDate = null;
     this.filteredPayments = this.payments;
+  }
+
+  deletePayment(payment: Payment){
+    this.contractService.deletePayment(payment)
+      .subscribe(response => {
+          this.deletedPayment = response;
+            this.delete = true;
+            this.userMessage = "Payment Deleted";
+           this.filteredPayments = this.filteredPayments.filter(filteredPayments => filteredPayments.id !== payment.id);          
+    });
   }
 
 }

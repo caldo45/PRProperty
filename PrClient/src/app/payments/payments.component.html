@@ -2,6 +2,9 @@
     <div class="text-center mb-5" *ngIf="loading">
         <i class="fa fa-spinner fa-spin center-block" style="font-size:24px"></i>
       </div>
+      <div class="alert" [ngClass]="{ 'alert-success': delete, 'alert-warning': !delete }" *ngIf="userMessage">
+        {{userMessage}}
+      </div>
   <div *ngIf="payments && !loading">
 
      <button routerLink="/addPayment" class="btn btn-green">Add Payments</button>
@@ -29,6 +32,7 @@
               <th scope="col">Reference</th>
               <th scope="col">Tenant Name</th>
               <th scope="col">Property Address</th>
+              <th scope="col">Delete Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +42,7 @@
               <td>{{payment.reference}}</td>
               <td>{{payment.contract.client.firstName}} {{payment.contract.client.lastName}}</td>
               <td>{{payment.contract.room.property.firstLineAddress}}</td>
+              <td><button (click)="deletePayment(payment)" class="btn-primary rounded m-1">Delete</button></td>
             </tr>
           </tbody>
           

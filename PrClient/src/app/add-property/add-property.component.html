@@ -58,6 +58,8 @@
                 </agm-map>
               </div>
   
-      <button type="submit" class="btn btn-green" (click)="addProperty(property)" [disabled]="addPropertyForm.invalid">Submit</button>
+      <button type="submit" class="btn btn-green" (click)="addProperty(property)">Submit</button>
+      
+      <button type="submit" class="btn btn-green" routerlink="/properties">Cancel</button>
     </form>
     </div>

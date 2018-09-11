@@ -18,7 +18,7 @@
                 </div>
 
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6" *ngIf="authService.isAdmin">
             <div class="card" routerLink="/payments">
                 <img class="card-img-top img-fluid" src="../../assets/icons/payment.png" alt="Card image cap">
                 <div class="card-body">
@@ -26,7 +26,7 @@
                 </div>
               </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6" *ngIf="authService.isAdmin">
             <div class="card" routerLink="/notifications">
               <span class="notify-badge" *ngIf="unreadNotifications">{{unreadNotifications.length}}</span>
                 <img class="card-img-top img-fluid" src="../../assets/icons/notification.png" alt="Card image cap">

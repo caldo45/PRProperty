@@ -116,7 +116,7 @@ namespace PrApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Contract contract)
+        public IActionResult Post([FromBody] Contract contract)
         {
             if (contract.Id == 0)
             {
@@ -126,19 +126,21 @@ namespace PrApi.Controllers
                 {
                     return StatusCode(400, "Contract exists or overlaps");
                 }
+
                 return StatusCode(201, added);
             }
-            
+
             {
                 var updated = _repository.UpdateContract(contract);
                 if (updated.Id == 0)
                 {
                     return StatusCode(400, "Contract exists or overlaps");
                 }
+
                 return StatusCode(201, updated);
             }
 
-           
+
         }
 
         [HttpPost("delete")]
@@ -154,7 +156,7 @@ namespace PrApi.Controllers
         }
 
         [HttpPost("payments")]
-        public IActionResult Post([FromBody]Payment[] payments)
+        public IActionResult Post([FromBody] Payment[] payments)
         {
             //Create List of bad references within the Payments Array
             List<String> badReferences = new List<string>(_repository.CheckValidPayments(payments));
@@ -163,16 +165,26 @@ namespace PrApi.Controllers
                 //return the bad references
                 return Json(badReferences);
             }
+
             foreach (Payment payment in payments)
-                {
-                    var contract = _repository.GetContractByPaymentReference(payment.Reference);
-                    payment.ContractId = contract.Id;
-      
-                    var added = _repository.AddPayment(payment);  
-                    }
-                return Json(201);
+            {
+                var contract = _repository.GetContractByPaymentReference(payment.Reference);
+                payment.ContractId = contract.Id;
+
+                var added = _repository.AddPayment(payment);
             }
-        } 
-   }
+
+            return Json("added");
+        }
+
+
+        [HttpPost("deletePayment")]
+        public Payment DeletePayment([FromBody] Payment payment)
+        {
+            var deleted = _repository.DeletePayment(payment);
+            return deleted;
+        }
+    }
+}
     
 

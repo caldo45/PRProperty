@@ -34,7 +34,7 @@
               <div *ngIf="client">
                   <div *ngIf="authService.isAdmin">
                     <div class="container">
-                            <h4>{{client.firstName}}'s Active Contract Contracts</h4>
+                            <h4>{{client.firstName}}'s Active Contract</h4>
                             <div class="col-lg-6 col-md-6 sm-6 mb-3" *ngIf="activeContract">
                               <div class="card p-4">
                                 <p class="card-title"><strong>Property: </strong>{{activeContract.room.property.firstLineAddress}}</p>
@@ -66,7 +66,7 @@
                      </div>
                 </div>
                       <div class="container mb-5">
-                      <h4>{{client.firstName}}'s' Old Contracts</h4>
+                      <h4>{{client.firstName}}'s Old Contracts</h4>
                       <div class="col-lg-6 col-md-6 sm-6 mb-3" *ngFor="let contract of oldContracts">
                         <div class="card p-4">
                           <p class="card-title"><strong>Property: </strong>{{contract.room.property.firstLineAddress}}</p>

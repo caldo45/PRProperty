@@ -764,7 +764,7 @@ namespace PrApi.Repositories
             //Gets todays date, and adds on number of days dependant on Notification
             DateTime date = DateTime.Now.AddDays(+days);
             int exists = 0;
-            var contracts = _db.Contracts.Where(c => c.DateTo <= date);
+            var contracts = _db.Contracts.Where(c => c.DateTo.CompareTo(date) >0);
             //returns all notifications
             var existingNotifications = _db.ContractNotifications;
             foreach (Contract contract in contracts)
@@ -803,6 +803,13 @@ namespace PrApi.Repositories
             }
             _db.SaveChanges();
             return contracts;
+        }
+
+        public Payment DeletePayment(Payment payment)
+        {
+            _db.Payments.Remove(payment);
+            _db.SaveChanges();
+            return payment;
         }
 
         public IEnumerable<LeaseNotification> GetLeaseNotifications()

@@ -17,6 +17,7 @@ export class AddPaymentComponent implements OnInit {
   csvFile: File;
   payments: Payment[] = [];
   dataList: Payment[];
+  badRef: string;
   path: String;
   success = true;
   saveSuccess: boolean;
@@ -55,24 +56,33 @@ export class AddPaymentComponent implements OnInit {
       }
     }
 
-  postPayments(payments){
-    this.contractService.postPayments(payments)
-    .subscribe( res => {  
-      console.log(res);
-        this.saveSuccess = true;
-        this.userMessage = 'Payments Successfully Uploaded';
-      
-      // {
-      //   console.log(res)
-      //   this.saveSuccess = false;
-      //   this.userMessage = 'Following References could not be found: '+res;
-      // }
-
-  }, err => {
-            this.saveSuccess = false;
-            this.userMessage = 'Payment Not Added. Unknown References: '+err;
+    postPayments(payments){
+      this.contractService.postPayments(payments)
+      .subscribe( res => {  
+        this.badRef = res;
+        if(this.badRef.indexOf("added") <0){
+          this.saveSuccess = false;
+          this.userMessage = 'Payments Not Added. Unknown References: '+this.badRef;
+        } else{
+          this.saveSuccess = true;
+          this.userMessage = 'Payments Successfully Uploaded';
         }
+
+    }
+   );
+  }
+
+//   postPayments(payments){
+//     this.contractService.postPayments(payments)
+//     .subscribe( res => {  
+//       console.log(res);
+//         this.saveSuccess = true;
+//         this.userMessage = 'Payments Successfully Uploaded';
+//   }, err => {
+//             this.badRef = err;
+
+//         }
        
- );
-}
+//  );
+// }
 }

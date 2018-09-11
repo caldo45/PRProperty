@@ -32,7 +32,7 @@ namespace PrApi.Repositories
         Lease DeleteLease(Lease lease);
         Contract DeleteContract(Contract contract);
         Property DeleteProperty(Property property);
-
+        Payment DeletePayment(Payment payment);
         Client UpdateUser(Client user);
         Property UpdateProperty(Property property);
 

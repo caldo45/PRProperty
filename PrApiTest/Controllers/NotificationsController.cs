@@ -9,6 +9,7 @@ using PrApi.Repositories;
 
 namespace PrApi.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class NotificationsController : Controller
     {
@@ -19,30 +20,19 @@ namespace PrApi.Controllers
             _repository = repository;
         }
 
-        [Authorize(Roles = "admin")]
+
         [HttpGet]
         public IActionResult Get()
         {
+            _repository.AddContractNotifications(30);
+            _repository.AddContractNotifications(60);
+            _repository.AddContractNotifications(90);
             var notifications = _repository.GetContractNotifications();
             return Ok(notifications);
 
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody]int activate)
-        {
 
-            if (activate == 1)
-            {
-                _repository.AddContractNotifications(30);
-                _repository.AddContractNotifications(60);
-                _repository.AddContractNotifications(90);
-                
-            }
-            return StatusCode(201);
-        }
-
-        [Authorize(Roles = "admin")]
         [HttpPost("asRead")]
         public IActionResult PostRead([FromBody]ContractNotification contractNotification
         )

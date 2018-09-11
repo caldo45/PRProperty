@@ -161,4 +161,14 @@ export class ContractsService {
       };
       return this.http.post<Contract>( environment.baseUrl + '/api/contract/delete',contract, httpOptions);
       }
+
+      deletePayment(payment: Payment): Observable<Payment>{
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Authorization': 'bearer ' + localStorage.getItem('access_token')
+          })
+        };
+        return this.http.post<Payment>( environment.baseUrl + '/api/contract/deletePayment',payment, httpOptions);
+        }
+
 }

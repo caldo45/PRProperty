@@ -9,7 +9,9 @@
                 <div class="alert alert-info" role="alert">
                     {{notification.contract.client.firstName}} {{notification.contract.client.lastName}} contract will end in {{notification.contractNotificationType.notificationType}}.
                     Added on {{notification.dateAdded | date: 'dd/MM/yyyy'}}
-                    <button class="primary float-right" (click)="markAsRead(notification, contractNotifications, unreadNotifications, readNotifications)">Mark As Read</button>
+                    <br>
+                    <button class="primary display-inline m-3" (click)="markAsRead(notification, contractNotifications, unreadNotifications, readNotifications)">Mark As Read</button> 
+                    <button class="primary display-inline m-3" [routerLink]="['/contract', notification.contractId]">View Contract</button>
                 </div>
             </div>
             <h4 *ngIf="unreadNotifications.length ==0" class="mt-5 mb-5"> There are no New Notifications</h4>

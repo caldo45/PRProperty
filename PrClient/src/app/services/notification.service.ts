@@ -13,6 +13,7 @@ export class NotificationService {
 
   constructor(private http:HttpClient) { }
 
+  /** Return Contract Notifications */
   getContractNotifications(): Observable<ContractNotification[]>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -29,7 +30,7 @@ export class NotificationService {
         'Authorization': 'bearer ' + localStorage.getItem('access_token')
       })
     };
-    return this.http.post( environment.baseUrl + '/api/notifications',activate, httpOptions);
+    return this.http.post(environment.baseUrl+ '/api/notifications',activate, httpOptions);
     }
 
     markContractNotificationAsRead(contractNotification: ContractNotification){
